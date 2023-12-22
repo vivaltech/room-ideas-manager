@@ -1,0 +1,6 @@
+{
+  "admin.app.admin-import-seller-products": {
+    "component": "AdminSellers",
+    "path": "/admin/app/admin-import-seller-products"
+  }
+}

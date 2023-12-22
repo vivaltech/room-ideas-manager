@@ -1,0 +1,11 @@
+mutation importSellerProducts($productList: [ProductInput]) {
+  importSellerProducts(productList: $productList) {
+    status
+    success
+    error
+    results {
+      success
+      error
+    }
+  }
+}

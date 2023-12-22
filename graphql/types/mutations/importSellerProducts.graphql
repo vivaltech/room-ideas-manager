@@ -1,0 +1,11 @@
+type SaveLogResponse {
+  status: Int
+  success: Boolean
+  error: String
+  results: [Result]
+}
+
+type Result {
+  success: Boolean
+  error: String
+}

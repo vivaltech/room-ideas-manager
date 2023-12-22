@@ -1,0 +1,14 @@
+{
+  "memory": 1024,
+  "ttl": 60,
+  "timeout": 20,
+  "minReplicas": 4,
+  "maxReplicas": 80,
+  "workers": 4,
+  "routes": {
+    "importSellerProducts": {
+      "path": "/_v/admin-import-seller-products/importSellerProducts",
+      "public": true
+    }
+  }
+}

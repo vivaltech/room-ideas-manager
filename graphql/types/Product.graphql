@@ -1,0 +1,54 @@
+input ProductInput {
+  externalId: ID
+  status: String!
+  name: String!
+  brandId: ID!
+  categoryIds: [ID!]!
+  specs: [ProductSpecInput!]!
+  attributes: [AttributeInput!]!
+  slug: String!
+  images: [ImageInput!]!
+  skus: [SkuInput!]!
+  origin: String!
+  transportModal: ID
+  taxCode: ID
+}
+
+input ProductSpecInput {
+  name: String!
+  values: [String!]!
+}
+
+input AttributeInput {
+  name: String!
+  value: String!
+}
+
+input ImageInput {
+  id: ID!
+  url: String!
+  alt: String
+}
+
+input SkuInput {
+  name: String!
+  externalId: ID
+  ean: ID
+  manufacturerCode: ID
+  isActive: Boolean!
+  weight: Float!
+  dimensions: DimensionInput!
+  specs: [SkuSpecInput!]!
+  images: [String!]!
+}
+
+input SkuSpecInput {
+  name: String!
+  value: String!
+}
+
+input DimensionInput {
+  width: Float!
+  height: Float!
+  length: Float!
+}

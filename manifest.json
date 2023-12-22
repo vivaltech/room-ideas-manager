@@ -1,0 +1,58 @@
+{
+  "name": "admin-import-seller-products",
+  "vendor": "ageas",
+  "version": "0.0.0",
+  "title": "Admin Import Seller Products",
+  "description": "This module empowers users to seamlessly import products into the Seller Portal catalog by utilizing a CSV file.",
+  "mustUpdateAt": "2022-08-28",
+  "scripts": {
+    "postreleasy": "vtex publish"
+  },
+  "dependencies": {
+    "vtex.styleguide": "9.x"
+  },
+  "builders": {
+    "node": "6.x",
+    "graphql": "1.x",
+    "react": "3.x",
+    "admin": "0.x",
+    "messages": "1.x",
+    "docs": "0.x"
+  },
+  "policies": [
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "read-workspace-apps-assets"
+    },
+    {
+      "name": "colossus-fire-event"
+    },
+    {
+      "name": "colossus-write-logs"
+    },
+    {
+      "name": "vbase-read-write"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}
