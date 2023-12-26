@@ -9,6 +9,10 @@
     "importSellerProducts": {
       "path": "/_v/admin-import-seller-products/importSellerProducts",
       "public": true
+    },
+    "getSellerProduct": {
+      "path": "/_v/admin-import-seller-products/getSellerProduct",
+      "public": true
     }
   }
 }
