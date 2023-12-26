@@ -2,6 +2,7 @@
   "admin/admin-import-seller-products.navigation.label-group": "Admin Import Seller Products",
   "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers",
   "admin/admin-import-seller-products.main.title": "Admin Import Seller Products",
+  "admin/admin-import-seller-products.main.importButton": "Import",
 
   "admin/admin-import-seller-products.product-table.columns.externalId.title": "External Id",
   "admin/admin-import-seller-products.product-table.columns.status.title": "Status",
@@ -19,5 +20,12 @@
 
   "admin/admin-import-seller-products.product-table.emptyText": "The table is empty",
   "admin/admin-import-seller-products.product-table.of": "of",
-  "admin/admin-import-seller-products.product-table.showRows": "Show rows"
+  "admin/admin-import-seller-products.product-table.showRows": "Show rows",
+
+  "admin/admin-import-seller-products.import-results.title": "Import Results",
+  "admin/admin-import-seller-products.import-results.product": "Product",
+  "admin/admin-import-seller-products.import-results.success": "Success",
+  "admin/admin-import-seller-products.import-results.yes": "Yes",
+  "admin/admin-import-seller-products.import-results.no": "No",
+  "admin/admin-import-seller-products.import-results.errors": "Errors"
 }

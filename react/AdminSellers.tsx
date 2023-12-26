@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Layout, PageBlock, PageHeader } from 'vtex.styleguide'
+import { Layout, PageBlock, PageHeader, Button } from 'vtex.styleguide'
 import { useIntl } from 'react-intl'
 import { useMutation } from 'react-apollo'
 import type { ParseResult } from 'papaparse'
@@ -10,6 +10,7 @@ import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gq
 import { adminSellersMainMessages } from './utils/adminSellersMessages'
 import type { ProductData } from './typings/Products'
 import ProductsTable from './components/ProductTable'
+import ImportResults from './components/ImportResults'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
@@ -19,7 +20,9 @@ const AdminSellers: React.FC = () => {
   )
 
   const [showTable, setShowTable] = useState(false)
-
+  const [importLoading, setImportLoading] = useState(false)
+  const [importError, setImportError] = useState('')
+  const [importResults, setImportResults] = useState<ResultData[]>([])
   const [
     importSellerProductsMutation,
     {
@@ -122,13 +125,17 @@ const AdminSellers: React.FC = () => {
     try {
       console.info({ productData })
 
+      setImportLoading(true)
+      setImportError('')
+      setImportResults([])
+
       await importSellerProductsMutation({
         variables: {
           productList: productData,
         },
       })
     } catch (e) {
-      console.error('Error durante la importación de productos:', e)
+      setImportError(JSON.stringify(`Error during import of products: ${e}`))
     }
   }, [importSellerProductsMutation, productData])
 
@@ -142,7 +149,8 @@ const AdminSellers: React.FC = () => {
 
   useEffect(() => {
     if (errorImportSellerProducts) {
-      console.error({ errorImportSellerProducts })
+      setImportError(JSON.stringify(errorImportSellerProducts))
+      setImportLoading(false)
     }
 
     if (
@@ -153,7 +161,11 @@ const AdminSellers: React.FC = () => {
       return
     }
 
-    console.info({ dataImportSellerProducts })
+    const resultsAux = dataImportSellerProducts?.importSellerProducts?.results
+
+    setImportLoading(false)
+    setImportError('')
+    setImportResults(resultsAux)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     loadingImportSellerProducts,
@@ -186,19 +198,32 @@ const AdminSellers: React.FC = () => {
             <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
           )}
 
-          <button
-            className="mt2 mb2 w5"
-            onClick={handleImportClick}
-            disabled={
-              !productData ||
-              productData.length === 0 ||
-              loadingImportSellerProducts
-            }
-          >
-            Importar
-          </button>
-
           {showTable && <ProductsTable products={productData} />}
+
+          {productData && productData.length > 0 && (
+            <div className="mt2 mb2 w5">
+              <Button
+                variation="primary"
+                onClick={handleImportClick}
+                disabled={
+                  !productData ||
+                  productData.length === 0 ||
+                  loadingImportSellerProducts
+                }
+                isLoading={importLoading}
+              >
+                {intl.formatMessage(adminSellersMainMessages.importButton)}
+              </Button>
+            </div>
+          )}
+
+          {importError && !importLoading && (
+            <div className="flex justify-center">{importError}</div>
+          )}
+
+          {!importLoading && importResults?.length > 0 && (
+            <ImportResults importResults={importResults} />
+          )}
         </div>
       </PageBlock>
     </Layout>

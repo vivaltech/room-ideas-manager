@@ -4,9 +4,11 @@ const prefixAdminSellers = 'admin/admin-import-seller-products.'
 const prefixAdminSellersMain = `${prefixAdminSellers}main.`
 const prefixProductTable = `${prefixAdminSellers}product-table.`
 const prefixProductTableColumns = `${prefixProductTable}columns.`
+const prefixProductImportResults = `${prefixAdminSellers}import-results.`
 
 export const adminSellersMainMessages = defineMessages({
   title: { id: `${prefixAdminSellersMain}title` },
+  importButton: { id: `${prefixAdminSellersMain}importButton` },
 })
 
 export const productTableColumnsMessages = defineMessages({
@@ -31,4 +33,13 @@ export const productTableMessages = defineMessages({
   emptyText: { id: `${prefixProductTable}emptyText` },
   of: { id: `${prefixProductTable}of` },
   showRows: { id: `${prefixProductTable}showRows` },
+})
+
+export const importResultsMessages = defineMessages({
+  title: { id: `${prefixProductImportResults}title` },
+  product: { id: `${prefixProductImportResults}product` },
+  success: { id: `${prefixProductImportResults}success` },
+  yes: { id: `${prefixProductImportResults}yes` },
+  no: { id: `${prefixProductImportResults}no` },
+  errors: { id: `${prefixProductImportResults}errors` },
 })
