@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface CreateProductsResponse {
-  status: number;
-  success: boolean;
-  results: Array<{ success: boolean; result?: any; error?: string }>;
-  error?: string;
+  status: number
+  success: boolean
+  results: Array<{ success: boolean; result?: any; error?: string }>
+  error?: string
 }
 
 export async function createProducts(
@@ -13,7 +13,7 @@ export async function createProducts(
 ): Promise<CreateProductsResponse> {
   const {
     clients: { catalogSellerPortal },
-  } = ctx;
+  } = ctx
 
   // console.info(JSON.stringify(productList, null, 4))
 
@@ -21,9 +21,9 @@ export async function createProducts(
     return Promise.all(
       (productList || []).map(async (product) => {
         try {
-          const result = await catalogSellerPortal.createProduct(product);
+          const result = await catalogSellerPortal.createProduct(product)
 
-          return { success: true, result };
+          return { success: true, result }
         } catch (error) {
           console.info(
             JSON.stringify(
@@ -31,7 +31,7 @@ export async function createProducts(
               null,
               4
             )
-          );
+          )
 
           return {
             success: false,
@@ -40,14 +40,14 @@ export async function createProducts(
               null,
               4
             ),
-          };
+          }
         }
       })
-    );
-  };
+    )
+  }
 
   try {
-    const createProductsResponse = await createProductDetails();
+    const createProductsResponse = await createProductDetails()
 
     // console.info(JSON.stringify(createProductsResponse, null, 4))
 
@@ -55,7 +55,7 @@ export async function createProducts(
       status: 200,
       success: true,
       results: createProductsResponse,
-    };
+    }
   } catch (error) {
     return {
       status: error?.status ? error?.status : 500,
@@ -63,7 +63,7 @@ export async function createProducts(
       results: [],
       error:
         error ??
-        "There was an issue processing your request. Please try again later.",
-    };
+        'There was an issue processing your request. Please try again later.',
+    }
   }
 }

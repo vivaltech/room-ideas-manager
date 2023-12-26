@@ -1,63 +1,24 @@
-import type { ChangeEvent } from "react";
-import React, { useCallback, useEffect, useState } from "react";
-import { Layout, PageBlock, PageHeader } from "vtex.styleguide";
-import { useIntl } from "react-intl";
-import { useMutation } from "react-apollo";
-import type { ParseResult } from "papaparse";
-import Papa from "papaparse";
+import type { ChangeEvent } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Layout, PageBlock, PageHeader } from 'vtex.styleguide'
+import { useIntl } from 'react-intl'
+import { useMutation } from 'react-apollo'
+import type { ParseResult } from 'papaparse'
+import Papa from 'papaparse'
 
-import importSellerProductsGQL from "./graphql/mutations/importSellerProducts.gql";
-import { adminSellersMainMessages } from "./utils/adminSellersMessages";
-
-interface ProductData {
-  externalId?: string | number;
-  status: string;
-  name: string;
-  brandId: string | number;
-  categoryIds: string[] | number[];
-  specs: Array<{
-    name: string;
-    values: string[];
-  }>;
-  attributes: Array<{
-    name: string;
-    value: string;
-  }>;
-  slug: string;
-  images: Array<{
-    id: string | number;
-    url: string;
-    alt?: string;
-  }>;
-  skus: Array<{
-    name: string;
-    externalId?: string | number;
-    ean?: string | number;
-    manufacturerCode?: string | number;
-    isActive: boolean;
-    weight: number;
-    dimensions: {
-      width: number;
-      height: number;
-      length: number;
-    };
-    specs: Array<{
-      name: string;
-      value: string;
-    }>;
-    images: string[];
-  }>;
-  origin: string;
-  transportModal?: string | number;
-  taxCode?: string | number;
-}
+import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gql'
+import { adminSellersMainMessages } from './utils/adminSellersMessages'
+import type { ProductData } from './typings/Products'
+import ProductsTable from './components/ProductTable'
 
 const AdminSellers: React.FC = () => {
-  const intl = useIntl();
-  const [productData, setProductData] = useState<ProductData[]>([]);
+  const intl = useIntl()
+  const [productData, setProductData] = useState<ProductData[]>([])
   const [errorProcessingCsv, setErrorProcessingCsv] = useState<string | null>(
     null
-  );
+  )
+
+  const [showTable, setShowTable] = useState(false)
 
   const [
     importSellerProductsMutation,
@@ -66,23 +27,23 @@ const AdminSellers: React.FC = () => {
       error: errorImportSellerProducts,
       data: dataImportSellerProducts,
     },
-  ] = useMutation(importSellerProductsGQL);
+  ] = useMutation(importSellerProductsGQL)
 
   const handleFileChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
+      const file = event.target.files?.[0]
 
       if (!file) {
-        return;
+        return
       }
 
-      const reader = new FileReader();
+      const reader = new FileReader()
 
       reader.onload = async (e) => {
-        const csvFile = e.target?.result as string;
+        const csvFile = e.target?.result as string
 
-        setProductData([]);
-        setErrorProcessingCsv(null);
+        setProductData([])
+        setErrorProcessingCsv(null)
 
         Papa.parse<ProductData>(csvFile, {
           header: true,
@@ -92,27 +53,27 @@ const AdminSellers: React.FC = () => {
           transform: (value: string, header: string) => {
             try {
               const arrayHeaders = [
-                "categoryIds",
-                "specs",
-                "attributes",
-                "images",
-                "skus",
-              ];
+                'categoryIds',
+                'specs',
+                'attributes',
+                'images',
+                'skus',
+              ]
 
               if (arrayHeaders.includes(header.toLowerCase())) {
-                const jsonValue = value.replace(/'/g, '"').replace(/\\/g, "");
+                const jsonValue = value.replace(/'/g, '"').replace(/\\/g, '')
 
-                return JSON.parse(jsonValue);
+                return JSON.parse(jsonValue)
               }
             } catch (error) {
-              const message = (error as Error)?.message;
+              const message = (error as Error)?.message
 
-              console.error(`Error al parsear JSON en ${header}: ${message}`);
+              console.error(`Error al parsear JSON en ${header}: ${message}`)
 
-              return value;
+              return value
             }
 
-            return value;
+            return value
           },
           complete: (result: ParseResult<ProductData>) => {
             if (result.data && Array.isArray(result.data)) {
@@ -127,61 +88,61 @@ const AdminSellers: React.FC = () => {
                   //! row.images?.length ||
                   //! row.skus?.length ||
                   //! row.origin
-                );
-              });
+                )
+              })
 
               if (missingDataRows?.length > 0) {
                 setErrorProcessingCsv(
-                  "Error: Algunas filas tienen datos incompletos."
-                );
+                  'Error: Algunas filas tienen datos incompletos.'
+                )
               } else {
-                setProductData(result?.data);
-                setErrorProcessingCsv(null);
+                setProductData(result?.data)
+                setErrorProcessingCsv(null)
               }
             } else {
               setErrorProcessingCsv(
-                "No se pudo analizar el archivo CSV correctamente."
-              );
+                'No se pudo analizar el archivo CSV correctamente.'
+              )
             }
           },
           error: (err: { message: string }) => {
             setErrorProcessingCsv(
               `Error al analizar el archivo CSV: ${err.message}`
-            );
+            )
           },
-        });
-      };
+        })
+      }
 
-      reader.readAsText(file);
+      reader.readAsText(file)
     },
     []
-  );
+  )
 
   const handleImportClick = useCallback(async () => {
     try {
-      console.info({ productData });
+      console.info({ productData })
 
       await importSellerProductsMutation({
         variables: {
           productList: productData,
         },
-      });
+      })
     } catch (e) {
-      console.error("Error durante la importación de productos:", e);
+      console.error('Error durante la importación de productos:', e)
     }
-  }, [importSellerProductsMutation, productData]);
+  }, [importSellerProductsMutation, productData])
 
   useEffect(() => {
     if (!errorProcessingCsv) {
-      return;
+      return
     }
 
-    setProductData([]);
-  }, [errorProcessingCsv]);
+    setProductData([])
+  }, [errorProcessingCsv])
 
   useEffect(() => {
     if (errorImportSellerProducts) {
-      console.error({ errorImportSellerProducts });
+      console.error({ errorImportSellerProducts })
     }
 
     if (
@@ -189,16 +150,26 @@ const AdminSellers: React.FC = () => {
       errorImportSellerProducts ||
       !dataImportSellerProducts
     ) {
-      return;
+      return
     }
 
-    console.info({ dataImportSellerProducts });
+    console.info({ dataImportSellerProducts })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     loadingImportSellerProducts,
     errorImportSellerProducts,
     dataImportSellerProducts,
-  ]);
+  ])
+
+  useEffect(() => {
+    if (!productData || productData.length === 0) {
+      setShowTable(false)
+
+      return
+    }
+
+    setShowTable(true)
+  }, [productData])
 
   return (
     <Layout
@@ -212,11 +183,11 @@ const AdminSellers: React.FC = () => {
         <div className="flex flex-column">
           <input type="file" onChange={handleFileChange} />
           {errorProcessingCsv && (
-            <p style={{ color: "red" }}>{errorProcessingCsv}</p>
+            <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
           )}
 
           <button
-            className="mt2 w5"
+            className="mt2 mb2 w5"
             onClick={handleImportClick}
             disabled={
               !productData ||
@@ -226,10 +197,12 @@ const AdminSellers: React.FC = () => {
           >
             Importar
           </button>
+
+          {showTable && <ProductsTable products={productData} />}
         </div>
       </PageBlock>
     </Layout>
-  );
-};
+  )
+}
 
-export default AdminSellers;
+export default AdminSellers

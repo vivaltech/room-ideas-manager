@@ -1,5 +1,23 @@
 {
   "admin/admin-import-seller-products.navigation.label-group": "Admin Import Seller Products",
   "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers",
-  "admin/admin-import-seller-products.main.title": "Admin Import Seller Products"
+  "admin/admin-import-seller-products.main.title": "Admin Import Seller Products",
+
+  "admin/admin-import-seller-products.product-table.columns.externalId.title": "External Id",
+  "admin/admin-import-seller-products.product-table.columns.status.title": "Status",
+  "admin/admin-import-seller-products.product-table.columns.name.title": "Name",
+  "admin/admin-import-seller-products.product-table.columns.brandId.title": "Brand Id",
+  "admin/admin-import-seller-products.product-table.columns.categoryIds.title": "Category Ids",
+  "admin/admin-import-seller-products.product-table.columns.specs.title": "Specifications",
+  "admin/admin-import-seller-products.product-table.columns.attributes.title": "Attributes",
+  "admin/admin-import-seller-products.product-table.columns.slug.title": "Slug",
+  "admin/admin-import-seller-products.product-table.columns.images.title": "Images",
+  "admin/admin-import-seller-products.product-table.columns.skus.title": "SKUs",
+  "admin/admin-import-seller-products.product-table.columns.origin.title": "Origin",
+  "admin/admin-import-seller-products.product-table.columns.transportModal.title": "Transport Modal",
+  "admin/admin-import-seller-products.product-table.columns.taxCode.title": "Tax Code",
+
+  "admin/admin-import-seller-products.product-table.emptyText": "The table is empty",
+  "admin/admin-import-seller-products.product-table.of": "of",
+  "admin/admin-import-seller-products.product-table.showRows": "Show rows"
 }
