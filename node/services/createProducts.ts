@@ -3,7 +3,7 @@
 interface CreateProductsResponse {
   status: number
   success: boolean
-  results: Array<{ success: boolean; result?: any; error?: string }>
+  results: Array<{ productName: string; success: boolean; details?: string }>
   error?: string
 }
 
@@ -15,31 +15,22 @@ export async function createProducts(
     clients: { catalogSellerPortal },
   } = ctx
 
-  // console.info(JSON.stringify(productList, null, 4))
-
   const createProductDetails = async () => {
     return Promise.all(
       (productList || []).map(async (product) => {
         try {
           const result = await catalogSellerPortal.createProduct(product)
 
-          return { success: true, result }
-        } catch (error) {
-          console.info(
-            JSON.stringify(
-              { productName: product.name, ...error.response.data },
-              null,
-              4
-            )
-          )
-
           return {
+            productName: product.name,
+            success: true,
+            details: JSON.stringify(result, null, 4),
+          }
+        } catch (error) {
+          return {
+            productName: product.name,
             success: false,
-            error: JSON.stringify(
-              { productName: product.name, ...error.response.data },
-              null,
-              4
-            ),
+            details: JSON.stringify(error.response.data, null, 4),
           }
         }
       })
@@ -48,8 +39,6 @@ export async function createProducts(
 
   try {
     const createProductsResponse = await createProductDetails()
-
-    // console.info(JSON.stringify(createProductsResponse, null, 4))
 
     return {
       status: 200,
