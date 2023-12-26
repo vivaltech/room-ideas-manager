@@ -20,22 +20,20 @@ export class CatalogSellerPortalClient extends JanusClient {
     })
   }
 
-  public createProduct(product: Product) {
+  public createProduct(product: Product, appKey: string, appToken: string) {
     return this.http.post<any>(routes.createProduct, product, {
       headers: {
-        'X-VTEX-API-AppKey': 'vtexappkey-spvaltechqa733-EFMEBI',
-        'X-VTEX-API-AppToken':
-          'COMRSFWRZJMCGNKQEOAYJFEOFWMVWGIIAFAOJVTTVNYGHNMORCHPOKIKWCJVXWSTGRGZBZMHJXBXCHZJOIZXXEXXEZKLMVIMNADKEBBINFLUKZHGQSAXFJATLCUKSFOK',
+        'X-VTEX-API-AppKey': appKey,
+        'X-VTEX-API-AppToken': appToken,
       },
     })
   }
 
-  public getProduct(productId: string) {
+  public getProduct(productId: string, appKey: string, appToken: string) {
     return this.http.get(routes.getProduct(productId), {
       headers: {
-        'X-VTEX-API-AppKey': 'vtexappkey-spvaltechqa733-EFMEBI',
-        'X-VTEX-API-AppToken':
-          'COMRSFWRZJMCGNKQEOAYJFEOFWMVWGIIAFAOJVTTVNYGHNMORCHPOKIKWCJVXWSTGRGZBZMHJXBXCHZJOIZXXEXXEZKLMVIMNADKEBBINFLUKZHGQSAXFJATLCUKSFOK',
+        'X-VTEX-API-AppKey': appKey,
+        'X-VTEX-API-AppToken': appToken,
       },
     })
   }

@@ -5,9 +5,10 @@ import { LRUCache, Service, method } from '@vtex/api'
 import { Clients } from './clients'
 import { resolvers } from './resolvers'
 import { getBody } from './middlewares/common/getBody'
-import { validateBody } from './middlewares/common/validateBody'
+import { validateBodyProductList } from './middlewares/validateBodyProductList'
 import { importSellerProducts } from './middlewares/importSellerProducts'
 import { getSellerProduct } from './middlewares/getSellerProduct'
+import { importImages } from './middlewares/importImages'
 
 const TIMEOUT_MS = 25000
 
@@ -44,7 +45,8 @@ declare global {
   }
 
   interface BodyProducts {
-    productList: Product[]
+    productList?: Product[]
+    images?: Images[]
   }
 
   interface Product {
@@ -89,6 +91,11 @@ declare global {
     transportModal?: string | number
     taxCode?: string | number
   }
+
+  interface Images {
+    fileName: string
+    url: string
+  }
 }
 
 // Export a service that defines route handlers and client options.
@@ -96,10 +103,13 @@ export default new Service({
   clients,
   routes: {
     importSellerProducts: method({
-      POST: [getBody, validateBody, importSellerProducts],
+      POST: [getBody, validateBodyProductList, importSellerProducts],
     }),
     getSellerProduct: method({
       POST: [getSellerProduct],
+    }),
+    importImages: method({
+      POST: [getBody, importImages],
     }),
   },
   graphql: {

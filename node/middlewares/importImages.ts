@@ -1,21 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createProducts } from '../services/createProducts'
+import { saveImages } from '../services/saveImages'
 
-export async function importSellerProducts(
-  ctx: Context,
-  next: () => Promise<any>
-) {
+export async function importImages(ctx: Context, next: () => Promise<any>) {
   try {
-    const { productList } = ctx.state.body
+    const { images } = ctx.state.body
 
-    if (!productList) {
+    if (!images) {
       await next()
 
       return
     }
 
-    const createProductsResponse = await createProducts(ctx, productList)
+    const createProductsResponse = await saveImages(ctx, images)
 
     ctx.status = createProductsResponse?.status
     ctx.body = {

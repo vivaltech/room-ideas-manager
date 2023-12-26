@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { appKey, appToken } from '../utils/constants'
+
 interface CreateProductsResponse {
   status: number
   success: boolean
@@ -19,7 +21,11 @@ export async function createProducts(
     return Promise.all(
       (productList || []).map(async (product) => {
         try {
-          const result = await catalogSellerPortal.createProduct(product)
+          const result = await catalogSellerPortal.createProduct(
+            product,
+            appKey,
+            appToken
+          )
 
           return {
             productName: product.name,

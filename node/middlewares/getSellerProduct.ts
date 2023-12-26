@@ -2,6 +2,8 @@
 
 import { json } from 'co-body'
 
+import { appKey, appToken } from '../utils/constants'
+
 export async function getSellerProduct(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { catalogSellerPortal },
@@ -13,7 +15,11 @@ export async function getSellerProduct(ctx: Context, next: () => Promise<any>) {
 
     console.info({ productId })
 
-    const response = await catalogSellerPortal.getProduct(productId)
+    const response = await catalogSellerPortal.getProduct(
+      productId,
+      appKey,
+      appToken
+    )
 
     console.info({ response })
     ctx.status = 200
