@@ -54,6 +54,8 @@ const AdminSellers: React.FC = () => {
           dynamicTyping: true,
           transformHeader: (header: string) => header.trim(),
           transform: (value: string, header: string) => {
+            const parsedValue = value?.replace('__parsed_extra', '')
+
             try {
               const arrayHeaders = [
                 'categoryIds',
@@ -64,7 +66,9 @@ const AdminSellers: React.FC = () => {
               ]
 
               if (arrayHeaders.includes(header.toLowerCase())) {
-                const jsonValue = value.replace(/'/g, '"').replace(/\\/g, '')
+                const jsonValue = parsedValue
+                  .replace(/'/g, '"')
+                  .replace(/\\/g, '')
 
                 return JSON.parse(jsonValue)
               }
@@ -73,19 +77,16 @@ const AdminSellers: React.FC = () => {
 
               console.error(`Error al parsear JSON en ${header}: ${message}`)
 
-              return value
+              return parsedValue
             }
 
-            return value
+            return parsedValue
           },
           complete: (result: ParseResult<ProductData>) => {
-            if (result.data && Array.isArray(result.data)) {
-              const validRows = result.data.filter((row) => {
-                // Exclude rows with __parsed_extra property
-                return !('__parsed_extra' in row)
-              })
+            const rows = result.data
 
-              const missingDataRows = validRows?.filter((_row) => {
+            if (rows && Array.isArray(rows)) {
+              const missingDataRows = rows?.filter((_row) => {
                 // TODO: Add validations
                 return (
                   //! row.status ||
@@ -109,7 +110,7 @@ const AdminSellers: React.FC = () => {
                   'Error: Algunas filas tienen datos incompletos.'
                 )
               } else {
-                setProductData(validRows)
+                setProductData(rows)
                 setErrorProcessingCsv(null)
               }
             } else {
