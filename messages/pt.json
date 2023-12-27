@@ -4,6 +4,7 @@
   "admin/admin-import-seller-products.main.title": "Admin Import Seller Products",
   "admin/admin-import-seller-products.main.importButton": "Import",
 
+  "admin/admin-import-seller-products.product-table.columns.id.title": "Product Id",
   "admin/admin-import-seller-products.product-table.columns.externalId.title": "External Id",
   "admin/admin-import-seller-products.product-table.columns.status.title": "Status",
   "admin/admin-import-seller-products.product-table.columns.name.title": "Name",

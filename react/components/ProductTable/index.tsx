@@ -22,10 +22,14 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
   const ITEMS_PER_PAGE = 5
 
   const columns = [
-    {
-      id: 'id',
-      title: 'id',
-    },
+    ...(products.some((product) => product.id)
+      ? [
+          {
+            id: 'id',
+            title: intl.formatMessage(productTableColumnsMessages.idTitle),
+          },
+        ]
+      : []),
     {
       id: 'externalId',
       title: intl.formatMessage(productTableColumnsMessages.externalIdTitle),
@@ -154,9 +158,9 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
               <strong>Specs:</strong>{' '}
               {sku.specs
                 .map((spec) => `${spec.name}: ${spec.value}`)
-                .join(', ')}{' '}
-              <strong>Images IDs:</strong>{' '}
-              {sku.images.map((images) => `${images}`).join(', ')}
+                .join(', ')}
+              , <strong>Images IDs:</strong>{' '}
+              {sku?.images?.map((images) => `${images}`).join(', ')}
             </li>
           ))}
         </ul>

@@ -12,6 +12,7 @@ export const adminSellersMainMessages = defineMessages({
 })
 
 export const productTableColumnsMessages = defineMessages({
+  idTitle: { id: `${prefixProductTableColumns}id.title` },
   externalIdTitle: { id: `${prefixProductTableColumns}externalId.title` },
   statusTitle: { id: `${prefixProductTableColumns}status.title` },
   nameTitle: { id: `${prefixProductTableColumns}name.title` },
