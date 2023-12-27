@@ -50,6 +50,7 @@ declare global {
   }
 
   interface Product {
+    id?: string | number
     externalId?: string | number
     status: string
     name: string
@@ -70,6 +71,7 @@ declare global {
       alt?: string
     }>
     skus: Array<{
+      id?: string | number
       name: string
       externalId?: string | number
       ean?: string | number

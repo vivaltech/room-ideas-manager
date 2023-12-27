@@ -29,6 +29,19 @@ export class CatalogSellerPortalClient extends JanusClient {
     })
   }
 
+  public updateProduct(product: Product, appKey: string, appToken: string) {
+    return this.http.put<any>(
+      `${routes.createProduct}/${product.id}`,
+      product,
+      {
+        headers: {
+          'X-VTEX-API-AppKey': appKey,
+          'X-VTEX-API-AppToken': appToken,
+        },
+      }
+    )
+  }
+
   public getProduct(productId: string, appKey: string, appToken: string) {
     return this.http.get(routes.getProduct(productId), {
       headers: {

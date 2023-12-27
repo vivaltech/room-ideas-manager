@@ -51,7 +51,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                   <strong className={styles.label}>
                     {intl.formatMessage(importResultsMessages.errors)}:
                   </strong>
-                  {parsedError.errors.length === 1 ? (
+                  {parsedError?.errors?.length === 1 ? (
                     <>
                       {' '}
                       <span className={styles.errorItem}>

@@ -1,4 +1,5 @@
 export interface ProductData {
+  id?: string | number
   externalId?: string | number
   status: string
   name: string
@@ -19,6 +20,7 @@ export interface ProductData {
     alt?: string
   }>
   skus: Array<{
+    id?: string | number
     name: string
     externalId?: string | number
     ean?: string | number

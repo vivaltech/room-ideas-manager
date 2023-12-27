@@ -23,6 +23,10 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
 
   const columns = [
     {
+      id: 'id',
+      title: 'id',
+    },
+    {
       id: 'externalId',
       title: intl.formatMessage(productTableColumnsMessages.externalIdTitle),
     },
@@ -117,6 +121,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         data,
       }: {
         data: Array<{
+          id?: string | number
           name: string
           externalId?: string | number
           ean?: string | number
@@ -125,11 +130,20 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
           weight: number
           dimensions: { width: number; height: number; length: number }
           specs: Array<{ name: string; value: string }>
+          images: string[]
         }>
       }) => (
         <ul>
           {data.map((sku, index) => (
             <li key={index}>
+              {sku?.id ? (
+                <>
+                  <strong>Id:</strong>
+                  {sku?.id},{' '}
+                </>
+              ) : (
+                ''
+              )}
               <strong>Name:</strong> {sku.name}, <strong>External ID:</strong>{' '}
               {sku.externalId ?? ''}, <strong>EAN:</strong> {sku.ean ?? ''},{' '}
               <strong>Manufacturer Code:</strong> {sku.manufacturerCode ?? ''},{' '}
@@ -140,7 +154,9 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
               <strong>Specs:</strong>{' '}
               {sku.specs
                 .map((spec) => `${spec.name}: ${spec.value}`)
-                .join(', ')}
+                .join(', ')}{' '}
+              <strong>Images IDs:</strong>{' '}
+              {sku.images.map((images) => `${images}`).join(', ')}
             </li>
           ))}
         </ul>

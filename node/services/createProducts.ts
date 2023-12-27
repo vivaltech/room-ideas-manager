@@ -21,11 +21,21 @@ export async function createProducts(
     return Promise.all(
       (productList || []).map(async (product) => {
         try {
-          const result = await catalogSellerPortal.createProduct(
-            product,
-            appKey,
-            appToken
-          )
+          let result
+
+          if (product?.id) {
+            result = await catalogSellerPortal.updateProduct(
+              product,
+              appKey,
+              appToken
+            )
+          } else {
+            result = await catalogSellerPortal.createProduct(
+              product,
+              appKey,
+              appToken
+            )
+          }
 
           return {
             productName: product.name,
