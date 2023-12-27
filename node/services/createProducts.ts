@@ -11,7 +11,7 @@ interface CreateProductsResponse {
 
 export async function createProducts(
   ctx: Context,
-  productList: Product[]
+  productList: ProductWithOrigin[]
 ): Promise<CreateProductsResponse> {
   const {
     clients: { catalogSellerPortal },

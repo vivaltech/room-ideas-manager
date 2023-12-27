@@ -90,7 +90,6 @@ const AdminSellers: React.FC = () => {
                   //! row.slug ||
                   //! row.images?.length ||
                   //! row.skus?.length ||
-                  //! row.origin
                 )
               })
 

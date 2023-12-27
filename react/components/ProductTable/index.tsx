@@ -163,10 +163,6 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       ),
     },
     {
-      id: 'origin',
-      title: intl.formatMessage(productTableColumnsMessages.originTitle),
-    },
-    {
       id: 'transportModal',
       title: intl.formatMessage(
         productTableColumnsMessages.transportModalTitle

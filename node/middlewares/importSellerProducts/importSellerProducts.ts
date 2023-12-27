@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createProducts } from '../services/createProducts'
+import { createProducts } from '../../services/createProducts'
 
 export async function importSellerProducts(
   ctx: Context,
   next: () => Promise<any>
 ) {
   try {
-    const { productList } = ctx.state.body
+    const { productWithOrigin } = ctx.state
 
-    if (!productList) {
+    if (!productWithOrigin) {
       await next()
 
       return
     }
 
-    const createProductsResponse = await createProducts(ctx, productList)
+    const createProductsResponse = await createProducts(ctx, productWithOrigin)
 
     ctx.status = createProductsResponse?.status
     ctx.body = {

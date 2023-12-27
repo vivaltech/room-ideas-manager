@@ -10,7 +10,6 @@ input ProductInput {
   slug: String
   images: [ImageInput]
   skus: [SkuInput]
-  origin: String
   transportModal: ID
   taxCode: ID
 }

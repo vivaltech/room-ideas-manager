@@ -4,6 +4,7 @@
   "dependencies": {
     "@vtex/clients": "^2.19.5",
     "co-body": "^6.0.0",
+    "form-data": "^4.0.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
@@ -14,8 +15,7 @@
     "@vtex/api": "6.46.0",
     "@vtex/test-tools": "^1.0.0",
     "@vtex/tsconfig": "^0.5.6",
-    "typescript": "3.9.7",
-    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide"
+    "typescript": "3.9.7"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty"

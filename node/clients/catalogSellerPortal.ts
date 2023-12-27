@@ -20,7 +20,11 @@ export class CatalogSellerPortalClient extends JanusClient {
     })
   }
 
-  public createProduct(product: Product, appKey: string, appToken: string) {
+  public createProduct(
+    product: ProductWithOrigin,
+    appKey: string,
+    appToken: string
+  ) {
     return this.http.post<any>(routes.createProduct, product, {
       headers: {
         'X-VTEX-API-AppKey': appKey,
@@ -29,7 +33,11 @@ export class CatalogSellerPortalClient extends JanusClient {
     })
   }
 
-  public updateProduct(product: Product, appKey: string, appToken: string) {
+  public updateProduct(
+    product: ProductWithOrigin,
+    appKey: string,
+    appToken: string
+  ) {
     return this.http.put<any>(
       `${routes.createProduct}/${product.id}`,
       product,

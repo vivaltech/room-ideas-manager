@@ -5,17 +5,18 @@ import { LRUCache, Service, method } from '@vtex/api'
 import { Clients } from './clients'
 import { resolvers } from './resolvers'
 import { getBody } from './middlewares/common/getBody'
-import { validateBodyProductList } from './middlewares/validateBodyProductList'
-import { importSellerProducts } from './middlewares/importSellerProducts'
-import { getSellerProduct } from './middlewares/getSellerProduct'
-import { importImages } from './middlewares/importImages'
+import { validateBodyProductList } from './middlewares/importSellerProducts/validateBodyProductList'
+import { addOrigin } from './middlewares/importSellerProducts/addOrigin'
+import { importSellerProducts } from './middlewares/importSellerProducts/importSellerProducts'
+import { getSellerProduct } from './middlewares/getSellerProduct/getSellerProduct'
+import { importImages } from './middlewares/importImages/importImages'
 
-const TIMEOUT_MS = 25000
+const TIMEOUT_MS = 80000
 
 // Create a LRU memory cache for the Status client.
 // The @vtex/api HttpClient respects Cache-Control headers and uses the provided cache.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const memoryCache = new LRUCache<string, any>({ max: 8000 })
+const memoryCache = new LRUCache<string, any>({ max: 80000 })
 
 metrics.trackCache('status', memoryCache)
 
@@ -42,6 +43,7 @@ declare global {
 
   interface State extends RecorderState {
     body: BodyProducts
+    productWithOrigin?: ProductWithOrigin[]
   }
 
   interface BodyProducts {
@@ -89,9 +91,12 @@ declare global {
       }>
       images: string[]
     }>
-    origin: string
     transportModal?: string | number
     taxCode?: string | number
+  }
+
+  interface ProductWithOrigin extends Product {
+    origin: string
   }
 
   interface Images {
@@ -105,7 +110,7 @@ export default new Service({
   clients,
   routes: {
     importSellerProducts: method({
-      POST: [getBody, validateBodyProductList, importSellerProducts],
+      POST: [getBody, validateBodyProductList, addOrigin, importSellerProducts],
     }),
     getSellerProduct: method({
       POST: [getSellerProduct],

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { saveImages } from '../services/saveImages'
+import { saveImages } from '../../services/saveImages'
 
 export async function importImages(ctx: Context, next: () => Promise<any>) {
   try {
@@ -14,7 +14,7 @@ export async function importImages(ctx: Context, next: () => Promise<any>) {
 
     const createProductsResponse = await saveImages(ctx, images)
 
-    ctx.status = createProductsResponse?.status
+    ctx.status = 200
     ctx.body = {
       ...createProductsResponse,
     }

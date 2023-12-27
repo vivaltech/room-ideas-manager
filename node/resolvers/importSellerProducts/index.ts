@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { addOriginOfProducts } from '../../services/addOriginOfProducts'
 import { createProducts } from '../../services/createProducts'
 import GraphQLError from '../../utils/GraphqlError'
 
@@ -9,7 +10,11 @@ export const mutations = {
     ctx: Context
   ) => {
     try {
-      const createProductsResponse = await createProducts(ctx, productList)
+      const productWithOrigin = addOriginOfProducts(ctx, productList)
+      const createProductsResponse = await createProducts(
+        ctx,
+        productWithOrigin
+      )
 
       if (
         createProductsResponse?.status === 500 ||

@@ -14,7 +14,6 @@
   "admin/admin-import-seller-products.product-table.columns.slug.title": "Slug",
   "admin/admin-import-seller-products.product-table.columns.images.title": "Images",
   "admin/admin-import-seller-products.product-table.columns.skus.title": "SKUs",
-  "admin/admin-import-seller-products.product-table.columns.origin.title": "Origin",
   "admin/admin-import-seller-products.product-table.columns.transportModal.title": "Transport Modal",
   "admin/admin-import-seller-products.product-table.columns.taxCode.title": "Tax Code",
 

@@ -22,7 +22,6 @@ export const productTableColumnsMessages = defineMessages({
   slugTitle: { id: `${prefixProductTableColumns}slug.title` },
   imagesTitle: { id: `${prefixProductTableColumns}images.title` },
   skusTitle: { id: `${prefixProductTableColumns}skus.title` },
-  originTitle: { id: `${prefixProductTableColumns}origin.title` },
   transportModalTitle: {
     id: `${prefixProductTableColumns}transportModal.title`,
   },

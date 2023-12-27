@@ -38,7 +38,6 @@ export interface ProductData {
     }>
     images: string[]
   }>
-  origin: string
   transportModal?: string | number
   taxCode?: string | number
 }
