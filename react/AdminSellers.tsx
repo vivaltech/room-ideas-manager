@@ -80,16 +80,27 @@ const AdminSellers: React.FC = () => {
           },
           complete: (result: ParseResult<ProductData>) => {
             if (result.data && Array.isArray(result.data)) {
-              const missingDataRows = result?.data?.filter((row) => {
+              const validRows = result.data.filter((row) => {
+                // Exclude rows with __parsed_extra property
+                return !('__parsed_extra' in row)
+              })
+
+              const missingDataRows = validRows?.filter((_row) => {
                 // TODO: Add validations
                 return (
-                  !row.status || !row.name || !row.brandId
-                  //! row.categoryIds?.length ||
+                  //! row.status ||
+                  //! row.name ||
+                  //! row.brandId ||
+                  //! (
+                  //  Array.isArray(row.categoryIds) && row.categoryIds.length > 0
+                  // ) ||
+                  //! row?.categoryIds ||
                   //! row.specs?.length ||
                   //! row.attributes?.length ||
                   //! row.slug ||
                   //! row.images?.length ||
-                  //! row.skus?.length ||
+                  //! row.skus?.length
+                  false
                 )
               })
 
@@ -98,7 +109,7 @@ const AdminSellers: React.FC = () => {
                   'Error: Algunas filas tienen datos incompletos.'
                 )
               } else {
-                setProductData(result?.data)
+                setProductData(validRows)
                 setErrorProcessingCsv(null)
               }
             } else {
