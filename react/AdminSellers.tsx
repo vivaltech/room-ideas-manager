@@ -1,6 +1,11 @@
-import type { ChangeEvent } from 'react'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Layout, PageBlock, PageHeader, Button } from 'vtex.styleguide'
+import {
+  Layout,
+  PageBlock,
+  PageHeader,
+  Button,
+  Dropzone,
+} from 'vtex.styleguide'
 import { useIntl } from 'react-intl'
 import { useMutation } from 'react-apollo'
 import type { ParseResult } from 'papaparse'
@@ -11,6 +16,7 @@ import { adminSellersMainMessages } from './utils/adminSellersMessages'
 import type { ProductData } from './typings/Products'
 import ProductsTable from './components/ProductTable'
 import ImportResults from './components/ImportResults'
+import styles from './styles/AdminSellers.module.css'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
@@ -32,9 +38,18 @@ const AdminSellers: React.FC = () => {
     },
   ] = useMutation(importSellerProductsGQL)
 
-  const handleFileChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
+  const handleResetUpload = useCallback(() => {
+    setProductData([])
+    setErrorProcessingCsv(null)
+    setImportLoading(false)
+    setImportError('')
+    setImportResults([])
+  }, [])
+
+  const handleFileUpload = useCallback((acceptedFiles) => {
+    try {
+      // eslint-disable-next-line prefer-destructuring
+      const file = acceptedFiles[0]
 
       if (!file) {
         return
@@ -45,8 +60,7 @@ const AdminSellers: React.FC = () => {
       reader.onload = async (e) => {
         const csvFile = e.target?.result as string
 
-        setProductData([])
-        setErrorProcessingCsv(null)
+        handleResetUpload()
 
         Papa.parse<ProductData>(csvFile, {
           header: true,
@@ -54,7 +68,7 @@ const AdminSellers: React.FC = () => {
           dynamicTyping: true,
           transformHeader: (header: string) => header.trim(),
           transform: (value: string, header: string) => {
-            const parsedValue = value?.replace('__parsed_extra', '')
+            const parsedValue = value?.replace(/"__parsed_extra": "[^"]*"/g, '')
 
             try {
               const arrayHeaders = [
@@ -86,31 +100,37 @@ const AdminSellers: React.FC = () => {
             const rows = result.data
 
             if (rows && Array.isArray(rows)) {
-              const missingDataRows = rows?.filter((_row) => {
+              const validRows = rows.map((row) => {
+                if ('__parsed_extra' in row) {
+                  // eslint-disable-next-line dot-notation
+                  delete row['__parsed_extra']
+                }
+
+                return row
+              })
+
+              const missingDataRows = validRows.filter((_row) => {
                 // TODO: Add validations
                 return (
-                  //! row.status ||
-                  //! row.name ||
-                  //! row.brandId ||
-                  //! (
-                  //  Array.isArray(row.categoryIds) && row.categoryIds.length > 0
-                  // ) ||
-                  //! row?.categoryIds ||
-                  //! row.specs?.length ||
-                  //! row.attributes?.length ||
-                  //! row.slug ||
-                  //! row.images?.length ||
-                  //! row.skus?.length
+                  //  !row.status ||
+                  //  !row.name ||
+                  //  !row.brandId ||
+                  //  !row.categoryIds?.length ||
+                  //  !row.specs?.length ||
+                  //  !row.attributes?.length ||
+                  //  !row.slug ||
+                  //  !row.images?.length ||
+                  //  !row.skus?.length
                   false
                 )
               })
 
-              if (missingDataRows?.length > 0) {
+              if (missingDataRows.length > 0) {
                 setErrorProcessingCsv(
                   'Error: Algunas filas tienen datos incompletos.'
                 )
               } else {
-                setProductData(rows)
+                setProductData(validRows)
                 setErrorProcessingCsv(null)
               }
             } else {
@@ -128,9 +148,11 @@ const AdminSellers: React.FC = () => {
       }
 
       reader.readAsText(file)
-    },
-    []
-  )
+    } catch (error) {
+      console.error('Error al manejar el archivo:', error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleImportClick = useCallback(async () => {
     try {
@@ -204,15 +226,38 @@ const AdminSellers: React.FC = () => {
     >
       <PageBlock variation="full">
         <div className="flex flex-column">
-          <input type="file" onChange={handleFileChange} />
-          {errorProcessingCsv && (
-            <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
-          )}
+          <div
+            className={`flex flex-row mt2 mb2 ${
+              productData && productData.length > 0
+                ? 'justify-between'
+                : 'justify-center'
+            }`}
+          >
+            <div
+              className={
+                productData && productData.length > 0 ? styles.dropzone : ''
+              }
+            >
+              <Dropzone
+                accept=".csv"
+                // minSize={2000}
+                // maxSize={10000}
+                onDropAccepted={handleFileUpload}
+                onFileReset={handleResetUpload}
+              >
+                <div className="pt7">
+                  <div>
+                    <span className="f4">Drop here your CSV or </span>
+                    <span className="f4 c-link" style={{ cursor: 'pointer' }}>
+                      choose a file
+                    </span>
+                    {/* <p className="f6 c-muted-2 tc">Maximum file size of 10 KB.</p> */}
+                  </div>
+                </div>
+              </Dropzone>
+            </div>
 
-          {showTable && <ProductsTable products={productData} />}
-
-          {productData && productData.length > 0 && (
-            <div className="mt2 mb2 w5">
+            {productData && productData.length > 0 && (
               <Button
                 variation="primary"
                 onClick={handleImportClick}
@@ -225,8 +270,14 @@ const AdminSellers: React.FC = () => {
               >
                 {intl.formatMessage(adminSellersMainMessages.importButton)}
               </Button>
-            </div>
+            )}
+          </div>
+
+          {errorProcessingCsv && (
+            <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
           )}
+
+          {showTable && <ProductsTable products={productData} />}
 
           {importError && !importLoading && (
             <div className="flex justify-center">{importError}</div>

@@ -1,0 +1,9 @@
+/* AdminSellers.module.css */
+.dropzone div {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.dropzone button {
+  margin-left: 5px;
+}
