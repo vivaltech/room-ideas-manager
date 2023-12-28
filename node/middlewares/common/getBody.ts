@@ -6,6 +6,7 @@ export async function getBody(ctx: Context, next: () => Promise<any>) {
 
   ctx.state.body = {
     productList: body?.productList,
+    images: body?.images,
   }
 
   await next()

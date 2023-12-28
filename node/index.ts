@@ -1,22 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ClientsConfig, RecorderState, ServiceContext } from "@vtex/api";
-import { LRUCache, Service, method } from "@vtex/api";
+import type { ClientsConfig, RecorderState, ServiceContext } from '@vtex/api'
+import { LRUCache, Service, method } from '@vtex/api'
 
-import { Clients } from "./clients";
-import { resolvers } from "./resolvers";
-import { getBody } from "./middlewares/common/getBody";
-import { validateBody } from "./middlewares/common/validateBody";
-import { importSellerProducts } from "./middlewares/importSellerProducts";
-import { getSellerProduct } from "./middlewares/getSellerProduct";
+import { Clients } from './clients'
+import { resolvers } from './resolvers'
+import { getBody } from './middlewares/common/getBody'
+import { validateBodyProductList } from './middlewares/importSellerProducts/validateBodyProductList'
+import { addOrigin } from './middlewares/importSellerProducts/addOrigin'
+import { importSellerProducts } from './middlewares/importSellerProducts/importSellerProducts'
+import { getSellerProduct } from './middlewares/getSellerProduct/getSellerProduct'
+import { importImages } from './middlewares/importImages/importImages'
+import { importProductImages } from './middlewares/importSellerProducts/importProductImages'
 
-const TIMEOUT_MS = 25000;
+const TIMEOUT_MS = 80000
 
 // Create a LRU memory cache for the Status client.
 // The @vtex/api HttpClient respects Cache-Control headers and uses the provided cache.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const memoryCache = new LRUCache<string, any>({ max: 8000 });
+const memoryCache = new LRUCache<string, any>({ max: 80000 })
 
-metrics.trackCache("status", memoryCache);
+metrics.trackCache('status', memoryCache)
 
 // This is the configuration for clients available in `ctx.clients`.
 const clients: ClientsConfig<Clients> = {
@@ -33,61 +36,83 @@ const clients: ClientsConfig<Clients> = {
       memoryCache,
     },
   },
-};
+}
 
 declare global {
   // We declare a global Context type just to avoid re-writing ServiceContext<Clients, State> in every handler and resolver
-  type Context = ServiceContext<Clients, State>;
+  type Context = ServiceContext<Clients, State>
 
   interface State extends RecorderState {
-    body: BodyProducts;
+    body: BodyProducts
+    productWithOrigin?: ProductWithOrigin[]
+    productWithImageImported?: ProductWithImageImported[]
   }
 
   interface BodyProducts {
-    productList: Product[];
+    productList?: Product[]
+    images?: Images[]
   }
 
   interface Product {
-    externalId?: string | number;
-    status: string;
-    name: string;
-    brandId: string | number;
-    categoryIds: string[] | number[];
+    id?: string | number
+    externalId?: string | number
+    status: string
+    name: string
+    brandId: string | number
+    categoryIds: string | number | string[] | number[]
     specs: Array<{
-      name: string;
-      values: string[];
-    }>;
+      name: string
+      values: string[]
+    }>
     attributes: Array<{
-      name: string;
-      value: string;
-    }>;
-    slug: string;
+      name: string
+      value: string
+    }>
+    slug: string
     images: Array<{
-      id: string | number;
-      url: string;
-      alt?: string;
-    }>;
+      id: string | number
+      url: string
+      alt?: string
+    }>
     skus: Array<{
-      name: string;
-      externalId?: string | number;
-      ean?: string | number;
-      manufacturerCode?: string | number;
-      isActive: boolean;
-      weight: number;
+      id?: string | number
+      name: string
+      externalId?: string | number
+      ean?: string | number
+      manufacturerCode?: string | number
+      isActive: boolean
+      weight: number
       dimensions: {
-        width: number;
-        height: number;
-        length: number;
-      };
+        width: number
+        height: number
+        length: number
+      }
       specs: Array<{
-        name: string;
-        value: string;
-      }>;
-      images: string[];
-    }>;
-    origin: string;
-    transportModal?: string | number;
-    taxCode?: string | number;
+        name: string
+        value: string
+      }>
+      images: string[]
+    }>
+    transportModal?: string | number
+    taxCode?: string | number
+  }
+
+  interface ProductWithOrigin extends Product {
+    origin: string
+  }
+
+  interface ProductWithImageImported extends ProductWithOrigin {
+    images: Array<{
+      id: string | number
+      url: string
+      alt?: string
+      error?: any
+    }>
+  }
+
+  interface Images {
+    fileName: string
+    url: string
   }
 }
 
@@ -96,13 +121,22 @@ export default new Service({
   clients,
   routes: {
     importSellerProducts: method({
-      POST: [getBody, validateBody, importSellerProducts],
+      POST: [
+        getBody,
+        validateBodyProductList,
+        addOrigin,
+        importProductImages,
+        importSellerProducts,
+      ],
     }),
     getSellerProduct: method({
       POST: [getSellerProduct],
+    }),
+    importImages: method({
+      POST: [getBody, importImages],
     }),
   },
   graphql: {
     resolvers,
   },
-});
+})

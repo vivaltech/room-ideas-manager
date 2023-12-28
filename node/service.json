@@ -13,6 +13,10 @@
     "getSellerProduct": {
       "path": "/_v/admin-import-seller-products/getSellerProduct",
       "public": true
+    },
+    "importImages": {
+      "path": "/_v/admin-import-seller-products/importImages",
+      "public": true
     }
   }
 }

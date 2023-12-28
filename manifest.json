@@ -9,7 +9,8 @@
     "postreleasy": "vtex publish"
   },
   "dependencies": {
-    "vtex.styleguide": "9.x"
+    "vtex.styleguide": "9.x",
+    "vtex.catalog-images": "0.x"
   },
   "builders": {
     "node": "6.x",
@@ -42,6 +43,13 @@
       }
     },
     {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "app.io.vtex.com",
+        "path": "/vtex.catalog-images/*"
+      }
+    },
+    {
       "name": "read-workspace-apps-assets"
     },
     {
@@ -52,6 +60,20 @@
     },
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "*",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "drive.google.com",
+        "path": "/*"
+      }
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

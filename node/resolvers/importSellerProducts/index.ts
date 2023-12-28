@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { addOriginOfProducts } from '../../services/addOriginOfProducts'
+import { addProductImages } from '../../services/addProductImages'
 import { createProducts } from '../../services/createProducts'
 import GraphQLError from '../../utils/GraphqlError'
 
@@ -9,7 +11,21 @@ export const mutations = {
     ctx: Context
   ) => {
     try {
-      const createProductsResponse = await createProducts(ctx, productList)
+      const productWithOrigin = addOriginOfProducts(ctx, productList)
+
+      if (!productWithOrigin || productWithOrigin.length === 0) {
+        throw new Error('Without productWithOrigin')
+      }
+
+      const productWithImageImported = await addProductImages(
+        ctx,
+        productWithOrigin
+      )
+
+      const createProductsResponse = await createProducts(
+        ctx,
+        productWithImageImported
+      )
 
       if (
         createProductsResponse?.status === 500 ||

@@ -1,11 +1,12 @@
 type SaveLogResponse {
   status: Int
   success: Boolean
-  error: String
   results: [Result]
+  error: String
 }
 
 type Result {
+  productName: String
   success: Boolean
-  error: String
+  details: String
 }

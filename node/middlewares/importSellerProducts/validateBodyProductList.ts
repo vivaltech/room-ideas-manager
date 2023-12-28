@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserInputError } from '@vtex/api'
 
-export async function validateBody(ctx: Context, next: () => Promise<any>) {
+export async function validateBodyProductList(
+  ctx: Context,
+  next: () => Promise<any>
+) {
   try {
     const { body } = ctx.state
 

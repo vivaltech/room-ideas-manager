@@ -1,4 +1,5 @@
 input ProductInput {
+  id: ID
   externalId: ID
   status: String
   name: String
@@ -9,7 +10,6 @@ input ProductInput {
   slug: String
   images: [ImageInput]
   skus: [SkuInput]
-  origin: String
   transportModal: ID
   taxCode: ID
 }
@@ -31,6 +31,7 @@ input ImageInput {
 }
 
 input SkuInput {
+  id: ID
   name: String
   externalId: ID
   ean: ID

@@ -1,64 +1,34 @@
-import type { ChangeEvent } from "react";
-import React, { useCallback, useEffect, useState } from "react";
-import { Layout, PageBlock, PageHeader } from "vtex.styleguide";
-import { useIntl } from "react-intl";
-import { useMutation } from "react-apollo";
-import type { ParseResult } from "papaparse";
-import Papa from "papaparse";
+import React, { useCallback, useEffect, useState } from 'react'
+import {
+  Layout,
+  PageBlock,
+  PageHeader,
+  Button,
+  Dropzone,
+} from 'vtex.styleguide'
+import { useIntl } from 'react-intl'
+import { useMutation } from 'react-apollo'
+import type { ParseResult } from 'papaparse'
+import Papa from 'papaparse'
 
-import importSellerProductsGQL from "./graphql/mutations/importSellerProducts.gql";
-import { adminSellersMainMessages } from "./utils/adminSellersMessages";
-
-interface ProductData {
-  externalId?: string | number;
-  status: string;
-  name: string;
-  brandId: string | number;
-  categoryIds: string[] | number[];
-  specs: Array<{
-    name: string;
-    values: string[];
-  }>;
-  attributes: Array<{
-    name: string;
-    value: string;
-  }>;
-  slug: string;
-  images: Array<{
-    id: string | number;
-    url: string;
-    alt?: string;
-  }>;
-  skus: Array<{
-    name: string;
-    externalId?: string | number;
-    ean?: string | number;
-    manufacturerCode?: string | number;
-    isActive: boolean;
-    weight: number;
-    dimensions: {
-      width: number;
-      height: number;
-      length: number;
-    };
-    specs: Array<{
-      name: string;
-      value: string;
-    }>;
-    images: string[];
-  }>;
-  origin: string;
-  transportModal?: string | number;
-  taxCode?: string | number;
-}
+import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gql'
+import { adminSellersMainMessages } from './utils/adminSellersMessages'
+import type { ProductData } from './typings/Products'
+import ProductsTable from './components/ProductTable'
+import ImportResults from './components/ImportResults'
+import styles from './styles/AdminSellers.module.css'
 
 const AdminSellers: React.FC = () => {
-  const intl = useIntl();
-  const [productData, setProductData] = useState<ProductData[]>([]);
+  const intl = useIntl()
+  const [productData, setProductData] = useState<ProductData[]>([])
   const [errorProcessingCsv, setErrorProcessingCsv] = useState<string | null>(
     null
-  );
+  )
 
+  const [showTable, setShowTable] = useState(false)
+  const [importLoading, setImportLoading] = useState(false)
+  const [importError, setImportError] = useState('')
+  const [importResults, setImportResults] = useState<ResultData[]>([])
   const [
     importSellerProductsMutation,
     {
@@ -66,23 +36,32 @@ const AdminSellers: React.FC = () => {
       error: errorImportSellerProducts,
       data: dataImportSellerProducts,
     },
-  ] = useMutation(importSellerProductsGQL);
+  ] = useMutation(importSellerProductsGQL)
 
-  const handleFileChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
+  const handleResetUpload = () => {
+    setProductData([])
+    setErrorProcessingCsv(null)
+    setImportLoading(false)
+    setImportError('')
+    setImportResults([])
+    setShowTable(false)
+  }
+
+  const handleFileUpload = useCallback((acceptedFiles) => {
+    try {
+      // eslint-disable-next-line prefer-destructuring
+      const file = acceptedFiles[0]
 
       if (!file) {
-        return;
+        return
       }
 
-      const reader = new FileReader();
+      const reader = new FileReader()
 
       reader.onload = async (e) => {
-        const csvFile = e.target?.result as string;
+        const csvFile = e.target?.result as string
 
-        setProductData([]);
-        setErrorProcessingCsv(null);
+        handleResetUpload()
 
         Papa.parse<ProductData>(csvFile, {
           header: true,
@@ -90,98 +69,133 @@ const AdminSellers: React.FC = () => {
           dynamicTyping: true,
           transformHeader: (header: string) => header.trim(),
           transform: (value: string, header: string) => {
+            const parsedValue = value?.replace(/"__parsed_extra": "[^"]*"/g, '')
+
             try {
               const arrayHeaders = [
-                "categoryIds",
-                "specs",
-                "attributes",
-                "images",
-                "skus",
-              ];
+                'categoryIds',
+                'specs',
+                'attributes',
+                'images',
+                'skus',
+              ]
 
               if (arrayHeaders.includes(header.toLowerCase())) {
-                const jsonValue = value.replace(/'/g, '"').replace(/\\/g, "");
+                const jsonValue = parsedValue
+                  .replace(/'/g, '"')
+                  .replace(/\\/g, '')
 
-                return JSON.parse(jsonValue);
+                return JSON.parse(jsonValue)
               }
             } catch (error) {
-              const message = (error as Error)?.message;
+              const message = (error as Error)?.message
 
-              console.error(`Error al parsear JSON en ${header}: ${message}`);
+              setErrorProcessingCsv(
+                `${intl.formatMessage(
+                  adminSellersMainMessages.errorOnProcessing
+                )} - ${header}: ${message}`
+              )
 
-              return value;
+              return parsedValue
             }
 
-            return value;
+            return parsedValue
           },
           complete: (result: ParseResult<ProductData>) => {
-            if (result.data && Array.isArray(result.data)) {
-              const missingDataRows = result?.data?.filter((row) => {
+            const rows = result.data
+
+            if (rows && Array.isArray(rows)) {
+              const validRows = rows.map((row) => {
+                if ('__parsed_extra' in row) {
+                  // eslint-disable-next-line dot-notation
+                  delete row['__parsed_extra']
+                }
+
+                return row
+              })
+
+              const missingDataRows = validRows.filter((_row) => {
                 // TODO: Add validations
                 return (
-                  !row.status || !row.name || !row.brandId
-                  //! row.categoryIds?.length ||
-                  //! row.specs?.length ||
-                  //! row.attributes?.length ||
-                  //! row.slug ||
-                  //! row.images?.length ||
-                  //! row.skus?.length ||
-                  //! row.origin
-                );
-              });
+                  //  !row.status ||
+                  //  !row.name ||
+                  //  !row.brandId ||
+                  //  !row.categoryIds?.length ||
+                  //  !row.specs?.length ||
+                  //  !row.attributes?.length ||
+                  //  !row.slug ||
+                  //  !row.images?.length ||
+                  //  !row.skus?.length
+                  false
+                )
+              })
 
-              if (missingDataRows?.length > 0) {
+              if (missingDataRows.length > 0) {
                 setErrorProcessingCsv(
-                  "Error: Algunas filas tienen datos incompletos."
-                );
+                  intl.formatMessage(
+                    adminSellersMainMessages.errorIncompleteData
+                  )
+                )
               } else {
-                setProductData(result?.data);
-                setErrorProcessingCsv(null);
+                setProductData(validRows)
+                setErrorProcessingCsv(null)
               }
             } else {
               setErrorProcessingCsv(
-                "No se pudo analizar el archivo CSV correctamente."
-              );
+                intl.formatMessage(adminSellersMainMessages.errorOnAnalyze)
+              )
             }
           },
-          error: (err: { message: string }) => {
+          error: () => {
             setErrorProcessingCsv(
-              `Error al analizar el archivo CSV: ${err.message}`
-            );
+              intl.formatMessage(adminSellersMainMessages.errorOnProcessing)
+            )
           },
-        });
-      };
+        })
+      }
 
-      reader.readAsText(file);
-    },
-    []
-  );
+      reader.readAsText(file)
+    } catch (_error) {
+      setErrorProcessingCsv(
+        intl.formatMessage(adminSellersMainMessages.errorOnProcessing)
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleImportClick = useCallback(async () => {
     try {
-      console.info({ productData });
+      setImportLoading(true)
+      setImportError('')
+      setImportResults([])
 
       await importSellerProductsMutation({
         variables: {
           productList: productData,
         },
-      });
+      })
     } catch (e) {
-      console.error("Error durante la importación de productos:", e);
+      setImportError(
+        JSON.stringify(
+          `${intl.formatMessage(adminSellersMainMessages.errorOnImport)} ${e}`
+        )
+      )
     }
-  }, [importSellerProductsMutation, productData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData])
 
   useEffect(() => {
     if (!errorProcessingCsv) {
-      return;
+      return
     }
 
-    setProductData([]);
-  }, [errorProcessingCsv]);
+    setProductData([])
+  }, [errorProcessingCsv])
 
   useEffect(() => {
     if (errorImportSellerProducts) {
-      console.error({ errorImportSellerProducts });
+      setImportError(JSON.stringify(errorImportSellerProducts))
+      setImportLoading(false)
     }
 
     if (
@@ -189,16 +203,30 @@ const AdminSellers: React.FC = () => {
       errorImportSellerProducts ||
       !dataImportSellerProducts
     ) {
-      return;
+      return
     }
 
-    console.info({ dataImportSellerProducts });
+    const resultsAux = dataImportSellerProducts?.importSellerProducts?.results
+
+    setImportLoading(false)
+    setImportError('')
+    setImportResults(resultsAux)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     loadingImportSellerProducts,
     errorImportSellerProducts,
     dataImportSellerProducts,
-  ]);
+  ])
+
+  useEffect(() => {
+    if (!productData || productData.length === 0) {
+      setShowTable(false)
+
+      return
+    }
+
+    setShowTable(true)
+  }, [productData])
 
   return (
     <Layout
@@ -210,26 +238,78 @@ const AdminSellers: React.FC = () => {
     >
       <PageBlock variation="full">
         <div className="flex flex-column">
-          <input type="file" onChange={handleFileChange} />
+          <div
+            className={`flex flex-row mt2 mb2 ${
+              productData && productData.length > 0
+                ? 'justify-between'
+                : 'justify-center'
+            }`}
+          >
+            <div
+              className={`${
+                productData && productData.length > 0 ? styles.dropzone : ''
+              } ${importLoading ? styles.disableResetButton : ''}`}
+            >
+              <Dropzone
+                accept=".csv"
+                // minSize={2000}
+                // maxSize={10000}
+                onDropAccepted={handleFileUpload}
+                onFileReset={() => {
+                  if (importLoading) {
+                    return
+                  }
+
+                  handleResetUpload()
+                }}
+              >
+                <div className="pt7">
+                  <div>
+                    <span className="f4">
+                      {intl.formatMessage(adminSellersMainMessages.dropFile)}{' '}
+                    </span>
+                    <span className="f4 c-link" style={{ cursor: 'pointer' }}>
+                      {intl.formatMessage(adminSellersMainMessages.chooseFile)}
+                    </span>
+                    {/* <p className="f6 c-muted-2 tc">Maximum file size of 10 KB.</p> */}
+                  </div>
+                </div>
+              </Dropzone>
+            </div>
+
+            {productData && productData.length > 0 && (
+              <Button
+                variation="primary"
+                onClick={handleImportClick}
+                disabled={
+                  !productData ||
+                  productData.length === 0 ||
+                  loadingImportSellerProducts
+                }
+                isLoading={importLoading}
+              >
+                {intl.formatMessage(adminSellersMainMessages.importButton)}
+              </Button>
+            )}
+          </div>
+
           {errorProcessingCsv && (
-            <p style={{ color: "red" }}>{errorProcessingCsv}</p>
+            <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
           )}
 
-          <button
-            className="mt2 w5"
-            onClick={handleImportClick}
-            disabled={
-              !productData ||
-              productData.length === 0 ||
-              loadingImportSellerProducts
-            }
-          >
-            Importar
-          </button>
+          {showTable && <ProductsTable products={productData} />}
+
+          {importError && !importLoading && (
+            <div className="flex justify-center">{importError}</div>
+          )}
+
+          {!importLoading && importResults?.length > 0 && (
+            <ImportResults importResults={importResults} />
+          )}
         </div>
       </PageBlock>
     </Layout>
-  );
-};
+  )
+}
 
-export default AdminSellers;
+export default AdminSellers
