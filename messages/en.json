@@ -3,6 +3,12 @@
   "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers",
   "admin/admin-import-seller-products.main.title": "Admin Import Seller Products",
   "admin/admin-import-seller-products.main.importButton": "Import",
+  "admin/admin-import-seller-products.main.dropFile": "Drop here your CSV or",
+  "admin/admin-import-seller-products.main.chooseFile": "choose a file",
+  "admin/admin-import-seller-products.main.errorIncompleteData": "Error: Some rows have incomplete data.",
+  "admin/admin-import-seller-products.main.errorOnAnalyze": "Error: The CSV file could not be analyzed correctly.",
+  "admin/admin-import-seller-products.main.errorOnProcessing": "Error: The CSV file could not be processed correctly.",
+  "admin/admin-import-seller-products.main.errorOnImport": "Error during import of products:",
 
   "admin/admin-import-seller-products.product-table.columns.id.title": "Product Id",
   "admin/admin-import-seller-products.product-table.columns.externalId.title": "External Id",

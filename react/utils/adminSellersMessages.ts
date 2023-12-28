@@ -9,6 +9,12 @@ const prefixProductImportResults = `${prefixAdminSellers}import-results.`
 export const adminSellersMainMessages = defineMessages({
   title: { id: `${prefixAdminSellersMain}title` },
   importButton: { id: `${prefixAdminSellersMain}importButton` },
+  dropFile: { id: `${prefixAdminSellersMain}dropFile` },
+  chooseFile: { id: `${prefixAdminSellersMain}chooseFile` },
+  errorIncompleteData: { id: `${prefixAdminSellersMain}errorIncompleteData` },
+  errorOnAnalyze: { id: `${prefixAdminSellersMain}errorOnAnalyze` },
+  errorOnProcessing: { id: `${prefixAdminSellersMain}errorOnProcessing` },
+  errorOnImport: { id: `${prefixAdminSellersMain}errorOnImport` },
 })
 
 export const productTableColumnsMessages = defineMessages({

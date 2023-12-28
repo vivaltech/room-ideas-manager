@@ -127,7 +127,9 @@ const AdminSellers: React.FC = () => {
 
               if (missingDataRows.length > 0) {
                 setErrorProcessingCsv(
-                  'Error: Algunas filas tienen datos incompletos.'
+                  intl.formatMessage(
+                    adminSellersMainMessages.errorIncompleteData
+                  )
                 )
               } else {
                 setProductData(validRows)
@@ -135,21 +137,23 @@ const AdminSellers: React.FC = () => {
               }
             } else {
               setErrorProcessingCsv(
-                'No se pudo analizar el archivo CSV correctamente.'
+                intl.formatMessage(adminSellersMainMessages.errorOnAnalyze)
               )
             }
           },
-          error: (err: { message: string }) => {
+          error: () => {
             setErrorProcessingCsv(
-              `Error al analizar el archivo CSV: ${err.message}`
+              intl.formatMessage(adminSellersMainMessages.errorOnProcessing)
             )
           },
         })
       }
 
       reader.readAsText(file)
-    } catch (error) {
-      console.error('Error al manejar el archivo:', error)
+    } catch (_error) {
+      setErrorProcessingCsv(
+        intl.formatMessage(adminSellersMainMessages.errorOnProcessing)
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -168,9 +172,14 @@ const AdminSellers: React.FC = () => {
         },
       })
     } catch (e) {
-      setImportError(JSON.stringify(`Error during import of products: ${e}`))
+      setImportError(
+        JSON.stringify(
+          `${intl.formatMessage(adminSellersMainMessages.errorOnImport)} ${e}`
+        )
+      )
     }
-  }, [importSellerProductsMutation, productData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productData])
 
   useEffect(() => {
     if (!errorProcessingCsv) {
@@ -247,9 +256,11 @@ const AdminSellers: React.FC = () => {
               >
                 <div className="pt7">
                   <div>
-                    <span className="f4">Drop here your CSV or </span>
+                    <span className="f4">
+                      {intl.formatMessage(adminSellersMainMessages.dropFile)}{' '}
+                    </span>
                     <span className="f4 c-link" style={{ cursor: 'pointer' }}>
-                      choose a file
+                      {intl.formatMessage(adminSellersMainMessages.chooseFile)}
                     </span>
                     {/* <p className="f6 c-muted-2 tc">Maximum file size of 10 KB.</p> */}
                   </div>
