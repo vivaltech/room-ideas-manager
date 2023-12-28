@@ -23,7 +23,8 @@ export async function createProducts(
         try {
           if (
             product.images.some(
-              (i) => !i.url.startsWith(`https://${ctx.vtex.account}`)
+              (i) =>
+                i?.url && !i?.url?.startsWith(`https://${ctx.vtex.account}`)
             )
           ) {
             const error = {
