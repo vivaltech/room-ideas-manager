@@ -89,7 +89,11 @@ const AdminSellers: React.FC = () => {
             } catch (error) {
               const message = (error as Error)?.message
 
-              console.error(`Error al parsear JSON en ${header}: ${message}`)
+              setErrorProcessingCsv(
+                `${intl.formatMessage(
+                  adminSellersMainMessages.errorOnProcessing
+                )} - ${header}: ${message}`
+              )
 
               return parsedValue
             }
