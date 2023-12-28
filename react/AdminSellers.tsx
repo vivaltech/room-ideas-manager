@@ -38,13 +38,13 @@ const AdminSellers: React.FC = () => {
     },
   ] = useMutation(importSellerProductsGQL)
 
-  const handleResetUpload = useCallback(() => {
+  const handleResetUpload = () => {
     setProductData([])
     setErrorProcessingCsv(null)
     setImportLoading(false)
     setImportError('')
     setImportResults([])
-  }, [])
+  }
 
   const handleFileUpload = useCallback((acceptedFiles) => {
     try {
