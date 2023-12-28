@@ -7,3 +7,8 @@
 .dropzone button {
   margin-left: 5px;
 }
+
+.disableResetButton button {
+  pointer-events: none;
+  opacity: 0.5;
+}

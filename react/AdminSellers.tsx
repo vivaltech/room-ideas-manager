@@ -246,16 +246,22 @@ const AdminSellers: React.FC = () => {
             }`}
           >
             <div
-              className={
+              className={`${
                 productData && productData.length > 0 ? styles.dropzone : ''
-              }
+              } ${importLoading ? styles.disableResetButton : ''}`}
             >
               <Dropzone
                 accept=".csv"
                 // minSize={2000}
                 // maxSize={10000}
                 onDropAccepted={handleFileUpload}
-                onFileReset={handleResetUpload}
+                onFileReset={() => {
+                  if (importLoading) {
+                    return
+                  }
+
+                  handleResetUpload()
+                }}
               >
                 <div className="pt7">
                   <div>
