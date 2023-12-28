@@ -44,6 +44,7 @@ const AdminSellers: React.FC = () => {
     setImportLoading(false)
     setImportError('')
     setImportResults([])
+    setShowTable(false)
   }
 
   const handleFileUpload = useCallback((acceptedFiles) => {
@@ -164,8 +165,6 @@ const AdminSellers: React.FC = () => {
 
   const handleImportClick = useCallback(async () => {
     try {
-      console.info({ productData })
-
       setImportLoading(true)
       setImportError('')
       setImportResults([])

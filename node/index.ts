@@ -10,6 +10,7 @@ import { addOrigin } from './middlewares/importSellerProducts/addOrigin'
 import { importSellerProducts } from './middlewares/importSellerProducts/importSellerProducts'
 import { getSellerProduct } from './middlewares/getSellerProduct/getSellerProduct'
 import { importImages } from './middlewares/importImages/importImages'
+import { importProductImages } from './middlewares/importSellerProducts/importProductImages'
 
 const TIMEOUT_MS = 80000
 
@@ -44,6 +45,7 @@ declare global {
   interface State extends RecorderState {
     body: BodyProducts
     productWithOrigin?: ProductWithOrigin[]
+    productWithImageImported?: ProductWithOrigin[]
   }
 
   interface BodyProducts {
@@ -110,7 +112,13 @@ export default new Service({
   clients,
   routes: {
     importSellerProducts: method({
-      POST: [getBody, validateBodyProductList, addOrigin, importSellerProducts],
+      POST: [
+        getBody,
+        validateBodyProductList,
+        addOrigin,
+        importProductImages,
+        importSellerProducts,
+      ],
     }),
     getSellerProduct: method({
       POST: [getSellerProduct],

@@ -26,7 +26,6 @@ export async function getSellerProduct(ctx: Context, next: () => Promise<any>) {
 
     await next()
   } catch (error) {
-    console.error({ error })
     ctx.status = error?.status
     ctx.body = {
       success: false,

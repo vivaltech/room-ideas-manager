@@ -7,15 +7,18 @@ export async function importSellerProducts(
   next: () => Promise<any>
 ) {
   try {
-    const { productWithOrigin } = ctx.state
+    const { productWithImageImported } = ctx.state
 
-    if (!productWithOrigin) {
+    if (!productWithImageImported) {
       await next()
 
       return
     }
 
-    const createProductsResponse = await createProducts(ctx, productWithOrigin)
+    const createProductsResponse = await createProducts(
+      ctx,
+      productWithImageImported
+    )
 
     ctx.status = createProductsResponse?.status
     ctx.body = {

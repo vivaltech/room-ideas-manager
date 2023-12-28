@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { addOriginOfProducts } from '../../services/addOriginOfProducts'
+import { addProductImages } from '../../services/addProductImages'
 import { createProducts } from '../../services/createProducts'
 import GraphQLError from '../../utils/GraphqlError'
 
@@ -11,9 +12,19 @@ export const mutations = {
   ) => {
     try {
       const productWithOrigin = addOriginOfProducts(ctx, productList)
-      const createProductsResponse = await createProducts(
+
+      if (!productWithOrigin || productWithOrigin.length === 0) {
+        throw new Error('Without productWithOrigin')
+      }
+
+      const productWithImageImported = await addProductImages(
         ctx,
         productWithOrigin
+      )
+
+      const createProductsResponse = await createProducts(
+        ctx,
+        productWithImageImported
       )
 
       if (

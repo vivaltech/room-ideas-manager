@@ -9,7 +9,7 @@ interface SaveImagesResponse {
     fileName?: string
     success?: boolean
     details?: {
-      id?: string
+      id?: string | number
       slug?: string
       fullUrl?: string
       error?: any

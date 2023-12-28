@@ -21,6 +21,28 @@ export async function createProducts(
     return Promise.all(
       (productList || []).map(async (product) => {
         try {
+          if (
+            product.images.some(
+              (i) => !i.url.startsWith(`https://${ctx.vtex.account}`)
+            )
+          ) {
+            const error = {
+              message: 'Invalid image url - error on addProductImages',
+            }
+
+            return {
+              productName: product?.name,
+              success: false,
+              details: JSON.stringify(
+                {
+                  errors: [error],
+                },
+                null,
+                4
+              ),
+            }
+          }
+
           let result
 
           if (product?.id) {
@@ -38,13 +60,13 @@ export async function createProducts(
           }
 
           return {
-            productName: product.name,
+            productName: product?.name,
             success: true,
             details: JSON.stringify(result, null, 4),
           }
         } catch (error) {
           return {
-            productName: product.name,
+            productName: product?.name,
             success: false,
             details: JSON.stringify(error.response.data, null, 4),
           }
