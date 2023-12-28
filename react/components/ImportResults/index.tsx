@@ -64,7 +64,12 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                         <ul className={styles.errorsList}>
                           {parsedError?.errors?.map((error, errorIndex) => (
                             <li key={errorIndex} className={styles.errorItem}>
-                              - {error.message}
+                              -{' '}
+                              {error.imageId
+                                ? `${error.imageId}: ${error.message}`
+                                : error.code
+                                ? `${error.code}: ${error.message}`
+                                : error.message}
                             </li>
                           ))}
                         </ul>

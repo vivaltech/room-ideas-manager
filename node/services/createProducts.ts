@@ -11,7 +11,7 @@ interface CreateProductsResponse {
 
 export async function createProducts(
   ctx: Context,
-  productList: ProductWithOrigin[]
+  productList: ProductWithImageImported[]
 ): Promise<CreateProductsResponse> {
   const {
     clients: { catalogSellerPortal },
@@ -20,24 +20,27 @@ export async function createProducts(
   const createProductDetails = async () => {
     return Promise.all(
       (productList || []).map(async (product) => {
+        const hasImageError = product.images.some(
+          (i) =>
+            i?.error &&
+            i?.url &&
+            !i?.url.startsWith(`https://${ctx.vtex.account}`)
+        )
+
         try {
-          if (
-            product.images.some(
+          if (hasImageError) {
+            const errorImages = product.images.filter(
               (i) =>
-                i?.url && !i?.url?.startsWith(`https://${ctx.vtex.account}`)
+                i.error &&
+                i.url &&
+                !i.url.startsWith(`https://${ctx.vtex.account}`)
             )
-          ) {
-            const error = {
-              message: 'Invalid image url - error on addProductImages',
-            }
 
             return {
               productName: product?.name,
               success: false,
               details: JSON.stringify(
-                {
-                  errors: [error],
-                },
+                { errors: errorImages.map((i) => i.error) },
                 null,
                 4
               ),

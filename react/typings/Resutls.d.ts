@@ -10,6 +10,8 @@ interface ResultDetails {
 }
 
 interface ErrorData {
-  code: string
+  code?: string
+  file?: string
+  imageId?: string
   message: string
 }

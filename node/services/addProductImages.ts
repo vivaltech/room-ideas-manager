@@ -4,7 +4,7 @@ import { saveImages } from './saveImages'
 export async function addProductImages(
   ctx: Context,
   products: ProductWithOrigin[]
-): Promise<ProductWithOrigin[]> {
+): Promise<ProductWithImageImported[]> {
   try {
     const productImages: Images[] = ([] as Images[]).concat(
       ...products.map(
@@ -33,11 +33,22 @@ export async function addProductImages(
         const product: ProductWithOrigin = {
           ...prod,
           images: prod?.images?.map((i) => {
-            const saveImageResult = saveImagesResults
-              ?.filter((r) => r?.success)
-              ?.find((r) => r?.fileName === i?.id)
+            const saveImageResult = saveImagesResults?.find(
+              (r) => r?.fileName === i?.id
+            )
+
+            const success = saveImageResult?.success
 
             if (saveImageResult) {
+              if (!success) {
+                return {
+                  id: i?.id,
+                  url: i?.url,
+                  alt: i?.alt ?? (i?.id as string),
+                  error: { imageId: i?.id, ...saveImageResult.details?.error },
+                }
+              }
+
               return {
                 id: i?.id,
                 url: saveImageResult?.details?.fullUrl ?? i?.url,

@@ -45,7 +45,7 @@ declare global {
   interface State extends RecorderState {
     body: BodyProducts
     productWithOrigin?: ProductWithOrigin[]
-    productWithImageImported?: ProductWithOrigin[]
+    productWithImageImported?: ProductWithImageImported[]
   }
 
   interface BodyProducts {
@@ -99,6 +99,15 @@ declare global {
 
   interface ProductWithOrigin extends Product {
     origin: string
+  }
+
+  interface ProductWithImageImported extends ProductWithOrigin {
+    images: Array<{
+      id: string | number
+      url: string
+      alt?: string
+      error?: any
+    }>
   }
 
   interface Images {
