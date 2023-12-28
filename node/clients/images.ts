@@ -19,6 +19,7 @@ export class ImagesClient extends ExternalClient {
     return this.http.get(urlHttp, {
       headers: { Accept: 'image/*' },
       responseType: 'arraybuffer',
+      maxRedirects: 5,
     })
   }
 }
