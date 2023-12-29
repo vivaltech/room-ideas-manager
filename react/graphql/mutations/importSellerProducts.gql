@@ -4,7 +4,9 @@ mutation importSellerProducts($productList: [ProductInput]) {
     success
     error
     results {
+      productId
       productName
+      descriptionUpdated
       success
       details
     }

@@ -33,6 +33,7 @@ export const productTableColumnsMessages = defineMessages({
     id: `${prefixProductTableColumns}transportModal.title`,
   },
   taxCodeTitle: { id: `${prefixProductTableColumns}taxCode.title` },
+  descriptionTitle: { id: `${prefixProductTableColumns}description.title` },
 })
 
 export const productTableMessages = defineMessages({
@@ -45,6 +46,7 @@ export const importResultsMessages = defineMessages({
   title: { id: `${prefixProductImportResults}title` },
   product: { id: `${prefixProductImportResults}product` },
   success: { id: `${prefixProductImportResults}success` },
+  descriptionUpdated: { id: `${prefixProductImportResults}descriptionUpdated` },
   yes: { id: `${prefixProductImportResults}yes` },
   no: { id: `${prefixProductImportResults}no` },
   errors: { id: `${prefixProductImportResults}errors` },

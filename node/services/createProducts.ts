@@ -5,7 +5,13 @@ import { appKey, appToken } from '../utils/constants'
 interface CreateProductsResponse {
   status: number
   success: boolean
-  results: Array<{ productName: string; success: boolean; details?: string }>
+  results: Array<{
+    productId: string | number
+    productName: string
+    description?: string
+    success: boolean
+    details?: string
+  }>
   error?: string
 }
 
@@ -37,6 +43,7 @@ export async function createProducts(
             )
 
             return {
+              productId: product?.id ?? '',
               productName: product?.name,
               success: false,
               details: JSON.stringify(
@@ -64,12 +71,15 @@ export async function createProducts(
           }
 
           return {
+            productId: product?.id ? product?.id : result?.id ?? '',
             productName: product?.name,
+            description: product?.description,
             success: true,
             details: JSON.stringify(result, null, 4),
           }
         } catch (error) {
           return {
+            productId: product?.id ?? '',
             productName: product?.name,
             success: false,
             details: JSON.stringify(error.response.data, null, 4),

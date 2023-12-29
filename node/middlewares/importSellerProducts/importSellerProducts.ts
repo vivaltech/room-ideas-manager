@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { addProductDescription } from '../../services/addProductDescription'
 import { createProducts } from '../../services/createProducts'
 
 export async function importSellerProducts(
@@ -19,6 +20,41 @@ export async function importSellerProducts(
       ctx,
       productWithImageImported
     )
+
+    const productWithDescription = createProductsResponse?.results
+      ?.filter((r) => r.success)
+      ?.filter((r) => r?.productId && r?.description)
+      ?.map((r) => {
+        const product: ProductWithDescription = {
+          productId: r?.productId,
+          description: r?.description ?? '',
+        }
+
+        return product
+      })
+
+    if (productWithDescription.length > 0) {
+      const addProductDescriptionResponse = await addProductDescription(
+        ctx,
+        productWithDescription
+      )
+
+      const { results: addProductDescriptionResults } =
+        addProductDescriptionResponse
+
+      const newResults = createProductsResponse.results.map((r) => {
+        const newResult = {
+          ...r,
+          descriptionUpdated: addProductDescriptionResults.some(
+            (rd) => rd.productId === r.productId && rd.success
+          ),
+        }
+
+        return newResult
+      })
+
+      createProductsResponse.results = newResults
+    }
 
     ctx.status = createProductsResponse?.status
     ctx.body = {

@@ -40,4 +40,5 @@ export interface ProductData {
   }>
   transportModal?: string | number
   taxCode?: string | number
+  description?: string
 }

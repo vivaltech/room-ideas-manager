@@ -1,5 +1,7 @@
 interface ResultData {
   productName: string
+  productId: string
+  descriptionUpdated: boolean
   success: boolean
   details: string
 }

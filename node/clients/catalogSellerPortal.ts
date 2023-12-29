@@ -5,8 +5,13 @@ import type { IOContext, InstanceOptions } from '@vtex/api'
 const baseURL = '/api/catalog-seller-portal'
 
 const routes = {
+  getProduct: (productId: string | number) =>
+    `${baseURL}/products/${productId}`,
   createProduct: `${baseURL}/products`,
-  getProduct: (productId: string) => `${baseURL}/products/${productId}`,
+  updateProduct: (productId: string | number) =>
+    `${baseURL}/products/${productId}`,
+  updateDescription: (productId: string | number) =>
+    `${baseURL}/products/${productId}/description`,
 }
 
 export class CatalogSellerPortalClient extends JanusClient {
@@ -39,7 +44,24 @@ export class CatalogSellerPortalClient extends JanusClient {
     appToken: string
   ) {
     return this.http.put<any>(
-      `${routes.createProduct}/${product.id}`,
+      `${routes.updateProduct(product?.id ?? '')}`,
+      product,
+      {
+        headers: {
+          'X-VTEX-API-AppKey': appKey,
+          'X-VTEX-API-AppToken': appToken,
+        },
+      }
+    )
+  }
+
+  public updateDescription(
+    product: ProductWithDescription,
+    appKey: string,
+    appToken: string
+  ) {
+    return this.http.put<any>(
+      `${routes.updateDescription(product?.productId ?? '')}`,
       product,
       {
         headers: {
