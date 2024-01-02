@@ -58,6 +58,7 @@ export const skuTableColumnsMessages = defineMessages({
 
 export const imageTableColumnsMessages = defineMessages({
   idTitle: { id: `${prefixImageTableColumns}id.title` },
+  imageTitle: { id: `${prefixImageTableColumns}image.title` },
   urlTitle: { id: `${prefixImageTableColumns}url.title` },
   altTitle: { id: `${prefixImageTableColumns}alt.title` },
 })

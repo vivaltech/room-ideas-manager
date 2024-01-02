@@ -37,6 +37,7 @@
   "admin/admin-import-seller-products.sku-table.columns.specs.title": "Specs",
 
   "admin/admin-import-seller-products.image-table.columns.id.title": "Image Id",
+  "admin/admin-import-seller-products.image-table.columns.image.title": "Image",
   "admin/admin-import-seller-products.image-table.columns.url.title": "Url",
   "admin/admin-import-seller-products.image-table.columns.alt.title": "Alt",
 

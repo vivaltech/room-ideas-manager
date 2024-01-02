@@ -7,6 +7,7 @@ import {
   Modal,
   ButtonWithIcon,
   IconExternalLink,
+  Link,
 } from 'vtex.styleguide'
 
 import type { ImageData } from '../../typings/Products'
@@ -56,18 +57,29 @@ const ImagesTable = ({ images }: ImagesTableProps) => {
     },
     {
       id: 'url',
-      title: intl.formatMessage(imageTableColumnsMessages.urlTitle),
+      title: intl.formatMessage(imageTableColumnsMessages.imageTitle),
       cellRenderer: ({ data }: { data: string }) => (
-        <ButtonWithIcon
-          variation="secondary"
-          onClick={() => handleOpenImageModal(data)}
-          icon={linkIcon}
-        />
+        <div className="flex justify-center">
+          <ButtonWithIcon
+            variation="secondary"
+            onClick={() => handleOpenImageModal(data)}
+            icon={linkIcon}
+          />
+        </div>
       ),
     },
     {
       id: 'alt',
       title: intl.formatMessage(imageTableColumnsMessages.altTitle),
+    },
+    {
+      id: 'url',
+      title: intl.formatMessage(imageTableColumnsMessages.urlTitle),
+      cellRenderer: ({ data }: { data: string }) => (
+        <Link href={data} target="_blank">
+          {data}
+        </Link>
+      ),
     },
   ]
 
