@@ -46,6 +46,7 @@ declare global {
     body: BodyProducts
     productWithOrigin?: ProductWithOrigin[]
     productWithImageImported?: ProductWithImageImported[]
+    productWithDescription?: ProductWithDescription[]
   }
 
   interface BodyProducts {
@@ -95,6 +96,7 @@ declare global {
     }>
     transportModal?: string | number
     taxCode?: string | number
+    description?: string
   }
 
   interface ProductWithOrigin extends Product {
@@ -108,6 +110,11 @@ declare global {
       alt?: string
       error?: any
     }>
+  }
+
+  interface ProductWithDescription {
+    productId: string | number
+    description: string
   }
 
   interface Images {

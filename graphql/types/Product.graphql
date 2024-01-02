@@ -12,6 +12,7 @@ input ProductInput {
   skus: [SkuInput]
   transportModal: ID
   taxCode: ID
+  description: String
 }
 
 input ProductSpecInput {

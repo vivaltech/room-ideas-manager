@@ -23,6 +23,7 @@
   "admin/admin-import-seller-products.product-table.columns.skus.title": "SKUs",
   "admin/admin-import-seller-products.product-table.columns.transportModal.title": "Transport Modal",
   "admin/admin-import-seller-products.product-table.columns.taxCode.title": "Tax Code",
+  "admin/admin-import-seller-products.product-table.columns.description.title": "Description",
 
   "admin/admin-import-seller-products.product-table.emptyText": "The table is empty",
   "admin/admin-import-seller-products.product-table.of": "of",
@@ -31,6 +32,7 @@
   "admin/admin-import-seller-products.import-results.title": "Import Results",
   "admin/admin-import-seller-products.import-results.product": "Product",
   "admin/admin-import-seller-products.import-results.success": "Success",
+  "admin/admin-import-seller-products.import-results.descriptionUpdated": "Description Updated",
   "admin/admin-import-seller-products.import-results.yes": "Yes",
   "admin/admin-import-seller-products.import-results.no": "No",
   "admin/admin-import-seller-products.import-results.errors": "Errors"

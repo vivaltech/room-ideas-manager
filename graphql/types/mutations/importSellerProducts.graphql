@@ -6,7 +6,9 @@ type SaveLogResponse {
 }
 
 type Result {
+  productId: String
   productName: String
+  descriptionUpdated: Boolean
   success: Boolean
   details: String
 }

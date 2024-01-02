@@ -20,7 +20,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
           </h2>
           <ul className={styles.resultsList}>
             {importResults?.map((result, index) => {
-              const parsedError: ResultDetails = JSON.parse(result?.details)
+              const parsedDetails: ResultDetails = JSON.parse(result?.details)
 
               return (
                 <li key={index} className={styles.resultItem}>
@@ -29,6 +29,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                       {intl.formatMessage(importResultsMessages.product)}:
                     </strong>{' '}
                     <span className={styles.productName}>
+                      {result?.productId ? `${result?.productId} - ` : ''}
                       {result?.productName}
                     </span>
                   </div>
@@ -48,21 +49,44 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                     </span>
                   </div>
 
+                  {result?.descriptionUpdated !== undefined &&
+                    result?.descriptionUpdated !== null && (
+                      <div>
+                        <strong className={styles.label}>
+                          {intl.formatMessage(
+                            importResultsMessages.descriptionUpdated
+                          )}
+                          :
+                        </strong>
+                        <span
+                          className={
+                            result?.descriptionUpdated
+                              ? styles.success
+                              : styles.notSuccess
+                          }
+                        >
+                          {result?.descriptionUpdated
+                            ? intl.formatMessage(importResultsMessages.yes)
+                            : intl.formatMessage(importResultsMessages.no)}
+                        </span>
+                      </div>
+                    )}
+
                   {!result.success && (
                     <div>
                       <strong className={styles.label}>
                         {intl.formatMessage(importResultsMessages.errors)}:
                       </strong>
-                      {parsedError?.errors?.length === 1 ? (
+                      {parsedDetails?.errors?.length === 1 ? (
                         <>
                           {' '}
                           <span className={styles.errorItem}>
-                            {parsedError.errors[0].message}
+                            {parsedDetails.errors[0].message}
                           </span>
                         </>
                       ) : (
                         <ul className={styles.errorsList}>
-                          {parsedError?.errors?.map((error, errorIndex) => (
+                          {parsedDetails?.errors?.map((error, errorIndex) => (
                             <li key={errorIndex} className={styles.errorItem}>
                               -{' '}
                               {error.imageId

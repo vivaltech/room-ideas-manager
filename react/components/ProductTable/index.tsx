@@ -176,6 +176,16 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       id: 'taxCode',
       title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
     },
+    ...(products.some((product) => product.description)
+      ? [
+          {
+            id: 'description',
+            title: intl.formatMessage(
+              productTableColumnsMessages.descriptionTitle
+            ),
+          },
+        ]
+      : []),
   ]
 
   const [filteredItems] = useState<ProductData[]>(products)
