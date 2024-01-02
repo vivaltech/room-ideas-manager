@@ -49,27 +49,28 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                     </span>
                   </div>
 
-                  {result?.descriptionUpdated !== undefined && (
-                    <div>
-                      <strong className={styles.label}>
-                        {intl.formatMessage(
-                          importResultsMessages.descriptionUpdated
-                        )}
-                        :
-                      </strong>
-                      <span
-                        className={
-                          result?.descriptionUpdated
-                            ? styles.success
-                            : styles.notSuccess
-                        }
-                      >
-                        {result?.descriptionUpdated
-                          ? intl.formatMessage(importResultsMessages.yes)
-                          : intl.formatMessage(importResultsMessages.no)}
-                      </span>
-                    </div>
-                  )}
+                  {result?.descriptionUpdated !== undefined &&
+                    result?.descriptionUpdated !== null && (
+                      <div>
+                        <strong className={styles.label}>
+                          {intl.formatMessage(
+                            importResultsMessages.descriptionUpdated
+                          )}
+                          :
+                        </strong>
+                        <span
+                          className={
+                            result?.descriptionUpdated
+                              ? styles.success
+                              : styles.notSuccess
+                          }
+                        >
+                          {result?.descriptionUpdated
+                            ? intl.formatMessage(importResultsMessages.yes)
+                            : intl.formatMessage(importResultsMessages.no)}
+                        </span>
+                      </div>
+                    )}
 
                   {!result.success && (
                     <div>

@@ -51,9 +51,11 @@ export const mutations = {
         const newResults = createProductsResponse.results.map((r) => {
           const newResult = {
             ...r,
-            descriptionUpdated: addProductDescriptionResults.some(
-              (rd) => rd.productId === r.productId && rd.success
-            ),
+            descriptionUpdated: !r.description
+              ? null
+              : addProductDescriptionResults.some(
+                  (rd) => rd.productId === r.productId && rd.success
+                ),
           }
 
           return newResult
