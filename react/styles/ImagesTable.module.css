@@ -1,0 +1,16 @@
+/* ImagesTable.module.css */
+
+.modalContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  max-height: 90%;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.modalContent img {
+  max-width: 50%;
+  object-fit: contain;
+}
