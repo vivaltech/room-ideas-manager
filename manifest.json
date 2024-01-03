@@ -76,5 +76,29 @@
       }
     }
   ],
+  "settingsSchema": {
+    "title": "Admin Import Seller Products",
+    "type": "object",
+    "properties": {
+      "vtexApi": {
+        "title": "VTEX Access",
+        "type": "object",
+        "properties": {
+          "appKey": {
+            "title": "VTEX API AppKey",
+            "description": "VTEX API Application Key",
+            "type": "string"
+          },
+          "appToken": {
+            "title": "VTEX API AppToken",
+            "description": "VTEX API Application Token",
+            "type": "string",
+            "format": "password"
+          }
+        },
+        "required": ["appKey", "appToken"]
+      }
+    }
+  },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }

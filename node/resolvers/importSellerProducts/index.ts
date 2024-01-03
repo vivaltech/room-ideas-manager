@@ -12,6 +12,22 @@ export const mutations = {
     ctx: Context
   ) => {
     try {
+      const { apps } = ctx.clients
+
+      const appId = process.env.VTEX_APP_ID ? process.env.VTEX_APP_ID : ''
+
+      const { vtexApi } = await apps.getAppSettings(appId)
+      const {
+        appKey,
+        appToken,
+      }: {
+        appKey: string
+        appToken: string
+      } = vtexApi
+
+      ctx.state.appKey = appKey
+      ctx.state.appToken = appToken
+
       const productWithOrigin = addOriginOfProducts(ctx, productList)
 
       if (!productWithOrigin || productWithOrigin.length === 0) {

@@ -6,82 +6,91 @@ import {
   EXPERIMENTAL_useTableVisibility as useTableVisibility,
 } from 'vtex.styleguide'
 
-import type { ProductData } from '../../typings/Products'
+import type { SkuData } from '../../typings/Products'
 import {
   productTableColumnsMessages,
   productTableMessages,
+  skuTableColumnsMessages,
 } from '../../utils/adminSellersMessages'
 import StatusTag from './StatusTag'
 
-interface ProductsTableProps {
-  products: ProductData[]
+interface SkusTableProps {
+  skus: SkuData[]
 }
-const ProductsTable = ({ products }: ProductsTableProps) => {
+const SkusTable = ({ skus }: SkusTableProps) => {
   const intl = useIntl()
 
   const ITEMS_PER_PAGE = 5
 
   const columns = [
-    ...(products.some((product) => product.id)
+    ...(skus.some((sku) => sku.id)
       ? [
           {
             id: 'id',
-            title: intl.formatMessage(productTableColumnsMessages.idTitle),
+            title: intl.formatMessage(skuTableColumnsMessages.idTitle),
           },
         ]
       : []),
-    {
-      id: 'externalId',
-      title: intl.formatMessage(productTableColumnsMessages.externalIdTitle),
-    },
-    {
-      id: 'status',
-      title: intl.formatMessage(productTableColumnsMessages.statusTitle),
-      cellRenderer: ({ data }: { data: string }) => {
-        return <StatusTag data={data} />
-      },
-    },
     {
       id: 'name',
       title: intl.formatMessage(productTableColumnsMessages.nameTitle),
     },
     {
-      id: 'brandId',
-      title: intl.formatMessage(productTableColumnsMessages.brandIdTitle),
+      id: 'externalId',
+      title: intl.formatMessage(productTableColumnsMessages.externalIdTitle),
     },
     {
-      id: 'categoryIds',
-      title: intl.formatMessage(productTableColumnsMessages.categoryIdsTitle),
+      id: 'ean',
+      title: intl.formatMessage(skuTableColumnsMessages.eanTitle),
+    },
+    {
+      id: 'manufacturerCode',
+      title: intl.formatMessage(skuTableColumnsMessages.manufacturerCodeTitle),
+    },
+    {
+      id: 'isActive',
+      title: intl.formatMessage(skuTableColumnsMessages.isActiveTitle),
+      cellRenderer: ({ data }: { data: boolean }) => (
+        <StatusTag data={data ? 'active' : 'inactive'} />
+      ),
+    },
+    {
+      id: 'weight',
+      title: intl.formatMessage(skuTableColumnsMessages.weightTitle),
+    },
+    {
+      id: 'dimensions',
+      title: intl.formatMessage(skuTableColumnsMessages.dimensionsTitle),
       cellRenderer: ({
         data,
       }: {
-        data: string | number | string[] | number[]
-      }) => {
-        const dataArray = Array.isArray(data) ? data : [data]
-
-        return <div>{dataArray.join(', ')}</div>
-      },
-    },
-    {
-      id: 'specs',
-      title: intl.formatMessage(productTableColumnsMessages.specsTitle),
-      cellRenderer: ({
-        data,
-      }: {
-        data: Array<{ name: string; values: string[] }>
+        data: { width: number; height: number; length: number }
       }) => (
         <ul>
-          {data.map((spec, index) => (
-            <li key={index}>
-              <strong>{spec.name}:</strong> {spec.values.join(', ')}
-            </li>
-          ))}
+          <li>
+            <strong>
+              {intl.formatMessage(skuTableColumnsMessages.widthTitle)}:
+            </strong>{' '}
+            {data.width}
+          </li>
+          <li>
+            <strong>
+              {intl.formatMessage(skuTableColumnsMessages.heightTitle)}:
+            </strong>{' '}
+            {data.height}
+          </li>
+          <li>
+            <strong>
+              {intl.formatMessage(skuTableColumnsMessages.lengthTitle)}:
+            </strong>{' '}
+            {data.length}
+          </li>
         </ul>
       ),
     },
     {
-      id: 'attributes',
-      title: intl.formatMessage(productTableColumnsMessages.attributesTitle),
+      id: 'specs',
+      title: intl.formatMessage(skuTableColumnsMessages.specsTitle),
       cellRenderer: ({
         data,
       }: {
@@ -97,98 +106,23 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       ),
     },
     {
-      id: 'slug',
-      title: intl.formatMessage(productTableColumnsMessages.slugTitle),
-    },
-    {
       id: 'images',
       title: intl.formatMessage(productTableColumnsMessages.imagesTitle),
-      cellRenderer: ({
-        data,
-      }: {
-        data: Array<{ id: string | number; url: string; alt?: string }>
-      }) => (
-        <ul>
-          {data.map((image, index) => (
-            <li key={index}>
-              <strong>ID:</strong> {image.id}, <strong>URL:</strong> {image.url}
-              , <strong>Alt:</strong> {image.alt ?? ''}
-            </li>
-          ))}
-        </ul>
-      ),
+      cellRenderer: ({ data }: { data: string[] }) => {
+        return (
+          <ul>
+            {data.map((imageId, index) => (
+              <li key={index}>
+                <strong>ID:</strong> {imageId}
+              </li>
+            ))}
+          </ul>
+        )
+      },
     },
-    {
-      id: 'skus',
-      title: intl.formatMessage(productTableColumnsMessages.skusTitle),
-      cellRenderer: ({
-        data,
-      }: {
-        data: Array<{
-          id?: string | number
-          name: string
-          externalId?: string | number
-          ean?: string | number
-          manufacturerCode?: string | number
-          isActive: boolean
-          weight: number
-          dimensions: { width: number; height: number; length: number }
-          specs: Array<{ name: string; value: string }>
-          images: string[]
-        }>
-      }) => (
-        <ul>
-          {data.map((sku, index) => (
-            <li key={index}>
-              {sku?.id ? (
-                <>
-                  <strong>Id:</strong>
-                  {sku?.id},{' '}
-                </>
-              ) : (
-                ''
-              )}
-              <strong>Name:</strong> {sku.name}, <strong>External ID:</strong>{' '}
-              {sku.externalId ?? ''}, <strong>EAN:</strong> {sku.ean ?? ''},{' '}
-              <strong>Manufacturer Code:</strong> {sku.manufacturerCode ?? ''},{' '}
-              <strong>Active:</strong> {sku.isActive ? 'Yes' : 'No'},{' '}
-              <strong>Weight:</strong> {sku.weight},{' '}
-              <strong>Dimensions:</strong> {sku.dimensions.width}x
-              {sku.dimensions.height}x{sku.dimensions.length},{' '}
-              <strong>Specs:</strong>{' '}
-              {sku.specs
-                .map((spec) => `${spec.name}: ${spec.value}`)
-                .join(', ')}
-              , <strong>Images IDs:</strong>{' '}
-              {sku?.images?.map((images) => `${images}`).join(', ')}
-            </li>
-          ))}
-        </ul>
-      ),
-    },
-    {
-      id: 'transportModal',
-      title: intl.formatMessage(
-        productTableColumnsMessages.transportModalTitle
-      ),
-    },
-    {
-      id: 'taxCode',
-      title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
-    },
-    ...(products.some((product) => product.description)
-      ? [
-          {
-            id: 'description',
-            title: intl.formatMessage(
-              productTableColumnsMessages.descriptionTitle
-            ),
-          },
-        ]
-      : []),
   ]
 
-  const [filteredItems] = useState<ProductData[]>(products)
+  const [filteredItems] = useState<SkuData[]>(skus)
 
   const measures = useTableMeasures({
     size: ITEMS_PER_PAGE,
@@ -205,10 +139,10 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
 
   const empty = useMemo(
     () =>
-      products.length === 0 ||
+      skus.length === 0 ||
       filteredItems.length === 0 ||
       Object.keys(visibility.visibleColumns).length === 0,
-    [products.length, filteredItems.length, visibility.visibleColumns]
+    [skus.length, filteredItems.length, visibility.visibleColumns]
   )
 
   const { slicedItems, ...paginationProps } = usePagination(
@@ -241,7 +175,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
   )
 }
 
-function usePagination(initialSize: number, items: ProductData[]) {
+function usePagination(initialSize: number, items: SkuData[]) {
   const [state, setState] = useState({
     tableSize: initialSize,
     currentPage: 1,
@@ -341,4 +275,4 @@ function calculateNewOptions(totalItems: number) {
   return newOptions
 }
 
-export default ProductsTable
+export default SkusTable

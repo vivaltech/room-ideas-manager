@@ -25,6 +25,22 @@
   "admin/admin-import-seller-products.product-table.columns.taxCode.title": "Tax Code",
   "admin/admin-import-seller-products.product-table.columns.description.title": "Description",
 
+  "admin/admin-import-seller-products.sku-table.columns.id.title": "Sku Id",
+  "admin/admin-import-seller-products.sku-table.columns.ean.title": "Ean",
+  "admin/admin-import-seller-products.sku-table.columns.manufacturerCode.title": "Manufacturer Code",
+  "admin/admin-import-seller-products.sku-table.columns.isActive.title": "Is Active",
+  "admin/admin-import-seller-products.sku-table.columns.weight.title": "Weight",
+  "admin/admin-import-seller-products.sku-table.columns.dimensions.title": "Dimensions",
+  "admin/admin-import-seller-products.sku-table.columns.width.title": "Width",
+  "admin/admin-import-seller-products.sku-table.columns.height.title": "Height",
+  "admin/admin-import-seller-products.sku-table.columns.length.title": "Length",
+  "admin/admin-import-seller-products.sku-table.columns.specs.title": "Specs",
+
+  "admin/admin-import-seller-products.image-table.columns.id.title": "Image Id",
+  "admin/admin-import-seller-products.image-table.columns.image.title": "Image",
+  "admin/admin-import-seller-products.image-table.columns.url.title": "Url",
+  "admin/admin-import-seller-products.image-table.columns.alt.title": "Alt",
+
   "admin/admin-import-seller-products.product-table.emptyText": "The table is empty",
   "admin/admin-import-seller-products.product-table.of": "of",
   "admin/admin-import-seller-products.product-table.showRows": "Show rows",

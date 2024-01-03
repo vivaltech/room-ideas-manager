@@ -14,7 +14,7 @@ import Papa from 'papaparse'
 import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gql'
 import { adminSellersMainMessages } from './utils/adminSellersMessages'
 import type { ProductData } from './typings/Products'
-import ProductsTable from './components/ProductTable'
+import ProductsTable from './components/Tables/ProductsTable'
 import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
 

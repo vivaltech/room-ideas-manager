@@ -14,31 +14,36 @@ export interface ProductData {
     value: string
   }>
   slug: string
-  images: Array<{
-    id: string | number
-    url: string
-    alt?: string
-  }>
-  skus: Array<{
-    id?: string | number
-    name: string
-    externalId?: string | number
-    ean?: string | number
-    manufacturerCode?: string | number
-    isActive: boolean
-    weight: number
-    dimensions: {
-      width: number
-      height: number
-      length: number
-    }
-    specs: Array<{
-      name: string
-      value: string
-    }>
-    images: string[]
-  }>
+  images: ImageData[]
+  skus: SkuData[]
   transportModal?: string | number
   taxCode?: string | number
   description?: string
+}
+
+export interface SkuData {
+  id?: string | number
+  name: string
+  externalId?: string | number
+  ean?: string | number
+  manufacturerCode?: string | number
+  isActive: boolean
+  weight: number
+  dimensions: {
+    width: number
+    height: number
+    length: number
+  }
+  specs: Array<{
+    name: string
+    value: string
+  }>
+  images: string[]
+}
+
+export interface ImageData {
+  index?: number
+  id: string | number
+  url: string
+  alt?: string
 }

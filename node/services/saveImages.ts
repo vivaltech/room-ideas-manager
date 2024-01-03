@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import FormData from 'form-data'
-
-import { appKey, appToken } from '../utils/constants'
+import { UserInputError } from '@vtex/api'
 
 interface SaveImagesResponse {
   results: Array<{
@@ -26,6 +25,16 @@ export async function saveImages(
   } = ctx
 
   try {
+    const { appKey, appToken } = ctx.state
+
+    if (!appKey) {
+      throw new UserInputError('Without appKey')
+    }
+
+    if (!appToken) {
+      throw new UserInputError('Without appToken')
+    }
+
     const { token } = await vtexId.getToken(appKey, appToken)
 
     const uploadImageDetails = async () => {

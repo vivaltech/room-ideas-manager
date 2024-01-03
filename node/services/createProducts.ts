@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { appKey, appToken } from '../utils/constants'
+import { UserInputError } from '@vtex/api'
 
 interface CreateProductsResponse {
   status: number
@@ -23,73 +23,83 @@ export async function createProducts(
     clients: { catalogSellerPortal },
   } = ctx
 
-  const createProductDetails = async () => {
-    return Promise.all(
-      (productList || []).map(async (product) => {
-        const hasImageError = product.images.some(
-          (i) =>
-            i?.error &&
-            i?.url &&
-            !i?.url.startsWith(`https://${ctx.vtex.account}`)
-        )
+  try {
+    const { appKey, appToken } = ctx.state
 
-        try {
-          if (hasImageError) {
-            const errorImages = product.images.filter(
-              (i) =>
-                i.error &&
-                i.url &&
-                !i.url.startsWith(`https://${ctx.vtex.account}`)
-            )
+    if (!appKey) {
+      throw new UserInputError('Without appKey')
+    }
 
+    if (!appToken) {
+      throw new UserInputError('Without appToken')
+    }
+
+    const createProductDetails = async () => {
+      return Promise.all(
+        (productList || []).map(async (product) => {
+          const hasImageError = product.images.some(
+            (i) =>
+              i?.error &&
+              i?.url &&
+              !i?.url.startsWith(`https://${ctx.vtex.account}`)
+          )
+
+          try {
+            if (hasImageError) {
+              const errorImages = product.images.filter(
+                (i) =>
+                  i.error &&
+                  i.url &&
+                  !i.url.startsWith(`https://${ctx.vtex.account}`)
+              )
+
+              return {
+                productId: product?.id ?? '',
+                productName: product?.name,
+                success: false,
+                details: JSON.stringify(
+                  { errors: errorImages.map((i) => i.error) },
+                  null,
+                  4
+                ),
+              }
+            }
+
+            let result
+
+            if (product?.id) {
+              result = await catalogSellerPortal.updateProduct(
+                product,
+                appKey,
+                appToken
+              )
+            } else {
+              result = await catalogSellerPortal.createProduct(
+                product,
+                appKey,
+                appToken
+              )
+            }
+
+            return {
+              productId: product?.id ? product?.id : result?.id ?? '',
+              productName: product?.name,
+              description: product?.description,
+              success: true,
+              details: JSON.stringify(result, null, 4),
+            }
+          } catch (error) {
             return {
               productId: product?.id ?? '',
               productName: product?.name,
               success: false,
-              details: JSON.stringify(
-                { errors: errorImages.map((i) => i.error) },
-                null,
-                4
-              ),
+              details: JSON.stringify(error.response.data, null, 4),
             }
           }
+        })
+      )
+    }
 
-          let result
-
-          if (product?.id) {
-            result = await catalogSellerPortal.updateProduct(
-              product,
-              appKey,
-              appToken
-            )
-          } else {
-            result = await catalogSellerPortal.createProduct(
-              product,
-              appKey,
-              appToken
-            )
-          }
-
-          return {
-            productId: product?.id ? product?.id : result?.id ?? '',
-            productName: product?.name,
-            description: product?.description,
-            success: true,
-            details: JSON.stringify(result, null, 4),
-          }
-        } catch (error) {
-          return {
-            productId: product?.id ?? '',
-            productName: product?.name,
-            success: false,
-            details: JSON.stringify(error.response.data, null, 4),
-          }
-        }
-      })
-    )
-  }
-
-  try {
     const createProductsResponse = await createProductDetails()
 
     return {

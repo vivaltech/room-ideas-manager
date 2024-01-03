@@ -5,6 +5,7 @@ import { LRUCache, Service, method } from '@vtex/api'
 import { Clients } from './clients'
 import { resolvers } from './resolvers'
 import { getBody } from './middlewares/common/getBody'
+import { getAppSettings } from './middlewares/common/getAppSettings'
 import { validateBodyProductList } from './middlewares/importSellerProducts/validateBodyProductList'
 import { addOrigin } from './middlewares/importSellerProducts/addOrigin'
 import { importSellerProducts } from './middlewares/importSellerProducts/importSellerProducts'
@@ -44,6 +45,8 @@ declare global {
 
   interface State extends RecorderState {
     body: BodyProducts
+    appKey?: string
+    appToken?: string
     productWithOrigin?: ProductWithOrigin[]
     productWithImageImported?: ProductWithImageImported[]
     productWithDescription?: ProductWithDescription[]
@@ -130,6 +133,7 @@ export default new Service({
     importSellerProducts: method({
       POST: [
         getBody,
+        getAppSettings,
         validateBodyProductList,
         addOrigin,
         importProductImages,
@@ -137,10 +141,10 @@ export default new Service({
       ],
     }),
     getSellerProduct: method({
-      POST: [getSellerProduct],
+      POST: [getAppSettings, getSellerProduct],
     }),
     importImages: method({
-      POST: [getBody, importImages],
+      POST: [getBody, getAppSettings, importImages],
     }),
   },
   graphql: {

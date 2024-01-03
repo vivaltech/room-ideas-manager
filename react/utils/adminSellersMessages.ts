@@ -3,7 +3,12 @@ import { defineMessages } from 'react-intl'
 const prefixAdminSellers = 'admin/admin-import-seller-products.'
 const prefixAdminSellersMain = `${prefixAdminSellers}main.`
 const prefixProductTable = `${prefixAdminSellers}product-table.`
+const prefixSkuTable = `${prefixAdminSellers}sku-table.`
+const prefixImageTable = `${prefixAdminSellers}image-table.`
 const prefixProductTableColumns = `${prefixProductTable}columns.`
+const prefixSkuTableColumns = `${prefixSkuTable}columns.`
+const prefixImageTableColumns = `${prefixImageTable}columns.`
+
 const prefixProductImportResults = `${prefixAdminSellers}import-results.`
 
 export const adminSellersMainMessages = defineMessages({
@@ -34,6 +39,28 @@ export const productTableColumnsMessages = defineMessages({
   },
   taxCodeTitle: { id: `${prefixProductTableColumns}taxCode.title` },
   descriptionTitle: { id: `${prefixProductTableColumns}description.title` },
+})
+
+export const skuTableColumnsMessages = defineMessages({
+  idTitle: { id: `${prefixSkuTableColumns}id.title` },
+  eanTitle: { id: `${prefixSkuTableColumns}ean.title` },
+  manufacturerCodeTitle: {
+    id: `${prefixSkuTableColumns}manufacturerCode.title`,
+  },
+  isActiveTitle: { id: `${prefixSkuTableColumns}isActive.title` },
+  weightTitle: { id: `${prefixSkuTableColumns}weight.title` },
+  dimensionsTitle: { id: `${prefixSkuTableColumns}dimensions.title` },
+  widthTitle: { id: `${prefixSkuTableColumns}width.title` },
+  heightTitle: { id: `${prefixSkuTableColumns}height.title` },
+  lengthTitle: { id: `${prefixSkuTableColumns}length.title` },
+  specsTitle: { id: `${prefixSkuTableColumns}specs.title` },
+})
+
+export const imageTableColumnsMessages = defineMessages({
+  idTitle: { id: `${prefixImageTableColumns}id.title` },
+  imageTitle: { id: `${prefixImageTableColumns}image.title` },
+  urlTitle: { id: `${prefixImageTableColumns}url.title` },
+  altTitle: { id: `${prefixImageTableColumns}alt.title` },
 })
 
 export const productTableMessages = defineMessages({
