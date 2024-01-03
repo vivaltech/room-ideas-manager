@@ -45,7 +45,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
 
   const handleOpenImagesTable = (images: ImageData[]) => {
     setOpenImagesModal(true)
-    setImagesSelected(images)
+    setImagesSelected(images?.map((i, index) => ({ ...i, index })))
   }
 
   const handleCloseImagesTable = () => {
@@ -215,6 +215,36 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
     textShowRows: intl.formatMessage(productTableMessages.showRows),
     totalItems: filteredItems.length,
   }
+
+  useEffect(() => {
+    if (!products || products.length === 0) {
+      return
+    }
+
+    const preloadImages = () => {
+      const allImageUrls: string[] = []
+
+      products.forEach((product) => {
+        product.images.forEach((image) => {
+          allImageUrls.push(image.url)
+        })
+      })
+
+      const imagePromises = allImageUrls.map((url) => {
+        return new Promise((resolve, reject) => {
+          const tempImage = new Image()
+
+          tempImage.onload = resolve
+          tempImage.onerror = reject
+          tempImage.src = url
+        })
+      })
+
+      Promise.all(imagePromises)
+    }
+
+    preloadImages()
+  }, [products])
 
   return (
     <div>

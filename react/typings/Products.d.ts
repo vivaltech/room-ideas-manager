@@ -42,6 +42,7 @@ export interface SkuData {
 }
 
 export interface ImageData {
+  index?: number
   id: string | number
   url: string
   alt?: string

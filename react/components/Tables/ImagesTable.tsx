@@ -4,9 +4,6 @@ import {
   EXPERIMENTAL_Table as Table,
   EXPERIMENTAL_useTableMeasures as useTableMeasures,
   EXPERIMENTAL_useTableVisibility as useTableVisibility,
-  Modal,
-  ButtonWithIcon,
-  IconExternalLink,
   Link,
 } from 'vtex.styleguide'
 
@@ -17,56 +14,31 @@ import {
 } from '../../utils/adminSellersMessages'
 import styles from '../../styles/ImagesTable.module.css'
 
-const linkIcon = <IconExternalLink />
-
 interface ImagesTableProps {
   images: ImageData[]
 }
 const ImagesTable = ({ images }: ImagesTableProps) => {
   const intl = useIntl()
 
-  const [openImageModal, setOpenImageModal] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<string>('')
-
-  useEffect(() => {
-    images.forEach((image) => {
-      const tempImage = new Image()
-
-      tempImage.src = image.url
-    })
-  }, [images])
-
-  const handleOpenImageModal = (imageUrl: string) => {
-    setOpenImageModal(true)
-    setSelectedImage(imageUrl)
-  }
-
-  const handleCloseImageModal = () => {
-    setOpenImageModal(false)
-    setTimeout(() => {
-      setSelectedImage('')
-    }, 1000)
-  }
-
   const ITEMS_PER_PAGE = 5
 
   const columns = [
     {
-      id: 'id',
-      title: intl.formatMessage(imageTableColumnsMessages.idTitle),
-    },
-    {
-      id: 'url',
+      id: 'index',
       title: intl.formatMessage(imageTableColumnsMessages.imageTitle),
-      cellRenderer: ({ data }: { data: string }) => (
-        <div className="flex justify-center">
-          <ButtonWithIcon
-            variation="secondary"
-            onClick={() => handleOpenImageModal(data)}
-            icon={linkIcon}
+      cellRenderer: ({ data: index }: { data: number }) => (
+        <div className={styles.modalContent}>
+          <img
+            className={styles.image}
+            src={images[index]?.url}
+            alt={images[index]?.alt}
           />
         </div>
       ),
+    },
+    {
+      id: 'id',
+      title: intl.formatMessage(imageTableColumnsMessages.idTitle),
     },
     {
       id: 'alt',
@@ -132,11 +104,6 @@ const ImagesTable = ({ images }: ImagesTableProps) => {
       >
         <Table.Pagination {...pagination} />
       </Table>
-      <Modal centered isOpen={openImageModal} onClose={handleCloseImageModal}>
-        <div className={styles.modalContent}>
-          <img src={selectedImage} alt="" />
-        </div>
-      </Modal>
     </div>
   )
 }
