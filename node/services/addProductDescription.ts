@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { appKey, appToken } from '../utils/constants'
+import { UserInputError } from '@vtex/api'
 
 interface AddProductsDescriptionResponse {
   status: number
@@ -20,6 +20,16 @@ export async function addProductDescription(
   const {
     clients: { catalogSellerPortal },
   } = ctx
+
+  const { appKey, appToken } = ctx.state
+
+  if (!appKey) {
+    throw new UserInputError('Without appKey')
+  }
+
+  if (!appToken) {
+    throw new UserInputError('Without appToken')
+  }
 
   const addProductDescriptionDetails = async () => {
     return Promise.all(
