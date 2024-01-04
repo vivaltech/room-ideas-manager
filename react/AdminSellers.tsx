@@ -250,7 +250,7 @@ const AdminSellers: React.FC = () => {
                 )
 
                 const formattedMessage = `${errorMessage}\n${missingDataRows
-                  .map((row, index) => {
+                  .map((row) => {
                     const missingFieldsInRow: string[] = []
 
                     Object.keys(row).forEach((field) => {
@@ -259,24 +259,19 @@ const AdminSellers: React.FC = () => {
                       }
                     })
 
-                    return `${productMessage} ${
-                      index + 1
-                    } ${withMissingFieldsMessage} (${missingFieldsInRow.join(
+                    return `${productMessage} ${`${
+                      row.id ?? row.externalId
+                    } - ${
+                      row.name
+                    }`} ${withMissingFieldsMessage} (${missingFieldsInRow.join(
                       ', '
                     )}).`
                   })
                   .join('\n')}`
 
                 setErrorProcessingCsv(formattedMessage)
-
-                // setErrorProcessingCsv(
-                //  intl.formatMessage(
-                //    adminSellersMainMessages.errorIncompleteData
-                //  )
-                // )
               } else {
                 setProductData(validRows)
-                setErrorProcessingCsv(null)
               }
             } else {
               setErrorProcessingCsv(
@@ -378,6 +373,7 @@ const AdminSellers: React.FC = () => {
     }
 
     setShowTable(true)
+    setErrorProcessingCsv(null)
   }, [productData])
 
   return (
@@ -444,7 +440,7 @@ const AdminSellers: React.FC = () => {
                 {intl.formatMessage(adminSellersMainMessages.importButton)}
               </Button>
             ) : (
-              <div className="mt4">
+              <div className="mt4 mb4">
                 <Button
                   variation="secondary"
                   onClick={handleDownloadExampleClick}
@@ -456,7 +452,12 @@ const AdminSellers: React.FC = () => {
           </div>
 
           {errorProcessingCsv && (
-            <pre style={{ color: 'red' }}>{errorProcessingCsv}</pre>
+            <div
+              id="errorProcessingCsv"
+              style={{ whiteSpace: 'pre-line', color: 'red' }}
+            >
+              {errorProcessingCsv}
+            </div>
           )}
 
           {showTable && <ProductsTable products={productData} />}
