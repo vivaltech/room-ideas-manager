@@ -17,6 +17,7 @@ import {
 import StatusTag from './StatusTag'
 import SkusTable from './SkusTable'
 import ImagesTable from './ImagesTable'
+import styles from '../../styles/ProductTable.module.css'
 
 const linkIcon = <IconExternalLink />
 
@@ -247,11 +248,11 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
   }, [products])
 
   return (
-    <div>
+    <div className={styles.productsTable}>
       <Table
         empty={empty}
         emptyState={emptyState}
-        measures={measures}
+        measures={{ ...measures, tableHeight: 'auto' }}
         items={slicedItems}
         columns={visibility.visibleColumns}
         highlightOnHover
