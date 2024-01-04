@@ -97,7 +97,7 @@ const SkusTable = ({ skus }: SkusTableProps) => {
         data: Array<{ name: string; value: string }>
       }) => (
         <ul>
-          {data.map((attribute, index) => (
+          {data?.map((attribute, index) => (
             <li key={index}>
               <strong>{attribute.name}:</strong> {attribute.value}
             </li>
@@ -111,7 +111,7 @@ const SkusTable = ({ skus }: SkusTableProps) => {
       cellRenderer: ({ data }: { data: string[] }) => {
         return (
           <ul>
-            {data.map((imageId, index) => (
+            {data?.map((imageId, index) => (
               <li key={index}>
                 <strong>ID:</strong> {imageId}
               </li>

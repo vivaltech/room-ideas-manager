@@ -13,7 +13,7 @@ import Papa from 'papaparse'
 
 import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gql'
 import { adminSellersMainMessages } from './utils/adminSellersMessages'
-import type { ProductData } from './typings/Products'
+import type { CsvProductData, ProductData, SkuData } from './typings/Products'
 import ProductsTable from './components/Tables/ProductsTable'
 import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
@@ -47,6 +47,10 @@ const AdminSellers: React.FC = () => {
     setShowTable(false)
   }
 
+  function generateNewUniqueId() {
+    return Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
+  }
+
   const handleFileUpload = useCallback((acceptedFiles) => {
     try {
       // eslint-disable-next-line prefer-destructuring
@@ -74,11 +78,13 @@ const AdminSellers: React.FC = () => {
             try {
               const arrayHeaders = [
                 'categoryIds',
-                'specs',
-                'attributes',
-                'images',
-                'skus',
-              ]
+                'productSpecs',
+                'productAttributes',
+                'productImages',
+                'skuSpecs',
+                'skuImages',
+                'skuDimensions',
+              ].map((h) => h.toLowerCase())
 
               if (arrayHeaders.includes(header.toLowerCase())) {
                 const jsonValue = parsedValue
@@ -101,17 +107,89 @@ const AdminSellers: React.FC = () => {
 
             return parsedValue
           },
-          complete: (result: ParseResult<ProductData>) => {
-            const rows = result.data
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          complete: (result: ParseResult<any>) => {
+            const rows: CsvProductData[] = result.data
 
             if (rows && Array.isArray(rows)) {
-              const validRows = rows.map((row) => {
-                if ('__parsed_extra' in row) {
-                  // eslint-disable-next-line dot-notation
-                  delete row['__parsed_extra']
+              const productMap: Map<string, ProductData> = new Map()
+
+              rows.forEach((row) => {
+                let productId
+
+                if (row?.productId) {
+                  productId = row?.productId?.toString()
+                } else if (row?.productExternalId) {
+                  productId = row?.productExternalId?.toString()
+                } else {
+                  productId = generateNewUniqueId()
                 }
 
-                return row
+                const existingProduct =
+                  productId !== undefined
+                    ? productMap.get(productId)
+                    : undefined
+
+                if (existingProduct) {
+                  // Add the SKU to the existing product
+                  const sku: SkuData = {
+                    id: row.skuId,
+                    name: row.skuName,
+                    externalId: row.skuExternalId,
+                    ean: row.skuEan,
+                    manufacturerCode: row.skuManufacturerCode,
+                    isActive: row.skuIsActive,
+                    weight: row.skuWeight,
+                    dimensions: row.skuDimensions,
+                    specs: row.skuSpecs,
+                    images: row.skuImages,
+                  }
+
+                  existingProduct.skus.push(sku)
+                } else {
+                  // Create a new product with the SKU
+                  const product: ProductData = {
+                    externalId: row.productExternalId,
+                    status: row.productStatus,
+                    name: row.productName,
+                    brandId: row.brandId,
+                    categoryIds: row.categoryIds,
+                    specs: row.productSpecs,
+                    attributes: row.productAttributes,
+                    slug: row.productSlug,
+                    images: row.productImages,
+                    skus: [
+                      {
+                        id: row.skuId,
+                        name: row.skuName,
+                        externalId: row.skuExternalId,
+                        ean: row.skuEan,
+                        manufacturerCode: row.skuManufacturerCode,
+                        isActive: row.skuIsActive,
+                        weight: row.skuWeight,
+                        dimensions: row.skuDimensions,
+                        specs: row.skuSpecs,
+                        images: row.skuImages,
+                      },
+                    ],
+                    transportModal: row.productTransportModal,
+                    taxCode: row.productTaxCode,
+                    description: row.productDescription,
+                  }
+
+                  productMap.set(productId, product)
+                }
+              })
+
+              const validRows: ProductData[] = Array.from(
+                productMap.values()
+              ).map((p) => {
+                if ('__parsed_extra' in p) {
+                  // eslint-disable-next-line dot-notation
+                  delete p['__parsed_extra']
+                }
+
+                return p
               })
 
               const missingDataRows = validRows.filter((_row) => {
