@@ -192,28 +192,78 @@ const AdminSellers: React.FC = () => {
                 return p
               })
 
-              const missingDataRows = validRows.filter((_row) => {
-                // TODO: Add validations
-                return (
-                  //  !row.status ||
-                  //  !row.name ||
-                  //  !row.brandId ||
-                  //  !row.categoryIds?.length ||
-                  //  !row.specs?.length ||
-                  //  !row.attributes?.length ||
-                  //  !row.slug ||
-                  //  !row.images?.length ||
-                  //  !row.skus?.length
-                  false
-                )
+              const missingDataRows = validRows.filter((row: ProductData) => {
+                const missingFields = []
+
+                if (!row.status) {
+                  missingFields.push('status')
+                }
+
+                if (!row.name) {
+                  missingFields.push('name')
+                }
+
+                if (!row.brandId) {
+                  missingFields.push('brandId')
+                }
+
+                // Puedes agregar más validaciones según sea necesario...
+
+                if (!row.specs?.length) {
+                  missingFields.push('specs')
+                }
+
+                if (!row.attributes?.length) {
+                  missingFields.push('attributes')
+                }
+
+                if (!row.slug) {
+                  missingFields.push('slug')
+                }
+
+                if (!row.images?.length) {
+                  missingFields.push('images')
+                }
+
+                if (!row.skus?.length) {
+                  missingFields.push('skus')
+                }
+
+                if (missingFields.length > 0) {
+                  return true
+                }
+
+                return false
               })
 
               if (missingDataRows.length > 0) {
-                setErrorProcessingCsv(
-                  intl.formatMessage(
-                    adminSellersMainMessages.errorIncompleteData
-                  )
+                const errorMessage = intl.formatMessage(
+                  adminSellersMainMessages.errorIncompleteData
                 )
+
+                const formattedMessage = `${errorMessage}\n${missingDataRows
+                  .map((row, index) => {
+                    const missingFieldsInRow: string[] = []
+
+                    Object.keys(row).forEach((field) => {
+                      if (!row[field as keyof ProductData]) {
+                        missingFieldsInRow.push(field)
+                      }
+                    })
+
+                    return `Product ${
+                      index + 1
+                    } with missing fields (${missingFieldsInRow.join(', ')}).`
+                  })
+                  .join('\n')}`
+
+                setErrorProcessingCsv(formattedMessage)
+
+                // setErrorProcessingCsv(
+                //  intl.formatMessage(
+                //    adminSellersMainMessages.errorIncompleteData
+                //  )
+                // )
               } else {
                 setProductData(validRows)
                 setErrorProcessingCsv(null)
@@ -372,7 +422,7 @@ const AdminSellers: React.FC = () => {
           </div>
 
           {errorProcessingCsv && (
-            <p style={{ color: 'red' }}>{errorProcessingCsv}</p>
+            <pre style={{ color: 'red' }}>{errorProcessingCsv}</pre>
           )}
 
           {showTable && <ProductsTable products={productData} />}
