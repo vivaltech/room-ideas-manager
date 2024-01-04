@@ -133,48 +133,49 @@ const AdminSellers: React.FC = () => {
                 if (existingProduct) {
                   // Add the SKU to the existing product
                   const sku: SkuData = {
-                    id: row.skuId,
-                    name: row.skuName,
-                    externalId: row.skuExternalId,
-                    ean: row.skuEan,
-                    manufacturerCode: row.skuManufacturerCode,
-                    isActive: row.skuIsActive,
-                    weight: row.skuWeight,
-                    dimensions: row.skuDimensions,
-                    specs: row.skuSpecs,
-                    images: row.skuImages,
+                    id: row?.skuId,
+                    name: row?.skuName,
+                    externalId: row?.skuExternalId,
+                    ean: row?.skuEan,
+                    manufacturerCode: row?.skuManufacturerCode,
+                    isActive: row?.skuIsActive,
+                    weight: row?.skuWeight,
+                    dimensions: row?.skuDimensions,
+                    specs: row?.skuSpecs,
+                    images: row?.skuImages,
                   }
 
                   existingProduct.skus.push(sku)
                 } else {
                   // Create a new product with the SKU
                   const product: ProductData = {
-                    externalId: row.productExternalId,
-                    status: row.productStatus,
-                    name: row.productName,
-                    brandId: row.brandId,
-                    categoryIds: row.categoryIds,
-                    specs: row.productSpecs,
-                    attributes: row.productAttributes,
-                    slug: row.productSlug,
-                    images: row.productImages,
+                    id: row?.productId,
+                    externalId: row?.productExternalId,
+                    status: row?.productStatus,
+                    name: row?.productName,
+                    brandId: row?.brandId,
+                    categoryIds: row?.categoryIds,
+                    specs: row?.productSpecs,
+                    attributes: row?.productAttributes,
+                    slug: row?.productSlug,
+                    images: row?.productImages,
                     skus: [
                       {
-                        id: row.skuId,
-                        name: row.skuName,
-                        externalId: row.skuExternalId,
-                        ean: row.skuEan,
-                        manufacturerCode: row.skuManufacturerCode,
-                        isActive: row.skuIsActive,
-                        weight: row.skuWeight,
-                        dimensions: row.skuDimensions,
-                        specs: row.skuSpecs,
-                        images: row.skuImages,
+                        id: row?.skuId,
+                        name: row?.skuName,
+                        externalId: row?.skuExternalId,
+                        ean: row?.skuEan,
+                        manufacturerCode: row?.skuManufacturerCode,
+                        isActive: row?.skuIsActive,
+                        weight: row?.skuWeight,
+                        dimensions: row?.skuDimensions,
+                        specs: row?.skuSpecs,
+                        images: row?.skuImages,
                       },
                     ],
-                    transportModal: row.productTransportModal,
-                    taxCode: row.productTaxCode,
-                    description: row.productDescription,
+                    transportModal: row?.productTransportModal,
+                    taxCode: row?.productTaxCode,
+                    description: row?.productDescription,
                   }
 
                   productMap.set(productId, product)
@@ -195,37 +196,37 @@ const AdminSellers: React.FC = () => {
               const missingDataRows = validRows.filter((row: ProductData) => {
                 const missingFields = []
 
-                if (!row.status) {
+                if (!row?.status) {
                   missingFields.push('status')
                 }
 
-                if (!row.name) {
+                if (!row?.name) {
                   missingFields.push('name')
                 }
 
-                if (!row.brandId) {
+                if (!row?.brandId) {
                   missingFields.push('brandId')
                 }
 
                 // Puedes agregar más validaciones según sea necesario...
 
-                if (!row.specs?.length) {
+                if (!row?.specs?.length) {
                   missingFields.push('specs')
                 }
 
-                if (!row.attributes?.length) {
+                if (!row?.attributes?.length) {
                   missingFields.push('attributes')
                 }
 
-                if (!row.slug) {
+                if (!row?.slug) {
                   missingFields.push('slug')
                 }
 
-                if (!row.images?.length) {
+                if (!row?.images?.length) {
                   missingFields.push('images')
                 }
 
-                if (!row.skus?.length) {
+                if (!row?.skus?.length) {
                   missingFields.push('skus')
                 }
 
