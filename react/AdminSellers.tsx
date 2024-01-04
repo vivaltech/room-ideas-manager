@@ -15,8 +15,9 @@ import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gq
 import { adminSellersMainMessages } from './utils/adminSellersMessages'
 import type { CsvProductData, ProductData, SkuData } from './typings/Products'
 import ProductsTable from './components/Tables/ProductsTable'
-import ImportResults from './components/ImportResults'
+import ImportResults from './examples/ImportResults'
 import styles from './styles/AdminSellers.module.css'
+import { exampleCsvContent } from './examples/exampleCsvContent'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
@@ -208,8 +209,6 @@ const AdminSellers: React.FC = () => {
                   missingFields.push('brandId')
                 }
 
-                // Puedes agregar más validaciones según sea necesario...
-
                 if (!row?.specs?.length) {
                   missingFields.push('specs')
                 }
@@ -242,6 +241,14 @@ const AdminSellers: React.FC = () => {
                   adminSellersMainMessages.errorIncompleteData
                 )
 
+                const productMessage = intl.formatMessage(
+                  adminSellersMainMessages.product
+                )
+
+                const withMissingFieldsMessage = intl.formatMessage(
+                  adminSellersMainMessages.withMissingFields
+                )
+
                 const formattedMessage = `${errorMessage}\n${missingDataRows
                   .map((row, index) => {
                     const missingFieldsInRow: string[] = []
@@ -252,9 +259,11 @@ const AdminSellers: React.FC = () => {
                       }
                     })
 
-                    return `Product ${
+                    return `${productMessage} ${
                       index + 1
-                    } with missing fields (${missingFieldsInRow.join(', ')}).`
+                    } ${withMissingFieldsMessage} (${missingFieldsInRow.join(
+                      ', '
+                    )}).`
                   })
                   .join('\n')}`
 
@@ -313,6 +322,20 @@ const AdminSellers: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productData])
 
+  const handleDownloadExampleClick = useCallback(() => {
+    const link = document.createElement('a')
+
+    const blob = new Blob([exampleCsvContent], {
+      type: 'text/csv;charset=utf-8;',
+    })
+
+    link.href = URL.createObjectURL(blob)
+    link.setAttribute('download', 'importSellerProductsExample.csv')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }, [])
+
   useEffect(() => {
     if (!errorProcessingCsv) {
       return
@@ -368,10 +391,11 @@ const AdminSellers: React.FC = () => {
       <PageBlock variation="full">
         <div className="flex flex-column">
           <div
-            className={`flex flex-row mt2 mb2 ${
+            className={`flex mt2 mb2
+            ${
               productData && productData.length > 0
-                ? 'justify-between'
-                : 'justify-center'
+                ? ' flex-row justify-between'
+                : ' flex-column justify-center items-center'
             }`}
           >
             <div
@@ -406,7 +430,7 @@ const AdminSellers: React.FC = () => {
               </Dropzone>
             </div>
 
-            {productData && productData.length > 0 && (
+            {productData && productData.length > 0 ? (
               <Button
                 variation="primary"
                 onClick={handleImportClick}
@@ -419,6 +443,15 @@ const AdminSellers: React.FC = () => {
               >
                 {intl.formatMessage(adminSellersMainMessages.importButton)}
               </Button>
+            ) : (
+              <div className="mt4">
+                <Button
+                  variation="secondary"
+                  onClick={handleDownloadExampleClick}
+                >
+                  {intl.formatMessage(adminSellersMainMessages.downloadButton)}
+                </Button>
+              </div>
             )}
           </div>
 
