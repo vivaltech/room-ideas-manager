@@ -130,7 +130,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         data: Array<{ name: string; values: string[] }>
       }) => (
         <ul>
-          {data.map((spec, index) => (
+          {data?.map((spec, index) => (
             <li key={index}>
               <strong>{spec.name}:</strong> {spec.values.join(', ')}
             </li>
@@ -147,9 +147,9 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         data: Array<{ name: string; value: string }>
       }) => (
         <ul>
-          {data.map((attribute, index) => (
+          {data?.map((attribute, index) => (
             <li key={index}>
-              <strong>{attribute.name}:</strong> {attribute.value}
+              <strong>{attribute?.name}:</strong> {attribute?.value}
             </li>
           ))}
         </ul>
@@ -231,7 +231,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         })
       })
 
-      const imagePromises = allImageUrls.map((url) => {
+      const imagePromises = allImageUrls?.map((url) => {
         return new Promise((resolve, reject) => {
           const tempImage = new Image()
 
