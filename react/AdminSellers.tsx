@@ -465,7 +465,11 @@ const AdminSellers: React.FC = () => {
           {importError && !importLoading && (
             <div
               id="importError"
-              style={{ whiteSpace: 'pre-line', color: 'red' }}
+              style={{
+                marginTop: '0.75rem',
+                whiteSpace: 'pre-line',
+                color: 'red',
+              }}
             >
               {importError}
             </div>
