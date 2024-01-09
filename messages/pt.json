@@ -9,6 +9,7 @@
   "admin/admin-import-seller-products.main.errorOnAnalyze": "Error: The CSV file could not be analyzed correctly.",
   "admin/admin-import-seller-products.main.errorOnProcessing": "Error: The CSV file could not be processed correctly.",
   "admin/admin-import-seller-products.main.errorOnImport": "Error during import of products:",
+  "admin/admin-import-seller-products.main.tryAgainLater": "Error during import of products. Please attempt the operation again later.",
   "admin/admin-import-seller-products.main.product": "Product",
   "admin/admin-import-seller-products.main.withMissingFields": "with missing fields",
   "admin/admin-import-seller-products.main.downloadButton": "Download Example",

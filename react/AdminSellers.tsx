@@ -341,7 +341,7 @@ const AdminSellers: React.FC = () => {
 
   useEffect(() => {
     if (errorImportSellerProducts) {
-      setImportError(JSON.stringify(errorImportSellerProducts))
+      setImportError(intl.formatMessage(adminSellersMainMessages.tryAgainLater))
       setImportLoading(false)
     }
 
