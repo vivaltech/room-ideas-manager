@@ -61,11 +61,20 @@ export async function saveImages(
               details: { ...result },
             }
           } catch (error) {
+            const status = error?.response?.status
+
             return {
               fileName: image.fileName,
               success: false,
               details: {
-                error: error?.response?.data || error?.response || error?.data,
+                error:
+                  status === 403
+                    ? {
+                        message:
+                          'Failed to open the image. Please choose another source for images.',
+                        file: image?.url,
+                      }
+                    : error?.response?.data || error?.response || error?.data,
               },
             }
           }
