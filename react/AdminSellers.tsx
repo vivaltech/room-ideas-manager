@@ -463,7 +463,12 @@ const AdminSellers: React.FC = () => {
           {showTable && <ProductsTable products={productData} />}
 
           {importError && !importLoading && (
-            <div className="flex justify-center">{importError}</div>
+            <div
+              id="importError"
+              style={{ whiteSpace: 'pre-line', color: 'red' }}
+            >
+              {importError}
+            </div>
           )}
 
           {!importLoading && importResults?.length > 0 && (
