@@ -29,7 +29,16 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                       {intl.formatMessage(importResultsMessages.product)}:
                     </strong>{' '}
                     <span className={styles.productName}>
-                      {result?.productId ? `${result?.productId} - ` : ''}
+                      {result?.productId
+                        ? `${intl.formatMessage(
+                            importResultsMessages.productId
+                          )}: ${result?.productId} - `
+                        : ''}
+                      {result?.productExternalId
+                        ? `${intl.formatMessage(
+                            importResultsMessages.productExternalId
+                          )}: ${result?.productExternalId} - `
+                        : ''}
                       {result?.productName}
                     </span>
                   </div>

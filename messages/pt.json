@@ -59,5 +59,7 @@
   "admin/admin-import-seller-products.import-results.conflictWithImage1": "Conflito com a imagem",
   "admin/admin-import-seller-products.import-results.conflictWithImage2": "Por favor, atualize a URL no seu arquivo CSV no ID especificado, utilizando a URL que está causando conflitos.",
   "admin/admin-import-seller-products.import-results.openImageError1": "Falha ao abrir a imagem",
-  "admin/admin-import-seller-products.import-results.openImageError2": "Por favor, escolha outra fonte para as imagens."
+  "admin/admin-import-seller-products.import-results.openImageError2": "Por favor, escolha outra fonte para as imagens.",
+  "admin/admin-import-seller-products.import-results.productId": "ID do Produto",
+  "admin/admin-import-seller-products.import-results.productExternalId": "ID Externo"
 }

@@ -59,5 +59,7 @@
   "admin/admin-import-seller-products.import-results.conflictWithImage1": "Conflict with image",
   "admin/admin-import-seller-products.import-results.conflictWithImage2": "Please update the URL in your CSV file at the specified ID, using the URL that is causing conflicts.",
   "admin/admin-import-seller-products.import-results.openImageError1": "Failed to open the image",
-  "admin/admin-import-seller-products.import-results.openImageError2": "Please choose another source for images."
+  "admin/admin-import-seller-products.import-results.openImageError2": "Please choose another source for images.",
+  "admin/admin-import-seller-products.import-results.productId": "Product Id",
+  "admin/admin-import-seller-products.import-results.productExternalId": "External Id"
 }

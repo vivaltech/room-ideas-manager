@@ -7,6 +7,7 @@ interface CreateProductsResponse {
   success: boolean
   results: Array<{
     productId: string | number
+    productExternalId: string | number
     productName: string
     description?: string
     success: boolean
@@ -55,6 +56,7 @@ export async function createProducts(
 
               return {
                 productId: product?.id ?? '',
+                productExternalId: product?.externalId ?? '',
                 productName: product?.name,
                 success: false,
                 details: JSON.stringify(
@@ -83,6 +85,7 @@ export async function createProducts(
 
             return {
               productId: product?.id ? product?.id : result?.id ?? '',
+              productExternalId: product?.externalId ?? '',
               productName: product?.name,
               description: product?.description,
               success: true,
@@ -91,6 +94,7 @@ export async function createProducts(
           } catch (error) {
             return {
               productId: product?.id ?? '',
+              productExternalId: product?.externalId ?? '',
               productName: product?.name,
               success: false,
               details: JSON.stringify(error.response.data, null, 4),

@@ -85,4 +85,6 @@ export const importResultsMessages = defineMessages({
   conflictWithImage2: { id: `${prefixProductImportResults}conflictWithImage2` },
   openImageError1: { id: `${prefixProductImportResults}openImageError1` },
   openImageError2: { id: `${prefixProductImportResults}openImageError2` },
+  productId: { id: `${prefixProductImportResults}productId` },
+  productExternalId: { id: `${prefixProductImportResults}productExternalId` },
 })
