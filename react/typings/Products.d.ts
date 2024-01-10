@@ -1,3 +1,38 @@
+export interface CsvProductData {
+  productId?: string | number
+  productExternalId?: string | number
+  productStatus: string
+  productName: string
+  brandId: string | number
+  categoryIds: string | number | string[] | number[]
+  productSpecs: Array<{
+    name: string
+    values: string[]
+  }>
+  productAttributes: Array<{
+    name: string
+    value: string
+  }>
+  productSlug: string
+  productImages: ImageData[]
+  skuId?: string | number
+  skuName: string
+  skuExternalId?: string | number
+  skuEan?: string | number
+  skuManufacturerCode?: string | number
+  skuIsActive: boolean
+  skuWeight: number
+  skuDimensions: { width: number; height: number; length: number }
+  skuSpecs: Array<{
+    name: string
+    value: string
+  }>
+  skuImages: string[]
+  productTransportModal?: string | number
+  productTaxCode?: string | number
+  productDescription?: string
+}
+
 export interface ProductData {
   id?: string | number
   externalId?: string | number

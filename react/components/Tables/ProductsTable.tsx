@@ -17,6 +17,7 @@ import {
 import StatusTag from './StatusTag'
 import SkusTable from './SkusTable'
 import ImagesTable from './ImagesTable'
+import styles from '../../styles/ProductTable.module.css'
 
 const linkIcon = <IconExternalLink />
 
@@ -129,7 +130,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         data: Array<{ name: string; values: string[] }>
       }) => (
         <ul>
-          {data.map((spec, index) => (
+          {data?.map((spec, index) => (
             <li key={index}>
               <strong>{spec.name}:</strong> {spec.values.join(', ')}
             </li>
@@ -146,9 +147,9 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         data: Array<{ name: string; value: string }>
       }) => (
         <ul>
-          {data.map((attribute, index) => (
+          {data?.map((attribute, index) => (
             <li key={index}>
-              <strong>{attribute.name}:</strong> {attribute.value}
+              <strong>{attribute?.name}:</strong> {attribute?.value}
             </li>
           ))}
         </ul>
@@ -230,7 +231,7 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
         })
       })
 
-      const imagePromises = allImageUrls.map((url) => {
+      const imagePromises = allImageUrls?.map((url) => {
         return new Promise((resolve, reject) => {
           const tempImage = new Image()
 
@@ -247,11 +248,11 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
   }, [products])
 
   return (
-    <div>
+    <div className={styles.productsTable}>
       <Table
         empty={empty}
         emptyState={emptyState}
-        measures={measures}
+        measures={{ ...measures, tableHeight: 'auto' }}
         items={slicedItems}
         columns={visibility.visibleColumns}
         highlightOnHover
