@@ -70,11 +70,27 @@ export async function saveImages(
                 error:
                   status === 403
                     ? {
+                        status,
                         message:
                           'Failed to open the image. Please choose another source for images.',
                         file: image?.url,
                       }
-                    : error?.response?.data || error?.response || error?.data,
+                    : error?.response?.data
+                    ? {
+                        ...error?.response?.data,
+                        status,
+                      }
+                    : error?.response
+                    ? {
+                        ...error?.response,
+                        status,
+                      }
+                    : error?.data
+                    ? {
+                        ...error?.data,
+                        status,
+                      }
+                    : { status },
               },
             }
           }

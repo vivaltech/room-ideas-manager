@@ -81,21 +81,111 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
                         <>
                           {' '}
                           <span className={styles.errorItem}>
-                            {parsedDetails.errors[0].message}
+                            {!parsedDetails.errors[0].status ? (
+                              parsedDetails.errors[0].message
+                            ) : parsedDetails.errors[0].status === 409 ? (
+                              <span>
+                                {intl.formatMessage(
+                                  importResultsMessages.conflictWithImage1
+                                )}{' '}
+                                <a
+                                  href={parsedDetails.errors[0].file}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={styles.imageUrl}
+                                >
+                                  {parsedDetails.errors[0].file}
+                                </a>
+                                {'. '}
+                                {intl.formatMessage(
+                                  importResultsMessages.conflictWithImage2
+                                )}
+                              </span>
+                            ) : parsedDetails.errors[0].status === 403 ? (
+                              <span>
+                                {intl.formatMessage(
+                                  importResultsMessages.openImageError1
+                                )}{' '}
+                                <a
+                                  href={parsedDetails.errors[0].file}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={styles.imageUrl}
+                                >
+                                  {parsedDetails.errors[0].file}
+                                </a>
+                                {'. '}
+                                {intl.formatMessage(
+                                  importResultsMessages.openImageError2
+                                )}
+                              </span>
+                            ) : (
+                              parsedDetails.errors[0].message
+                            )}
                           </span>
                         </>
                       ) : (
                         <ul className={styles.errorsList}>
-                          {parsedDetails?.errors?.map((error, errorIndex) => (
-                            <li key={errorIndex} className={styles.errorItem}>
-                              -{' '}
-                              {error.imageId
-                                ? `${error.imageId}: ${error.message}`
-                                : error.code
-                                ? `${error.code}: ${error.message}`
-                                : error.message}
-                            </li>
-                          ))}
+                          {parsedDetails?.errors?.map((error, errorIndex) => {
+                            const errorMessage = !error.status ? (
+                              error.message
+                            ) : error.status === 409 ? (
+                              <>
+                                {intl.formatMessage(
+                                  importResultsMessages.conflictWithImage1
+                                )}{' '}
+                                <a
+                                  href={error.file}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={styles.imageUrl}
+                                >
+                                  {error.file}
+                                </a>
+                                {'. '}
+                                {intl.formatMessage(
+                                  importResultsMessages.conflictWithImage2
+                                )}
+                              </>
+                            ) : error.status === 403 ? (
+                              <>
+                                {intl.formatMessage(
+                                  importResultsMessages.openImageError1
+                                )}{' '}
+                                <a
+                                  href={error.file}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className={styles.imageUrl}
+                                >
+                                  {error.file}
+                                </a>
+                                {'. '}
+                                {intl.formatMessage(
+                                  importResultsMessages.openImageError2
+                                )}
+                              </>
+                            ) : (
+                              error.message
+                            )
+
+                            return (
+                              <li key={errorIndex} className={styles.errorItem}>
+                                -{' '}
+                                {error.imageId ? (
+                                  <>
+                                    {error.imageId}: {errorMessage}
+                                  </>
+                                ) : error.code ? (
+                                  <>
+                                    {error.code}: {errorMessage}
+                                  </>
+                                ) : (
+                                  <>{errorMessage}</>
+                                )}
+                              </li>
+                            )
+                          })}
                         </ul>
                       )}
                     </div>

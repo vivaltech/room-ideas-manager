@@ -16,4 +16,5 @@ interface ErrorData {
   file?: string
   imageId?: string
   message: string
+  status?: number
 }

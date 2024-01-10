@@ -55,5 +55,9 @@
   "admin/admin-import-seller-products.import-results.descriptionUpdated": "Descrição Atualizada",
   "admin/admin-import-seller-products.import-results.yes": "Sim",
   "admin/admin-import-seller-products.import-results.no": "Não",
-  "admin/admin-import-seller-products.import-results.errors": "Erros"
+  "admin/admin-import-seller-products.import-results.errors": "Erros",
+  "admin/admin-import-seller-products.import-results.conflictWithImage1": "Conflito com a imagem",
+  "admin/admin-import-seller-products.import-results.conflictWithImage2": "Por favor, atualize a URL no seu arquivo CSV no ID especificado, utilizando a URL que está causando conflitos.",
+  "admin/admin-import-seller-products.import-results.openImageError1": "Falha ao abrir a imagem.",
+  "admin/admin-import-seller-products.import-results.openImageError2": "Por favor, escolha outra fonte para as imagens."
 }
