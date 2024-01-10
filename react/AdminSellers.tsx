@@ -15,7 +15,7 @@ import importSellerProductsGQL from './graphql/mutations/importSellerProducts.gq
 import { adminSellersMainMessages } from './utils/adminSellersMessages'
 import type { CsvProductData, ProductData, SkuData } from './typings/Products'
 import ProductsTable from './components/Tables/ProductsTable'
-import ImportResults from './examples/ImportResults'
+import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
 import { exampleCsvContent } from './examples/exampleCsvContent'
 
