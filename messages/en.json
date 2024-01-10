@@ -1,7 +1,7 @@
 {
-  "admin/admin-import-seller-products.navigation.label-group": "Admin Import Seller Products",
-  "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers",
-  "admin/admin-import-seller-products.main.title": "Admin Import Seller Products",
+  "admin/admin-import-seller-products.navigation.label-group": "Import Seller Products",
+  "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers, product, products",
+  "admin/admin-import-seller-products.main.title": "Import Seller Products",
   "admin/admin-import-seller-products.main.importButton": "Import",
   "admin/admin-import-seller-products.main.dropFile": "Drop here your CSV or",
   "admin/admin-import-seller-products.main.chooseFile": "choose a file",
@@ -55,5 +55,11 @@
   "admin/admin-import-seller-products.import-results.descriptionUpdated": "Description Updated",
   "admin/admin-import-seller-products.import-results.yes": "Yes",
   "admin/admin-import-seller-products.import-results.no": "No",
-  "admin/admin-import-seller-products.import-results.errors": "Errors"
+  "admin/admin-import-seller-products.import-results.errors": "Errors",
+  "admin/admin-import-seller-products.import-results.conflictWithImage1": "Conflict with image",
+  "admin/admin-import-seller-products.import-results.conflictWithImage2": "Please update the URL in your CSV file at the specified ID, using the URL that is causing conflicts.",
+  "admin/admin-import-seller-products.import-results.openImageError1": "Failed to open the image",
+  "admin/admin-import-seller-products.import-results.openImageError2": "Please choose another source for images.",
+  "admin/admin-import-seller-products.import-results.productId": "Product Id",
+  "admin/admin-import-seller-products.import-results.productExternalId": "External Id"
 }

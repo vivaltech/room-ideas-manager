@@ -81,4 +81,10 @@ export const importResultsMessages = defineMessages({
   yes: { id: `${prefixProductImportResults}yes` },
   no: { id: `${prefixProductImportResults}no` },
   errors: { id: `${prefixProductImportResults}errors` },
+  conflictWithImage1: { id: `${prefixProductImportResults}conflictWithImage1` },
+  conflictWithImage2: { id: `${prefixProductImportResults}conflictWithImage2` },
+  openImageError1: { id: `${prefixProductImportResults}openImageError1` },
+  openImageError2: { id: `${prefixProductImportResults}openImageError2` },
+  productId: { id: `${prefixProductImportResults}productId` },
+  productExternalId: { id: `${prefixProductImportResults}productExternalId` },
 })

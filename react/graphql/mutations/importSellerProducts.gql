@@ -5,6 +5,7 @@ mutation importSellerProducts($productList: [ProductInput]) {
     error
     results {
       productId
+      productExternalId
       productName
       descriptionUpdated
       success

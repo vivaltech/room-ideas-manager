@@ -57,3 +57,11 @@
   color: red;
   margin-bottom: 5px;
 }
+
+.imageUrl {
+  color: #007bff;
+}
+
+.imageUrl:active {
+  color: #06468a;
+}
