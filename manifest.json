@@ -84,7 +84,7 @@
     }
   ],
   "settingsSchema": {
-    "title": "Admin Import Seller Products",
+    "title": "Import Seller Products",
     "type": "object",
     "properties": {
       "vtexApi": {
