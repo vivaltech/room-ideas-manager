@@ -1,5 +1,7 @@
 import React from 'react'
+import { saveAs } from 'file-saver'
 import { useIntl } from 'react-intl'
+import { Button } from 'vtex.styleguide'
 
 import { importResultsMessages } from '../../utils/adminSellersMessages'
 import styles from '../../styles/ImportResults.module.css'
@@ -11,13 +13,82 @@ interface ImportResultsProps {
 const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
   const intl = useIntl()
 
+  const handleDownloadResultsJson = () => {
+    const importResultParsed = importResults?.map((result) => {
+      const parsedDetails: ResultDetails = JSON.parse(result?.details)
+
+      let auxResult
+
+      if ('__typename' in result) {
+        // eslint-disable-next-line dot-notation
+        delete result['__typename']
+      }
+
+      if (result?.descriptionUpdated === null) {
+        // eslint-disable-next-line dot-notation
+        const { descriptionUpdated, ...filteredResult } = result
+
+        auxResult = filteredResult
+      } else {
+        auxResult = {
+          ...result,
+          descriptionUpdated: result?.descriptionUpdated
+            ? intl.formatMessage(importResultsMessages.yes)
+            : intl.formatMessage(importResultsMessages.no),
+        }
+      }
+
+      return {
+        ...auxResult,
+        success: auxResult?.success
+          ? intl.formatMessage(importResultsMessages.yes)
+          : intl.formatMessage(importResultsMessages.no),
+        details: {
+          ...parsedDetails,
+          errors: parsedDetails.errors.map((error) => {
+            const errorMessage = !error.status
+              ? error?.message
+              : error.status === 409
+              ? `${intl.formatMessage(
+                  importResultsMessages.conflictWithImage1
+                )} ${error?.file}. ${intl.formatMessage(
+                  importResultsMessages.conflictWithImage2
+                )}`
+              : error.status === 403
+              ? `${intl.formatMessage(importResultsMessages.openImageError1)} ${
+                  error?.file
+                }. ${intl.formatMessage(importResultsMessages.openImageError2)}`
+              : error?.message
+
+            return { ...error, message: errorMessage }
+          }),
+        },
+      }
+    })
+
+    const resultsAsString = JSON.stringify(importResultParsed, null, 2)
+    const blob = new Blob([resultsAsString], { type: 'application/json' })
+
+    saveAs(blob, 'import_results.json')
+  }
+
   return (
     <>
       {importResults && importResults.length > 0 ? (
         <div className={styles.importResultsContainer}>
-          <h2 className={styles.title}>
-            {intl.formatMessage(importResultsMessages.title)}
-          </h2>
+          <div className="flex flex-row">
+            <h2 className={styles.title}>
+              {intl.formatMessage(importResultsMessages.title)}
+            </h2>
+            <Button
+              variation="secondary"
+              size="small"
+              onClick={handleDownloadResultsJson}
+            >
+              {intl.formatMessage(importResultsMessages.downloadResultsJson)}
+            </Button>
+          </div>
+
           <ul className={styles.resultsList}>
             {importResults?.map((result, index) => {
               const parsedDetails: ResultDetails = JSON.parse(result?.details)
