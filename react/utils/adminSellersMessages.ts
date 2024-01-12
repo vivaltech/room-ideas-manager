@@ -90,7 +90,7 @@ export const importResultsMessages = defineMessages({
   downloadResultsJson: {
     id: `${prefixProductImportResults}downloadResultsJson`,
   },
-  downloadResultsXls: {
-    id: `${prefixProductImportResults}downloadResultsXls`,
+  downloadResultsXlsx: {
+    id: `${prefixProductImportResults}downloadResultsXlsx`,
   },
 })

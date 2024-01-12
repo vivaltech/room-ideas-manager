@@ -1,5 +1,6 @@
 import React from 'react'
 import { saveAs } from 'file-saver'
+import * as XLSX from 'xlsx'
 import { useIntl } from 'react-intl'
 import { Button } from 'vtex.styleguide'
 
@@ -12,64 +13,90 @@ interface ImportResultsProps {
 
 const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
   const intl = useIntl()
+  const importResultParsed = importResults?.map((result) => {
+    const parsedDetails: ResultDetails = JSON.parse(result?.details)
 
-  const handleDownloadResultsJson = () => {
-    const importResultParsed = importResults?.map((result) => {
-      const parsedDetails: ResultDetails = JSON.parse(result?.details)
+    let auxResult
 
-      let auxResult
+    if ('__typename' in result) {
+      // eslint-disable-next-line dot-notation
+      delete result['__typename']
+    }
 
-      if ('__typename' in result) {
-        // eslint-disable-next-line dot-notation
-        delete result['__typename']
-      }
+    if (result?.descriptionUpdated === null) {
+      // eslint-disable-next-line dot-notation
+      const { descriptionUpdated, ...filteredResult } = result
 
-      if (result?.descriptionUpdated === null) {
-        // eslint-disable-next-line dot-notation
-        const { descriptionUpdated, ...filteredResult } = result
-
-        auxResult = filteredResult
-      } else {
-        auxResult = {
-          ...result,
-          descriptionUpdated: result?.descriptionUpdated
-            ? intl.formatMessage(importResultsMessages.yes)
-            : intl.formatMessage(importResultsMessages.no),
-        }
-      }
-
-      return {
-        ...auxResult,
-        success: auxResult?.success
+      auxResult = filteredResult
+    } else {
+      auxResult = {
+        ...result,
+        descriptionUpdated: result?.descriptionUpdated
           ? intl.formatMessage(importResultsMessages.yes)
           : intl.formatMessage(importResultsMessages.no),
-        details: {
-          ...parsedDetails,
-          errors: parsedDetails.errors.map((error) => {
-            const errorMessage = !error.status
-              ? error?.message
-              : error.status === 409
-              ? `${intl.formatMessage(
-                  importResultsMessages.conflictWithImage1
-                )} ${error?.file}. ${intl.formatMessage(
-                  importResultsMessages.conflictWithImage2
-                )}`
-              : error.status === 403
-              ? `${intl.formatMessage(importResultsMessages.openImageError1)} ${
-                  error?.file
-                }. ${intl.formatMessage(importResultsMessages.openImageError2)}`
-              : error?.message
-
-            return { ...error, message: errorMessage }
-          }),
-        },
       }
-    })
+    }
 
-    const resultsAsString = JSON.stringify(importResultParsed, null, 2)
+    return {
+      ...auxResult,
+      success: auxResult?.success
+        ? intl.formatMessage(importResultsMessages.yes)
+        : intl.formatMessage(importResultsMessages.no),
+      details: {
+        ...parsedDetails,
+        errors: parsedDetails.errors.map((error) => {
+          const errorMessage = !error.status
+            ? error?.message
+            : error.status === 409
+            ? `${intl.formatMessage(
+                importResultsMessages.conflictWithImage1
+              )} ${error?.file}. ${intl.formatMessage(
+                importResultsMessages.conflictWithImage2
+              )}`
+            : error.status === 403
+            ? `${intl.formatMessage(importResultsMessages.openImageError1)} ${
+                error?.file
+              }. ${intl.formatMessage(importResultsMessages.openImageError2)}`
+            : error?.message
+
+          return { ...error, message: errorMessage }
+        }),
+      },
+    }
+  })
+
+  const handleDownloadResultsJson = () => {
+    const jsonData = importResultParsed
+    const resultsAsString = JSON.stringify(jsonData, null, 2)
     const blob = new Blob([resultsAsString], { type: 'application/json' })
 
     saveAs(blob, 'import_results.json')
+  }
+
+  function s2ab(s: string) {
+    const buf = new ArrayBuffer(s.length)
+    const view = new Uint8Array(buf)
+
+    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
+
+    return buf
+  }
+
+  const handleDownloadResultsXlsx = () => {
+    const xlsData = importResultParsed
+
+    const worksheet = XLSX.utils.json_to_sheet(xlsData)
+    const workbook = XLSX.utils.book_new()
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Import Results')
+
+    const excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' })
+    const excelBlob = new Blob([s2ab(excelData)], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    })
+
+    // Guardar el archivo Excel
+    saveAs(excelBlob, 'import_results.xlsx')
   }
 
   return (
@@ -86,6 +113,14 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
               onClick={handleDownloadResultsJson}
             >
               {intl.formatMessage(importResultsMessages.downloadResultsJson)}
+            </Button>
+            <div className="mr5" />
+            <Button
+              variation="secondary"
+              size="small"
+              onClick={handleDownloadResultsXlsx}
+            >
+              {intl.formatMessage(importResultsMessages.downloadResultsXlsx)}
             </Button>
           </div>
 

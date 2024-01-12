@@ -63,5 +63,5 @@
   "admin/admin-import-seller-products.import-results.productId": "Product Id",
   "admin/admin-import-seller-products.import-results.productExternalId": "External Id",
   "admin/admin-import-seller-products.import-results.downloadResultsJson": "Download Results JSON",
-  "admin/admin-import-seller-products.import-results.downloadResultsXls": "Download Results XLS"
+  "admin/admin-import-seller-products.import-results.downloadResultsXlsx": "Download Results XLSX"
 }
