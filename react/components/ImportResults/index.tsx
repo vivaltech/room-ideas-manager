@@ -85,7 +85,13 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
   const handleDownloadResultsXlsx = () => {
     const xlsData = importResultParsed
 
-    const worksheet = XLSX.utils.json_to_sheet(xlsData)
+    const worksheet = XLSX.utils.json_to_sheet(
+      xlsData.map((item) => ({
+        ...item,
+        details: JSON.stringify(item.details),
+      }))
+    )
+
     const workbook = XLSX.utils.book_new()
 
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Import Results')
@@ -95,7 +101,6 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     })
 
-    // Guardar el archivo Excel
     saveAs(excelBlob, 'import_results.xlsx')
   }
 
