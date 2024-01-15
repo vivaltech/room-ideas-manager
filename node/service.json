@@ -1,7 +1,7 @@
 {
   "memory": 1024,
-  "ttl": 60,
-  "timeout": 20,
+  "ttl": 120,
+  "timeout": 200,
   "minReplicas": 4,
   "maxReplicas": 80,
   "workers": 4,
