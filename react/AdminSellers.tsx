@@ -272,6 +272,7 @@ const AdminSellers: React.FC = () => {
                 setErrorProcessingCsv(formattedMessage)
               } else {
                 setProductData(validRows)
+                setShowTable(true)
               }
             } else {
               setErrorProcessingCsv(

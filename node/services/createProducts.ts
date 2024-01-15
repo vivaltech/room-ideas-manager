@@ -97,7 +97,7 @@ export async function createProducts(
               productExternalId: product?.externalId ?? '',
               productName: product?.name,
               success: false,
-              details: JSON.stringify(error.response.data, null, 4),
+              details: JSON.stringify(error?.response?.data, null, 4),
             }
           }
         })

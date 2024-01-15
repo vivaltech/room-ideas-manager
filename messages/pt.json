@@ -61,5 +61,7 @@
   "admin/admin-import-seller-products.import-results.openImageError1": "Falha ao abrir a imagem",
   "admin/admin-import-seller-products.import-results.openImageError2": "Por favor, escolha outra fonte para as imagens.",
   "admin/admin-import-seller-products.import-results.productId": "ID do Produto",
-  "admin/admin-import-seller-products.import-results.productExternalId": "ID Externo"
+  "admin/admin-import-seller-products.import-results.productExternalId": "ID Externo",
+  "admin/admin-import-seller-products.import-results.downloadResultsJson": "Baixar resultados JSON",
+  "admin/admin-import-seller-products.import-results.downloadResultsXlsx": "Baixar resultados XLSX"
 }

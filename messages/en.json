@@ -61,5 +61,7 @@
   "admin/admin-import-seller-products.import-results.openImageError1": "Failed to open the image",
   "admin/admin-import-seller-products.import-results.openImageError2": "Please choose another source for images.",
   "admin/admin-import-seller-products.import-results.productId": "Product Id",
-  "admin/admin-import-seller-products.import-results.productExternalId": "External Id"
+  "admin/admin-import-seller-products.import-results.productExternalId": "External Id",
+  "admin/admin-import-seller-products.import-results.downloadResultsJson": "Download Results JSON",
+  "admin/admin-import-seller-products.import-results.downloadResultsXlsx": "Download Results XLSX"
 }

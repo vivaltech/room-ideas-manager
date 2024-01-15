@@ -87,4 +87,10 @@ export const importResultsMessages = defineMessages({
   openImageError2: { id: `${prefixProductImportResults}openImageError2` },
   productId: { id: `${prefixProductImportResults}productId` },
   productExternalId: { id: `${prefixProductImportResults}productExternalId` },
+  downloadResultsJson: {
+    id: `${prefixProductImportResults}downloadResultsJson`,
+  },
+  downloadResultsXlsx: {
+    id: `${prefixProductImportResults}downloadResultsXlsx`,
+  },
 })

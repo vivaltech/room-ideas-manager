@@ -54,7 +54,7 @@ export async function addProductDescription(
           return {
             productId: product?.productId,
             success: false,
-            details: JSON.stringify(error.response.data, null, 4),
+            details: JSON.stringify(error?.response?.data, null, 4),
           }
         }
       })
