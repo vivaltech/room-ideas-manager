@@ -15,7 +15,9 @@
     "@vtex/api": "6.46.0",
     "@vtex/test-tools": "^1.0.0",
     "@vtex/tsconfig": "^0.5.6",
-    "typescript": "3.9.7"
+    "typescript": "3.9.7",
+    "vtex.catalog-images": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.catalog-images@0.3.1/public/@types/vtex.catalog-images",
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty"
