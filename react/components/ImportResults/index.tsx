@@ -44,7 +44,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
         : intl.formatMessage(importResultsMessages.no),
       details: {
         ...parsedDetails,
-        errors: parsedDetails.errors.map((error) => {
+        errors: parsedDetails?.errors?.map((error) => {
           const errorMessage = !error.status
             ? error?.message
             : error.status === 409
@@ -67,6 +67,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
 
   const handleDownloadResultsJson = () => {
     const jsonData = importResultParsed
+
     const resultsAsString = JSON.stringify(jsonData, null, 2)
     const blob = new Blob([resultsAsString], { type: 'application/json' })
 
@@ -84,9 +85,9 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
 
   const handleDownloadResultsXlsx = () => {
     const xlsData = importResultParsed
-
+    
     const worksheet = XLSX.utils.json_to_sheet(
-      xlsData.map((item) => ({
+      xlsData?.map((item) => ({
         ...item,
         details: JSON.stringify(item.details),
       }))
