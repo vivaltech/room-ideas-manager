@@ -7,6 +7,7 @@
     "@types/react": "^16.8.10",
     "@types/react-intl": "^2.3.17",
     "@vtex/tsconfig": "^0.4.4",
+    "ageas.admin-import-seller-products": "https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products",
     "apollo-client": "^2.4.7",
     "graphql": "^14.0.2",
     "prop-types": "^15.7.2",

@@ -15,6 +15,7 @@
     "@vtex/api": "6.46.0",
     "@vtex/test-tools": "^1.0.0",
     "@vtex/tsconfig": "^0.5.6",
+    "ageas.admin-import-seller-products": "https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products",
     "typescript": "3.9.7",
     "vtex.catalog-images": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.catalog-images@0.3.1/public/@types/vtex.catalog-images",
     "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide"
