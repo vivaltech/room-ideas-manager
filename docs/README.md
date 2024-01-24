@@ -1,22 +1,22 @@
-# Admin Import Seller Products 🛒
+# Import Seller Product 🛒
 
 ## 1. Introduction
 
-The **Admin Import Seller Products** module is designed to empower users in seamlessly importing products into the Seller Portal catalog. This process is facilitated through the use of a CSV file, streamlining the product importation process.
+The **Import Seller Product** module is designed to empower users in seamlessly importing products into the Seller Portal catalog. This process is facilitated through the use of a CSV file, streamlining the product importation process.
 
 To provide a visual guide and enhance your understanding, we've created a comprehensive flowchart illustrating the step-by-step workflow involved in importing products. The following diagram depicts the key stages of the product importation process.
 
-Please refer to the accompanying flowchart for a visual representation of the "Admin Import Seller Products" workflow. Each symbol and connection has been carefully designed to represent a specific action or decision point in the importation journey. Use this guide in conjunction with the detailed instructions in the documentation for a comprehensive understanding of the module's functionality.
+Please refer to the accompanying flowchart for a visual representation of the "Import Seller Product" workflow. Each symbol and connection has been carefully designed to represent a specific action or decision point in the importation journey. Use this guide in conjunction with the detailed instructions in the documentation for a comprehensive understanding of the module's functionality.
 
-![Admin Import Seller Products Workflow](./images/admin-import-seller-products-flow.png)
+![Import Seller Product Workflow](./images/admin-import-seller-products-flow.png)
 
 ---
 
 ## 2. Installation
 
-This section provides detailed instructions on how to install and set up the "Admin Import Seller Products" module. Follow the steps below to ensure a successful installation.
+This section provides detailed instructions on how to install and set up the "Import Seller Product" module. Follow the steps below to ensure a successful installation.
 
-### **The installation and the configuration need to be done peer seller.**
+### **The installation and the configuration need to be done peer seller by the Marketplace.**
 
 #### Installation of `vtex.admin-apps`
 
@@ -46,13 +46,13 @@ We need to set the credentials to be able to do the whole process.
 
 1. Go to [https://{sellerAccountName}.myvtex.com/admin/apps](https://{sellerAccountName}.myvtex.com/admin/apps)
 
-2. Open the **Admin Import Seller Products** by clicking on **Settings**:
+2. Open the **Import Seller Product** by clicking on **Settings**:
    ![Configuration 1](./images/config1.png)
 
-3. In the Admin Import Seller Products settings, locate the fields for **VTEX API AppKey** and **VTEX API AppToken**:
+3. In the Import Seller Product settings, locate the fields for **VTEX API AppKey** and **VTEX API AppToken**:
    ![Configuration 2](./images/config2.png)
 
-4. Generate the credentials with the **Owner (Admin Super)** role on the seller account that you are configuring. Follow the guidelines provided in the documentation.
+4. Generate the credentials with the **Owner (Admin Super)** role on the seller account that you are configuring. Follow the guidelines provided in the documentation. **This is need to be done by the Seller.**
    ![Configuration 3](./images/config3.png)
 
 5. Fill in the generated **VTEX API AppKey** and **VTEX API AppToken** in the respective fields.
@@ -60,7 +60,7 @@ We need to set the credentials to be able to do the whole process.
 
 6. Save the changes to apply the new credentials.
 
-By following these steps, you should have successfully configured the necessary credentials for the Admin Import Seller Products application. Ensure that you have the required permissions and roles to generate and apply these credentials.
+By following these steps, you should have successfully configured the necessary credentials for the Import Seller Product application. Ensure that you have the required permissions and roles to generate and apply these credentials.
 
 ---
 
