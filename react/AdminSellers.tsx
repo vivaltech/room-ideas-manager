@@ -74,14 +74,17 @@ const AdminSellers: React.FC = () => {
           dynamicTyping: true,
           transformHeader: (header: string) => header.trim(),
           transform: (value: string, header: string) => {
-            const parsedValue = value?.replace(/"__parsed_extra": "[^"]*"/g, '')?.trim()
-              const headerLowerCase = header.toLowerCase()
-            try {
+            const parsedValue = value
+              ?.replace(/"__parsed_extra": "[^"]*"/g, '')
+              ?.trim()
 
+            const headerLowerCase = header.toLowerCase()
+
+            try {
               const productSpecsValueHeaders = [
                 'productSpecs_values_1',
                 'productSpecs_values_2',
-                'productSpecs_values_3'
+                'productSpecs_values_3',
               ].map((h) => h.toLowerCase())
 
               const skuImagesHeader = 'skuImages'.toLowerCase()
@@ -97,12 +100,16 @@ const AdminSellers: React.FC = () => {
                   ?.replace(/'/g, '"')
                   ?.replace(/\\/g, '')
 
-                  let parsedJSONValue
-                  if (productSpecsValueHeaders.includes(headerLowerCase) || headerLowerCase === skuImagesHeader) {
-                    parsedJSONValue = jsonValue.slice(1, -1).split(';')
-                  }else{
-                    parsedJSONValue = JSON.parse(jsonValue)
-                  }
+                let parsedJSONValue
+
+                if (
+                  productSpecsValueHeaders.includes(headerLowerCase) ||
+                  headerLowerCase === skuImagesHeader
+                ) {
+                  parsedJSONValue = jsonValue.slice(1, -1).split(';')
+                } else {
+                  parsedJSONValue = JSON.parse(jsonValue)
+                }
 
                 return parsedJSONValue
               }
@@ -159,9 +166,15 @@ const AdminSellers: React.FC = () => {
                       length: row?.skuLength,
                     },
                     specs: [
-                      {name: row?.skuSpecs_name_1, value: row?.skuSpecs_value_1},
-                      {name: row?.skuSpecs_name_2, value: row?.skuSpecs_value_2},
-                    ].filter(s => s?.name && s?.value),
+                      {
+                        name: row?.skuSpecs_name_1,
+                        value: row?.skuSpecs_value_1,
+                      },
+                      {
+                        name: row?.skuSpecs_name_2,
+                        value: row?.skuSpecs_value_2,
+                      },
+                    ].filter((s) => s?.name && s?.value),
                     images: row?.skuImages,
                   }
 
@@ -176,27 +189,82 @@ const AdminSellers: React.FC = () => {
                     brandId: row?.brandId,
                     categoryIds: row?.categoryIds,
                     specs: [
-                      {name: row?.productSpecs_name_1, values: row?.productSpecs_values_1},
-                      {name: row?.productSpecs_name_2, values: row?.productSpecs_values_2},
-                    ].filter(s => s?.name && s?.values?.length>0),
+                      {
+                        name: row?.productSpecs_name_1,
+                        values: row?.productSpecs_values_1,
+                      },
+                      {
+                        name: row?.productSpecs_name_2,
+                        values: row?.productSpecs_values_2,
+                      },
+                    ].filter((s) => s?.name && s?.values?.length > 0),
                     attributes: [
-                      {name: row?.productAttributes_name_1, value: row?.productAttributes_value_1},
-                      {name: row?.productAttributes_name_2, value: row?.productAttributes_value_2},
-                      {name: row?.productAttributes_name_3, value: row?.productAttributes_value_3},
-                    ].filter(a => a?.name && a?.value),
+                      {
+                        name: row?.productAttributes_name_1,
+                        value: row?.productAttributes_value_1,
+                      },
+                      {
+                        name: row?.productAttributes_name_2,
+                        value: row?.productAttributes_value_2,
+                      },
+                      {
+                        name: row?.productAttributes_name_3,
+                        value: row?.productAttributes_value_3,
+                      },
+                    ].filter((a) => a?.name && a?.value),
                     slug: row?.productSlug,
                     images: [
-                      {id: row?.productImages_id_1, url: row?.productImages_url_1?.trim(), alt: row?.productImages_alt_1,},
-                      {id: row?.productImages_id_2, url: row?.productImages_url_2?.trim(), alt: row?.productImages_alt_2,},
-                      {id: row?.productImages_id_3, url: row?.productImages_url_3?.trim(), alt: row?.productImages_alt_3,},
-                      {id: row?.productImages_id_4, url: row?.productImages_url_4?.trim(), alt: row?.productImages_alt_4,},
-                      {id: row?.productImages_id_5, url: row?.productImages_url_5?.trim(), alt: row?.productImages_alt_5,},
-                      {id: row?.productImages_id_6, url: row?.productImages_url_6?.trim(), alt: row?.productImages_alt_6,},
-                      {id: row?.productImages_id_7, url: row?.productImages_url_7?.trim(), alt: row?.productImages_alt_7,},
-                      {id: row?.productImages_id_8, url: row?.productImages_url_8?.trim(), alt: row?.productImages_alt_8,},
-                      {id: row?.productImages_id_9, url: row?.productImages_url_9?.trim(), alt: row?.productImages_alt_9,},
-                      {id: row?.productImages_id_10, url: row?.productImages_url_10?.trim(), alt: row?.productImages_alt_10,},
-                    ].filter(i => i?.id && i?.url),
+                      {
+                        id: row?.productImages_id_1,
+                        url: row?.productImages_url_1?.trim(),
+                        alt: row?.productImages_alt_1,
+                      },
+                      {
+                        id: row?.productImages_id_2,
+                        url: row?.productImages_url_2?.trim(),
+                        alt: row?.productImages_alt_2,
+                      },
+                      {
+                        id: row?.productImages_id_3,
+                        url: row?.productImages_url_3?.trim(),
+                        alt: row?.productImages_alt_3,
+                      },
+                      {
+                        id: row?.productImages_id_4,
+                        url: row?.productImages_url_4?.trim(),
+                        alt: row?.productImages_alt_4,
+                      },
+                      {
+                        id: row?.productImages_id_5,
+                        url: row?.productImages_url_5?.trim(),
+                        alt: row?.productImages_alt_5,
+                      },
+                      {
+                        id: row?.productImages_id_6,
+                        url: row?.productImages_url_6?.trim(),
+                        alt: row?.productImages_alt_6,
+                      },
+                      {
+                        id: row?.productImages_id_7,
+                        url: row?.productImages_url_7?.trim(),
+                        alt: row?.productImages_alt_7,
+                      },
+                      {
+                        id: row?.productImages_id_8,
+                        url: row?.productImages_url_8?.trim(),
+                        alt: row?.productImages_alt_8,
+                      },
+                      {
+                        id: row?.productImages_id_9,
+                        url: row?.productImages_url_9?.trim(),
+                        alt: row?.productImages_alt_9,
+                      },
+                      {
+                        id: row?.productImages_id_10,
+                        url: row?.productImages_url_10?.trim(),
+                        alt: row?.productImages_alt_10,
+                      },
+                    ].filter((i) => i?.id && i?.url),
                     skus: [
                       {
                         id: row?.skuId,
@@ -212,9 +280,15 @@ const AdminSellers: React.FC = () => {
                           length: row?.skuLength,
                         },
                         specs: [
-                          {name: row?.skuSpecs_name_1, value: row?.skuSpecs_value_1},
-                          {name: row?.skuSpecs_name_2, value: row?.skuSpecs_value_2},
-                        ].filter(s => s?.name && s?.value),
+                          {
+                            name: row?.skuSpecs_name_1,
+                            value: row?.skuSpecs_value_1,
+                          },
+                          {
+                            name: row?.skuSpecs_name_2,
+                            value: row?.skuSpecs_value_2,
+                          },
+                        ].filter((s) => s?.name && s?.value),
                         images: row?.skuImages,
                       },
                     ],

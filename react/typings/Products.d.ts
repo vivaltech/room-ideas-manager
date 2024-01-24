@@ -5,19 +5,10 @@ export interface CsvProductData {
   productName: string
   brandId: string | number
   categoryIds: string | number | string[] | number[]
-  //productSpecs: Array<{
-  //  name: string
-  //  values: string[]
-  //}>
-
   productSpecs_name_1: string
   productSpecs_values_1: string[]
   productSpecs_name_2: string
   productSpecs_values_2: string[]
-  //productAttributes: Array<{
-  //  name: string
-  //  value: string
-  //}>
   productAttributes_name_1: string
   productAttributes_value_1: string
   productAttributes_name_2: string
@@ -25,7 +16,6 @@ export interface CsvProductData {
   productAttributes_name_3: string
   productAttributes_value_3: string
   productSlug: string
-  //productImages: ImageData[]
   productImages_id_1
   productImages_url_1
   productImages_alt_1
@@ -63,14 +53,9 @@ export interface CsvProductData {
   skuManufacturerCode?: string | number
   skuIsActive: boolean
   skuWeight: number
-  //skuDimensions: { width: number; height: number; length: number }
   skuWidth: number
   skuHeight: number
   skuLength: number
-  //skuSpecs: Array<{
-  //  name: string
-  //  value: string
-  //}>
   skuSpecs_name_1: string
   skuSpecs_value_1: string
   skuSpecs_name_2: string

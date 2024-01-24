@@ -1,5 +1,6 @@
 {
   "name": "admin-import-seller-products",
+  "version": "0.0.0",
   "private": false,
   "license": "MIT",
   "scripts": {
@@ -22,6 +23,9 @@
       "prettier --write"
     ]
   },
+  "engines": {
+    "node": ">=8"
+  },
   "devDependencies": {
     "@types/node": "^12.12.21",
     "@vtex/api": "6.45.24",
@@ -35,10 +39,6 @@
     "prettier": "^2.2.1",
     "stylelint": "^15.10.3",
     "typescript": "^3.7.5"
-  },
-  "version": "0.0.0",
-  "engines": {
-    "node": ">=8"
   },
   "dependencies": {}
 }
