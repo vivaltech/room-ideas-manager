@@ -99,8 +99,6 @@ const AdminSellers: React.FC = () => {
 
                   let parsedJSONValue
                   if (productSpecsValueHeaders.includes(headerLowerCase) || headerLowerCase === skuImagesHeader) {
-                    console.log({jsonValue})
-
                     parsedJSONValue = jsonValue.slice(1, -1).split(';')
                   }else{
                     parsedJSONValue = JSON.parse(jsonValue)
