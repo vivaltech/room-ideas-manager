@@ -85,7 +85,7 @@ const ImportResults: React.FC<ImportResultsProps> = ({ importResults }) => {
 
   const handleDownloadResultsXlsx = () => {
     const xlsData = importResultParsed
-    
+
     const worksheet = XLSX.utils.json_to_sheet(
       xlsData?.map((item) => ({
         ...item,

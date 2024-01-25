@@ -20,7 +20,7 @@ export async function addProductImages(
       (i) =>
         i?.fileName &&
         i?.url &&
-        !i?.url.startsWith(`https://${ctx.vtex.account}`)
+        !i?.url?.trim()?.startsWith(`https://${ctx.vtex.account}`)
     )
 
     if (externalImages.length > 0) {

@@ -1,7 +1,7 @@
 {
   "name": "admin-import-seller-products",
   "vendor": "ageas",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "title": "Import Seller Products",
   "description": "This module empowers users to seamlessly import products into the Seller Portal catalog by utilizing a CSV file.",
   "mustUpdateAt": "2022-08-28",
@@ -25,9 +25,7 @@
       "email": "soporte.commerce@valtech.com",
       "phone": "+541170796080"
     },
-    "availableCountries": [
-      "*"
-    ]
+    "availableCountries": ["*"]
   },
   "policies": [
     {
@@ -49,6 +47,13 @@
       "attrs": {
         "host": "{{account}}.vtexcommercestable.com.br",
         "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexassets.com",
+        "path": "/*"
       }
     },
     {
@@ -105,10 +110,7 @@
             "format": "password"
           }
         },
-        "required": [
-          "appKey",
-          "appToken"
-        ]
+        "required": ["appKey", "appToken"]
       }
     }
   },
