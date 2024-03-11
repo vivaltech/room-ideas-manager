@@ -12,7 +12,7 @@
     "@types/jest": "^24.0.18",
     "@types/node": "^12.0.0",
     "@types/ramda": "types/npm-ramda#dist",
-    "@vtex/api": "6.46.0",
+    "@vtex/api": "6.46.1",
     "@vtex/test-tools": "^1.0.0",
     "@vtex/tsconfig": "^0.5.6",
     "ageas.admin-import-seller-products": "https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products",
