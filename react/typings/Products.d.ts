@@ -15,6 +15,20 @@ export interface CsvProductData {
   productAttributes_value_2: string
   productAttributes_name_3: string
   productAttributes_value_3: string
+  productAttributes_name_4: string
+  productAttributes_value_4: string
+  productAttributes_name_5: string
+  productAttributes_value_5: string
+  productAttributes_name_6: string
+  productAttributes_value_6: string
+  productAttributes_name_7: string
+  productAttributes_value_7: string
+  productAttributes_name_8: string
+  productAttributes_value_8: string
+  productAttributes_name_9: string
+  productAttributes_value_9: string
+  productAttributes_name_10: string
+  productAttributes_value_10: string
   productSlug: string
   productImages_id_1
   productImages_url_1

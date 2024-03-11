@@ -211,6 +211,34 @@ const AdminSellers: React.FC = () => {
                         name: row?.productAttributes_name_3,
                         value: row?.productAttributes_value_3,
                       },
+                      {
+                        name: row?.productAttributes_name_4,
+                        value: row?.productAttributes_value_4,
+                      },
+                      {
+                        name: row?.productAttributes_name_5,
+                        value: row?.productAttributes_value_5,
+                      },
+                      {
+                        name: row?.productAttributes_name_6,
+                        value: row?.productAttributes_value_6,
+                      },
+                      {
+                        name: row?.productAttributes_name_7,
+                        value: row?.productAttributes_value_7,
+                      },
+                      {
+                        name: row?.productAttributes_name_8,
+                        value: row?.productAttributes_value_8,
+                      },
+                      {
+                        name: row?.productAttributes_name_9,
+                        value: row?.productAttributes_value_9,
+                      },
+                      {
+                        name: row?.productAttributes_name_10,
+                        value: row?.productAttributes_value_10,
+                      },
                     ].filter((a) => a?.name && a?.value),
                     slug: row?.productSlug,
                     images: [
