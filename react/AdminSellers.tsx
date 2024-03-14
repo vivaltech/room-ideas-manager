@@ -175,7 +175,9 @@ const AdminSellers: React.FC = () => {
                         value: row?.skuSpecs_value_2,
                       },
                     ].filter((s) => s?.name && s?.value),
-                    images: row?.skuImages,
+                    images: row?.skuImages?.map((s) =>
+                      s?.replace(/[^\w\s.-]/g, '')
+                    ),
                   }
 
                   existingProduct.skus.push(sku)
@@ -243,52 +245,52 @@ const AdminSellers: React.FC = () => {
                     slug: row?.productSlug,
                     images: [
                       {
-                        id: row?.productImages_id_1,
+                        id: row?.productImages_id_1?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_1?.trim(),
                         alt: row?.productImages_alt_1,
                       },
                       {
-                        id: row?.productImages_id_2,
+                        id: row?.productImages_id_2?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_2?.trim(),
                         alt: row?.productImages_alt_2,
                       },
                       {
-                        id: row?.productImages_id_3,
+                        id: row?.productImages_id_3?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_3?.trim(),
                         alt: row?.productImages_alt_3,
                       },
                       {
-                        id: row?.productImages_id_4,
+                        id: row?.productImages_id_4?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_4?.trim(),
                         alt: row?.productImages_alt_4,
                       },
                       {
-                        id: row?.productImages_id_5,
+                        id: row?.productImages_id_5?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_5?.trim(),
                         alt: row?.productImages_alt_5,
                       },
                       {
-                        id: row?.productImages_id_6,
+                        id: row?.productImages_id_6?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_6?.trim(),
                         alt: row?.productImages_alt_6,
                       },
                       {
-                        id: row?.productImages_id_7,
+                        id: row?.productImages_id_7?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_7?.trim(),
                         alt: row?.productImages_alt_7,
                       },
                       {
-                        id: row?.productImages_id_8,
+                        id: row?.productImages_id_8?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_8?.trim(),
                         alt: row?.productImages_alt_8,
                       },
                       {
-                        id: row?.productImages_id_9,
+                        id: row?.productImages_id_9?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_9?.trim(),
                         alt: row?.productImages_alt_9,
                       },
                       {
-                        id: row?.productImages_id_10,
+                        id: row?.productImages_id_10?.replace(/[^\w\s.-]/g, ''),
                         url: row?.productImages_url_10?.trim(),
                         alt: row?.productImages_alt_10,
                       },
@@ -317,7 +319,9 @@ const AdminSellers: React.FC = () => {
                             value: row?.skuSpecs_value_2,
                           },
                         ].filter((s) => s?.name && s?.value),
-                        images: row?.skuImages,
+                        images: row?.skuImages.map((s) =>
+                          s?.replace(/[^\w\s.-]/g, '')
+                        ),
                       },
                     ],
                     transportModal: row?.productTransportModal,

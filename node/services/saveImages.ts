@@ -41,22 +41,24 @@ export async function saveImages(
       return Promise.all(
         images.map(async (image) => {
           try {
+            const cleanedFileName = image.fileName.replace(/[^\w\s.-]/g, '')
+
             const imageBuffer = await imagesClient.open(image?.url)
 
             const formData = new FormData()
 
             formData.append('image', imageBuffer, {
-              filename: image.fileName,
+              filename: cleanedFileName,
             })
 
             const result = await catalogImagesExternal.save(
-              image.fileName,
+              cleanedFileName,
               token,
               formData
             )
 
             return {
-              fileName: image.fileName,
+              fileName: cleanedFileName,
               success: true,
               details: { ...result },
             }
@@ -80,17 +82,7 @@ export async function saveImages(
                         ...error?.response?.data,
                         status,
                       }
-                    : error?.response
-                    ? {
-                        ...error?.response,
-                        status,
-                      }
-                    : error?.data
-                    ? {
-                        ...error?.data,
-                        status,
-                      }
-                    : { status },
+                    : { message: 'Another Conflict', status },
               },
             }
           }

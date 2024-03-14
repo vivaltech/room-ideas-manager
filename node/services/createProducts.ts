@@ -59,11 +59,21 @@ export async function createProducts(
                 productExternalId: product?.externalId ?? '',
                 productName: product?.name,
                 success: false,
-                details: JSON.stringify(
-                  { errors: errorImages.map((i) => i.error) },
-                  null,
-                  4
-                ),
+                details: JSON.stringify({
+                  errors: errorImages.map((i) => {
+                    const nonObjectErrors: any = {}
+
+                    for (const key in i.error) {
+                      if (Object.prototype.hasOwnProperty.call(i.error, key)) {
+                        if (typeof i.error[key] !== 'object') {
+                          nonObjectErrors[key] = i.error[key]
+                        }
+                      }
+                    }
+
+                    return nonObjectErrors
+                  }),
+                }),
               }
             }
 

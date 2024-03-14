@@ -2,8 +2,6 @@
 
 import { addProductImages } from '../../services/addProductImages'
 
-// import { saveImages } from '../../services/saveImages'
-
 export async function importProductImages(
   ctx: Context,
   next: () => Promise<any>
