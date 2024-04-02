@@ -96,6 +96,9 @@ Let’s review each field:
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **productSpecs_name_1** related to **productSpecs_values_1**                                                                                                                                                                                              |
 | **productSpecs_name_2** related to **productSpecs_values_2**                                                                                                                                                                                              |
+| **productSpecs_name_3** related to **productSpecs_values_3**                                                                                             |
+| **...**                                                                                                                                                           |
+| **productSpecs_name_5** related to **productSpecs_values_5**                                                                                           |
 
 7. **productSpecs_name_1 (Required)**: Specify the name of the specification, providing a distinct attribute for the product. Choose clear and concise names for specifications.
 
@@ -113,6 +116,10 @@ Let’s review each field:
 
     - **Example**: `[S;M;L]`
 
+11. **productSpecs_name_3 … productSpecs_name_5**: Specify the name of the specification, providing a distinct attribute for the product. Choose clear and concise names for specifications.
+
+12. **productSpecs_values_3 … productSpecs_values_5**: efine the possible values associated with the specified spec defined on the `productSpecs_name_X`.
+
 | **productAttributes** contains attributes of the product. Attributes are additional properties used to create site browsing filters. This field was divided into: |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **productAttributes_name_1** related to **productAttributes_value_1**                                                                                             |
@@ -121,35 +128,35 @@ Let’s review each field:
 | **...**                                                                                                                                                           |
 | **productAttributes_name_10** related to **productAttributes_value_10**                                                                                           |
 
-11. **productAttributes_name_1 (Required)**: Specify the name of the attribute.
+13. **productAttributes_name_1 (Required)**: Specify the name of the attribute.
 
     - **Example**: `Fabric`
 
-12. **productAttributes_value_1 (Required)**: Define the value associated with the specified attribute defined on the `productAttributes_name_1`.
+14. **productAttributes_value_1 (Required)**: Define the value associated with the specified attribute defined on the `productAttributes_name_1`.
 
     - **Example**: `Plastic`
 
-13. **productAttributes_name_2**: Specify the name of the attribute.
+14. **productAttributes_name_2**: Specify the name of the attribute.
 
     - **Example**: `Gender`
 
-14. **productAttributes_value_2**: Define the value associated with the specified attribute defined on the `productAttributes_name_2`.
+16. **productAttributes_value_2**: Define the value associated with the specified attribute defined on the `productAttributes_name_2`.
 
     - **Example**: `Feminine`
 
-15. **productAttributes_name_3**: Specify the name of the attribute.
+17. **productAttributes_name_3**: Specify the name of the attribute.
 
     - **Example**: `From`
 
-16. **productAttributes_value_3**: Define the value associated with the specified attribute defined on the `productAttributes_name_3`.
+18. **productAttributes_value_3**: Define the value associated with the specified attribute defined on the `productAttributes_name_3`.
 
     - **Example**: `China`
 
-17. **productAttributes_name_4 … productAttributes_name_10**: Specify the name of the attribute.
+19. **productAttributes_name_4 … productAttributes_name_10**: Specify the name of the attribute.
 
-18. **productAttributes_value_4 … productAttributes_value_10**: Define the value associated with the specified attribute defined on the `productAttributes_name_X`.
+20. **productAttributes_value_4 … productAttributes_value_10**: Define the value associated with the specified attribute defined on the `productAttributes_name_X`.
 
-19. **productSlug**: This field represents a slug or identifier for the product, which is utilized in the URLs of the store. The product slug serves as a reference in the URL, contributing to search engine optimization (SEO) efforts.
+21. **productSlug**: This field represents a slug or identifier for the product, which is utilized in the URLs of the store. The product slug serves as a reference in the URL, contributing to search engine optimization (SEO) efforts.
 
 | **productImages** encompasses the identifiers and URLs of images associated with the product. This this images will be assign on each SKU. This field was divided into: |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -158,48 +165,48 @@ Let’s review each field:
 | **. . .**                                                                                                                                                               |
 | **productImages_id_10** related to **productImages_url_10** and **productImages_alt_10**                                                                                |
 
-20. **productImages_id_1 (Required)**: Represents the unique identifier for the image. This id is necessary to save the image inside VTEX.
+22. **productImages_id_1 (Required)**: Represents the unique identifier for the image. This id is necessary to save the image inside VTEX.
 
-21. **productImages_url_1 (Required)**: Represents the URL of the image `productImages_id_1`. You have the flexibility to use external URLs, such as those from Google Drive.
+23. **productImages_url_1 (Required)**: Represents the URL of the image `productImages_id_1`. You have the flexibility to use external URLs, such as those from Google Drive.
 
     - If the URL is external, we will save the images in VTEX before importing the products. In the case of Google Drive URLs, it is essential to follow this specific format: `https://drive.google.com/thumbnail?id={id}`, where id represents the unique identifier associated with the image content. **Example**: [https://drive.google.com/thumbnail?id=1YT19jigO7R4W4wLGkvXIngCtrRIol7s1](https://drive.google.com/thumbnail?id=1YT19jigO7R4W4wLGkvXIngCtrRIol7s1)
     - If the URL is internal, it should be formatted as `https://{accountName}.vtexassets.com/assets/{path}`. **Example**: [https://spvaltechqa733.vtexassets.com/assets/vtex.catalog-images/products/water_img_1\_\_\_128a77fee20713a5b8b69da81912fb82.png](https://spvaltechqa733.vtexassets.com/assets/vtex.catalog-images/products/water_img_1___128a77fee20713a5b8b69da81912fb82.png)
 
-22. **productImages_alt_1**: Describes the alternative text for the image `productImages_id_1`.
+24. **productImages_alt_1**: Describes the alternative text for the image `productImages_id_1`.
 
-23. **productImages_id_2 … productImages_id_10**: Represents the unique identifier for the image. This id is necessary to save the image inside VTEX.
+25. **productImages_id_2 … productImages_id_10**: Represents the unique identifier for the image. This id is necessary to save the image inside VTEX.
 
-24. **productImages_url_2 … productImages_url_10**: Represents the URL of the image `productImages_id_X`. You have the flexibility to use external URLs, such as those from Google Drive.
+26. **productImages_url_2 … productImages_url_10**: Represents the URL of the image `productImages_id_X`. You have the flexibility to use external URLs, such as those from Google Drive.
 
-25. **productImages_alt_2 … productImages_alt_10**: Describes the alternative text for the image `productImages_id_X`.
+27. **productImages_alt_2 … productImages_alt_10**: Describes the alternative text for the image `productImages_id_X`.
 
-26. **skuId**: The skuId serves as the distinctive identifier for the SKU. This unique identifier is assigned to each SKU within the system. Importantly, **when creating new skus, it is crucial to omit this value**. The system will autonomously generate a unique `skuId` for new products during the creation process.
+28. **skuId**: The skuId serves as the distinctive identifier for the SKU. This unique identifier is assigned to each SKU within the system. Importantly, **when creating new skus, it is crucial to omit this value**. The system will autonomously generate a unique `skuId` for new products during the creation process.
     However, **if you are performing updates to existing products, it becomes crucial to include the skuId column in your CSV file**. This identifier is essential for accurately associating modifications with the corresponding SKUs. By understanding this distinction, you contribute to a seamless and error-free product importation process.
 
-27. **skuName**: The `skuName` represents the distinct name assigned to the SKU. This serves as a clear and concise label for the SKU, contributing to effective product differentiation. It is imperative to use straightforward language, avoiding complex terms or languages. The `skuName` is a crucial element for SEO optimization and must adhere to the 150-character limit.
+29. **skuName**: The `skuName` represents the distinct name assigned to the SKU. This serves as a clear and concise label for the SKU, contributing to effective product differentiation. It is imperative to use straightforward language, avoiding complex terms or languages. The `skuName` is a crucial element for SEO optimization and must adhere to the 150-character limit.
 
-28. **skuExternalId**: The `skuExternalId` serves as an external identifier for the SKU. This unique reference code is crafted to enhance the organization of the store. It provides a valuable means of identification for the SKU in external systems or processes.
+30. **skuExternalId**: The `skuExternalId` serves as an external identifier for the SKU. This unique reference code is crafted to enhance the organization of the store. It provides a valuable means of identification for the SKU in external systems or processes.
 
-29. **skuEan**: The `skuEan` is the EAN (International Article Number) assigned to the SKU. This unique barcode comprises up to 13 numeric characters, providing a standardized identification code for the SKU. The EAN is crucial for accurate and efficient tracking of the SKU across various systems.
+31. **skuEan**: The `skuEan` is the EAN (International Article Number) assigned to the SKU. This unique barcode comprises up to 13 numeric characters, providing a standardized identification code for the SKU. The EAN is crucial for accurate and efficient tracking of the SKU across various systems.
 
-30. **skuManufacturerCode**: The `skuManufacturerCode` is the manufacturer code specific to the SKU. This code serves as a reference within the store, facilitating streamlined organization and management of SKU-related information. It is essential for associating the SKU with its respective manufacturer.
+32. **skuManufacturerCode**: The `skuManufacturerCode` is the manufacturer code specific to the SKU. This code serves as a reference within the store, facilitating streamlined organization and management of SKU-related information. It is essential for associating the SKU with its respective manufacturer.
 
-31. **skuIsActive**: The `skuIsActive` field indicates the activity status of the SKU. It is a boolean attribute, meaning it accepts either `true` or `false` values.
+33. **skuIsActive**: The `skuIsActive` field indicates the activity status of the SKU. It is a boolean attribute, meaning it accepts either `true` or `false` values.
 
     - When set to `true`, it signifies that the SKU is active, indicating that it is currently available for purchase.
     - Conversely, when set to `false`, it denotes that the SKU is inactive, implying that it is not available for purchase at the moment.
 
-32. **skuWeight**: The `skuWeight` field represents the weight of the SKU and is specified in grams. It is a numerical attribute, allowing for weights lighter than 1000 grams.
+34. **skuWeight**: The `skuWeight` field represents the weight of the SKU and is specified in grams. It is a numerical attribute, allowing for weights lighter than 1000 grams.
 
-33. **skuWidth (Required)**: The `skuWidth` field represents the width of the SKU.
+35. **skuWidth (Required)**: The `skuWidth` field represents the width of the SKU.
 
     - **Example**: `1.5`
 
-34. **skuHeight (Required)**: The `skuHeight` field represents the height of the SKU.
+36. **skuHeight (Required)**: The `skuHeight` field represents the height of the SKU.
 
     - **Example**: `2.0`
 
-35. **skuLength (Required)**: The `skuLength` field represents the length of the SKU.
+37. **skuLength (Required)**: The `skuLength` field represents the length of the SKU.
 
     - **Example**: `1.7`
 
@@ -208,34 +215,34 @@ Let’s review each field:
 | **skuSpecs_name_1** related to **skuSpecs_value_1** and **productImages_alt_1**                                                                                                       |
 | **skuSpecs_name_2** related to **productImages_url_2** and **skuSpecs_value_2**                                                                                                       |
 
-36. **skuSpecs_name_1 (Required)**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
+38. **skuSpecs_name_1 (Required)**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
 
     - **Example**: `Color`
 
-37. **skuSpecs_value_1 (Required)**: Specifies the value associated with the particular specification defined on `skuSpecs_name_1`, contributing to defining the unique characteristics of the SKU.
+39. **skuSpecs_value_1 (Required)**: Specifies the value associated with the particular specification defined on `skuSpecs_name_1`, contributing to defining the unique characteristics of the SKU.
 
     - **Example**: `White`
 
     - In this example, the SKU has a specification named `Color` with a corresponding value of `White`. It's important to note that for **skuSpecs_name_1** can be chosen from **productSpecs_name_1** and the **skuSpecs_value_1** can be chosen from the **productSpecs_values_1**.
 
-38. **skuSpecs_name_2**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
+40. **skuSpecs_name_2**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
 
     - **Example**: `Size`
 
-39. **skuSpecs_value_2**: Specifies the value associated with the particular specification defined on `skuSpecs_name_2`, contributing to defining the unique characteristics of the SKU.
+41. **skuSpecs_value_2**: Specifies the value associated with the particular specification defined on `skuSpecs_name_2`, contributing to defining the unique characteristics of the SKU.
 
     - **Example**: `M`
 
     - In this example, the SKU has a specification named `Size` with a corresponding value of `M`. It's important to note that for **skuSpecs_name_2** can be chosen from **productSpecs_name_2** and the **skuSpecs_value_2** can be chosen from the **productSpecs_values_2**.
 
-40. **skuImages (List of Values) (Required)**: The `skuImages` field contains the URLs or identifiers of images associated with the SKU. It is an list of SKU image IDs, and these IDs correspond to the images defined in the `productImages_id_X` columns. Make sure that the values are enclosed in brackets `[ ]` and separated by a semicolon `;`
+42. **skuImages (List of Values) (Required)**: The `skuImages` field contains the URLs or identifiers of images associated with the SKU. It is an list of SKU image IDs, and these IDs correspond to the images defined in the `productImages_id_X` columns. Make sure that the values are enclosed in brackets `[ ]` and separated by a semicolon `;`
     - **Example**: `[oil_img_1.png;oil_img_2.png]`
     - In this example, the SKU image added was the one with the id `oil_img_1.png` and `oil_img_2.png`. Ensure that the specified IDs match the images you have previously defined in the `productImages_id_X` field.
-41. **productTransportModal**: Represents the transport modal used for transporting the product.
+43. **productTransportModal**: Represents the transport modal used for transporting the product.
 
-42. **productTaxCode**: Signifies the tax code associated with the product.
+44. **productTaxCode**: Signifies the tax code associated with the product.
 
-43. **productDescription**: The `productDescription` field is used to provide a detailed description of the product. It supports HTML formatting, allowing you to structure the content as needed.
+45. **productDescription**: The `productDescription` field is used to provide a detailed description of the product. It supports HTML formatting, allowing you to structure the content as needed.
     - Should you wish to incorporate spaces within the description, it is necessary to encapsulate the entire description within `"`.
     - **Example**: `"<p>Description Example 2</p><p></p><h1>111111</h1><p></p><h3><strong><em>123456789</em></strong></h3>"`
 
