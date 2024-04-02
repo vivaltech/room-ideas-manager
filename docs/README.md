@@ -214,6 +214,7 @@ Let’s review each field:
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **skuSpecs_name_1** related to **skuSpecs_value_1** and **productImages_alt_1**                                                                                                       |
 | **skuSpecs_name_2** related to **productImages_url_2** and **skuSpecs_value_2**                                                                                                       |
+| **skuSpecs_name_3 … skuSpecs_name_5** related to **productImages_url_3 … productImages_url_5** and **skuSpecs_value_3 … skuSpecs_value_5**                                                                                                       |
 
 38. **skuSpecs_name_1 (Required)**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
 
