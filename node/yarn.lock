@@ -1414,9 +1414,9 @@ acorn@^6.0.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.3.0.tgz#0087509119ffa4fc0a0041d1e93a417e68cb856e"
   integrity sha512-/czfa8BwS88b9gWQVhc8eknunSA2DoJpJyTQkhheIf5E48u1N0R4q/YxxsAeqRrmK9TQ/uYfgLDfZo91UlANIA==
 
-"ageas.admin-import-seller-products@https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products":
-  version "1.0.1"
-  resolved "https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products#c9e36c0a383c1588c2ebaf1c0aa24a35864fc88e"
+"ageas.admin-import-seller-products@http://ageas.vtexassets.com/_v/public/typings/v1/ageas.admin-import-seller-products@1.1.0/public/@types/ageas.admin-import-seller-products":
+  version "1.1.0"
+  resolved "http://ageas.vtexassets.com/_v/public/typings/v1/ageas.admin-import-seller-products@1.1.0/public/@types/ageas.admin-import-seller-products#6b80df25f022431dc59d0d98648b45167c8992bc"
 
 agentkeepalive@^4.0.2:
   version "4.1.2"
@@ -5344,7 +5344,7 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-"stats-lite@github:vtex/node-stats-lite#dist":
+stats-lite@vtex/node-stats-lite#dist:
   version "2.2.0"
   resolved "https://codeload.github.com/vtex/node-stats-lite/tar.gz/1b0d39cc41ef7aaecfd541191f877887a2044797"
   dependencies:

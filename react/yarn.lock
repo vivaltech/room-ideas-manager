@@ -181,10 +181,9 @@ adler-32@~1.3.0:
   resolved "https://registry.npmjs.org/adler-32/-/adler-32-1.3.1.tgz"
   integrity sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==
 
-"ageas.admin-import-seller-products@https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products":
-  version "1.0.1"
-  resolved "https://gbo--spvaltechqa733.myvtex.com/_v/private/typings/linked/v1/ageas.admin-import-seller-products@1.0.1+build1705935304/public/@types/ageas.admin-import-seller-products"
-  integrity sha512-4Ikx93SKpwfvxa8ZYI6djMW2R/vXt147RqqTiMNyoQ9UarsUw5NuSF5UPoMxV70SHREmasspbIfuQO70uPemOQ==
+"ageas.admin-import-seller-products@http://ageas.vtexassets.com/_v/public/typings/v1/ageas.admin-import-seller-products@1.1.0/public/@types/ageas.admin-import-seller-products":
+  version "1.1.0"
+  resolved "http://ageas.vtexassets.com/_v/public/typings/v1/ageas.admin-import-seller-products@1.1.0/public/@types/ageas.admin-import-seller-products#6b80df25f022431dc59d0d98648b45167c8992bc"
 
 apollo-cache@1.3.5:
   version "1.3.5"

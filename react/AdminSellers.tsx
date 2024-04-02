@@ -85,6 +85,8 @@ const AdminSellers: React.FC = () => {
                 'productSpecs_values_1',
                 'productSpecs_values_2',
                 'productSpecs_values_3',
+                'productSpecs_values_4',
+                'productSpecs_values_5',
               ].map((h) => h.toLowerCase())
 
               const skuImagesHeader = 'skuImages'.toLowerCase()
@@ -174,6 +176,18 @@ const AdminSellers: React.FC = () => {
                         name: row?.skuSpecs_name_2,
                         value: row?.skuSpecs_value_2,
                       },
+                      {
+                        name: row?.skuSpecs_name_3,
+                        value: row?.skuSpecs_value_3,
+                      },
+                      {
+                        name: row?.skuSpecs_name_4,
+                        value: row?.skuSpecs_value_4,
+                      },
+                      {
+                        name: row?.skuSpecs_name_5,
+                        value: row?.skuSpecs_value_5,
+                      },
                     ].filter((s) => s?.name && s?.value),
                     images: row?.skuImages?.map((s) =>
                       s?.replace(/[^\w\s.-]/g, '')
@@ -198,6 +212,18 @@ const AdminSellers: React.FC = () => {
                       {
                         name: row?.productSpecs_name_2,
                         values: row?.productSpecs_values_2,
+                      },
+                      {
+                        name: row?.productSpecs_name_3,
+                        values: row?.productSpecs_values_3,
+                      },
+                      {
+                        name: row?.productSpecs_name_4,
+                        values: row?.productSpecs_values_4,
+                      },
+                      {
+                        name: row?.productSpecs_name_5,
+                        values: row?.productSpecs_values_5,
                       },
                     ].filter((s) => s?.name && s?.values?.length > 0),
                     attributes: [
@@ -317,6 +343,18 @@ const AdminSellers: React.FC = () => {
                           {
                             name: row?.skuSpecs_name_2,
                             value: row?.skuSpecs_value_2,
+                          },
+                          {
+                            name: row?.skuSpecs_name_3,
+                            value: row?.skuSpecs_value_3,
+                          },
+                          {
+                            name: row?.skuSpecs_name_4,
+                            value: row?.skuSpecs_value_4,
+                          },
+                          {
+                            name: row?.skuSpecs_name_5,
+                            value: row?.skuSpecs_value_5,
                           },
                         ].filter((s) => s?.name && s?.value),
                         images: row?.skuImages.map((s) =>
