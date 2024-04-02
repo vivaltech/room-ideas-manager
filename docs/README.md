@@ -118,7 +118,7 @@ Let’s review each field:
 
 11. **productSpecs_name_3 … productSpecs_name_5**: Specify the name of the specification, providing a distinct attribute for the product. Choose clear and concise names for specifications.
 
-12. **productSpecs_values_3 … productSpecs_values_5**: efine the possible values associated with the specified spec defined on the `productSpecs_name_X`.
+12. **productSpecs_values_3 … productSpecs_values_5**: Define the possible values associated with the specified spec defined on the `productSpecs_name_X`.
 
 | **productAttributes** contains attributes of the product. Attributes are additional properties used to create site browsing filters. This field was divided into: |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
