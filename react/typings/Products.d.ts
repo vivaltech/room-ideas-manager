@@ -9,6 +9,12 @@ export interface CsvProductData {
   productSpecs_values_1: string[]
   productSpecs_name_2: string
   productSpecs_values_2: string[]
+  productSpecs_name_3: string
+  productSpecs_values_3: string[]
+  productSpecs_name_4: string
+  productSpecs_values_4: string[]
+  productSpecs_name_5: string
+  productSpecs_values_5: string[]
   productAttributes_name_1: string
   productAttributes_value_1: string
   productAttributes_name_2: string
@@ -74,6 +80,12 @@ export interface CsvProductData {
   skuSpecs_value_1: string
   skuSpecs_name_2: string
   skuSpecs_value_2: string
+  skuSpecs_name_3: string
+  skuSpecs_value_3: string
+  skuSpecs_name_4: string
+  skuSpecs_value_4: string
+  skuSpecs_name_5: string
+  skuSpecs_value_5: string
   skuImages: string[]
   productTransportModal?: string | number
   productTaxCode?: string | number
