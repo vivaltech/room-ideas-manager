@@ -235,14 +235,24 @@ Let’s review each field:
 
     - In this example, the SKU has a specification named `Size` with a corresponding value of `M`. It's important to note that for **skuSpecs_name_2** can be chosen from **productSpecs_name_2** and the **skuSpecs_value_2** can be chosen from the **productSpecs_values_2**.
 
-42. **skuImages (List of Values) (Required)**: The `skuImages` field contains the URLs or identifiers of images associated with the SKU. It is an list of SKU image IDs, and these IDs correspond to the images defined in the `productImages_id_X` columns. Make sure that the values are enclosed in brackets `[ ]` and separated by a semicolon `;`
+42. **skuSpecs_name_3 … skuSpecs_name_5**: Represents the name of the SKU's specification, providing a distinct attribute for the SKU.
+
+    - **Example**: `Fabric`
+
+43. **skuSpecs_value_3 … skuSpecs_value_5**: Specifies the value associated with the particular specification defined on `skuSpecs_name_X`, contributing to defining the unique characteristics of the SKU.
+
+    - **Example**: `Cotton`
+
+    - In this example, the SKU has a specification named `Fabric` with a corresponding value of `Cotton`. It's important to note that for **skuSpecs_name_X** can be chosen from **productSpecs_name_X** and the **skuSpecs_value_X** can be chosen from the **productSpecs_values_X**.
+
+44. **skuImages (List of Values) (Required)**: The `skuImages` field contains the URLs or identifiers of images associated with the SKU. It is an list of SKU image IDs, and these IDs correspond to the images defined in the `productImages_id_X` columns. Make sure that the values are enclosed in brackets `[ ]` and separated by a semicolon `;`
     - **Example**: `[oil_img_1.png;oil_img_2.png]`
     - In this example, the SKU image added was the one with the id `oil_img_1.png` and `oil_img_2.png`. Ensure that the specified IDs match the images you have previously defined in the `productImages_id_X` field.
-43. **productTransportModal**: Represents the transport modal used for transporting the product.
+45. **productTransportModal**: Represents the transport modal used for transporting the product.
 
-44. **productTaxCode**: Signifies the tax code associated with the product.
+46. **productTaxCode**: Signifies the tax code associated with the product.
 
-45. **productDescription**: The `productDescription` field is used to provide a detailed description of the product. It supports HTML formatting, allowing you to structure the content as needed.
+47. **productDescription**: The `productDescription` field is used to provide a detailed description of the product. It supports HTML formatting, allowing you to structure the content as needed.
     - Should you wish to incorporate spaces within the description, it is necessary to encapsulate the entire description within `"`.
     - **Example**: `"<p>Description Example 2</p><p></p><h1>111111</h1><p></p><h3><strong><em>123456789</em></strong></h3>"`
 
