@@ -167,16 +167,24 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       id: 'slug',
       title: intl.formatMessage(productTableColumnsMessages.slugTitle),
     },
-    {
-      id: 'transportModal',
-      title: intl.formatMessage(
-        productTableColumnsMessages.transportModalTitle
-      ),
-    },
-    {
-      id: 'taxCode',
-      title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
-    },
+    ...(products.some((product) => product.transportModal)
+      ? [
+          {
+            id: 'transportModal',
+            title: intl.formatMessage(
+              productTableColumnsMessages.transportModalTitle
+            ),
+          },
+        ]
+      : []),
+    ...(products.some((product) => product.taxCode)
+      ? [
+          {
+            id: 'taxCode',
+            title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
+          },
+        ]
+      : []),
     ...(products.some((product) => product.description)
       ? [
           {

@@ -43,10 +43,16 @@ const SkusTable = ({ skus }: SkusTableProps) => {
       id: 'ean',
       title: intl.formatMessage(skuTableColumnsMessages.eanTitle),
     },
-    {
-      id: 'manufacturerCode',
-      title: intl.formatMessage(skuTableColumnsMessages.manufacturerCodeTitle),
-    },
+    ...(skus.some((sku) => sku.manufacturerCode)
+      ? [
+          {
+            id: 'manufacturerCode',
+            title: intl.formatMessage(
+              skuTableColumnsMessages.manufacturerCodeTitle
+            ),
+          },
+        ]
+      : []),
     {
       id: 'isActive',
       title: intl.formatMessage(skuTableColumnsMessages.isActiveTitle),
