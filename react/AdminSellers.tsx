@@ -268,7 +268,13 @@ const AdminSellers: React.FC = () => {
                         value: row?.productAttributes_value_10,
                       },
                     ].filter((a) => a?.name && a?.value),
-                    slug: row?.productSlug,
+                    slug: `/${row?.productName
+                      ?.toLowerCase()
+                      .trim()
+                      .replace(/[^\w\s-]/g, '')
+                      .replace(/\s+/g, '-')
+                      .replace(/--+/g, '-')
+                      .slice(0, 50)}`,
                     images: [
                       {
                         id: row?.productImages_id_1?.replace(/[^\w\s.-]/g, ''),
