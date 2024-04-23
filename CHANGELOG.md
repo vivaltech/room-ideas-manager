@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `wakeUp` to fix first call. (If this doesn't work, we need to use a fetch instead of gql mutation).
+- Product Slug is generated based on the product name removing special characters and replacing spaces with `-`.
+- Product Spec is generated based on the `skuSpecs` from each product.
+
+### Fixed
+
+- Contemplate the conflict if the image id already exist and use it.
+
+### Removed
+
+- Remove `productTransportModal, productTaxCode, skuManufacturerCode` columns from csv.
+- Remove `productSlug` column from csv and generate it based on productName.
+- Remove `productSpecs (name_1 to name_5 and values_1 to values_5)` columns from csv and generate it based on `skuSpecs`.
+
 ## [1.2.1] - 2024-04-03
 
 ### Fixed
