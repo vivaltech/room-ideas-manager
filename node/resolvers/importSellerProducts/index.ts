@@ -93,4 +93,7 @@ export const mutations = {
       throw new GraphQLError('importSellerProducts error', { detail: error })
     }
   },
+  wakeUp: async (_: unknown, __: unknown, _ctx: Context) => {
+    return true
+  },
 }
