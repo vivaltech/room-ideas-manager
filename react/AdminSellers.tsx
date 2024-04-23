@@ -159,7 +159,6 @@ const AdminSellers: React.FC = () => {
                     name: row?.skuName,
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
-                    manufacturerCode: row?.skuManufacturerCode,
                     isActive: row?.skuIsActive,
                     weight: row?.skuWeight,
                     dimensions: {
@@ -204,28 +203,7 @@ const AdminSellers: React.FC = () => {
                     name: row?.productName,
                     brandId: row?.brandId,
                     categoryIds: row?.categoryIds,
-                    specs: [
-                      {
-                        name: row?.productSpecs_name_1,
-                        values: row?.productSpecs_values_1,
-                      },
-                      {
-                        name: row?.productSpecs_name_2,
-                        values: row?.productSpecs_values_2,
-                      },
-                      {
-                        name: row?.productSpecs_name_3,
-                        values: row?.productSpecs_values_3,
-                      },
-                      {
-                        name: row?.productSpecs_name_4,
-                        values: row?.productSpecs_values_4,
-                      },
-                      {
-                        name: row?.productSpecs_name_5,
-                        values: row?.productSpecs_values_5,
-                      },
-                    ].filter((s) => s?.name && s?.values?.length > 0),
+                    specs: [],
                     attributes: [
                       {
                         name: row?.productAttributes_name_1,
@@ -333,7 +311,6 @@ const AdminSellers: React.FC = () => {
                         name: row?.skuName,
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
-                        manufacturerCode: row?.skuManufacturerCode,
                         isActive: row?.skuIsActive,
                         weight: row?.skuWeight,
                         dimensions: {
@@ -368,13 +345,37 @@ const AdminSellers: React.FC = () => {
                         ),
                       },
                     ],
-                    transportModal: row?.productTransportModal,
-                    taxCode: row?.productTaxCode,
                     description: row?.productDescription,
                   }
 
                   productMap.set(productId, product)
                 }
+              })
+
+              productMap.forEach((product) => {
+                const combinedSpecs: Array<{
+                  name: string
+                  values: string[]
+                }> = []
+
+                product?.skus?.forEach((sku) => {
+                  sku?.specs?.forEach((spec) => {
+                    const existingSpec = combinedSpecs?.find(
+                      (s) => s?.name === spec?.name
+                    )
+
+                    if (existingSpec) {
+                      existingSpec?.values?.push(spec?.value)
+                    } else {
+                      combinedSpecs.push({
+                        name: spec?.name,
+                        values: [spec?.value],
+                      })
+                    }
+                  })
+                })
+
+                product.specs = combinedSpecs
               })
 
               const validRows: ProductData[] = Array.from(
@@ -403,16 +404,12 @@ const AdminSellers: React.FC = () => {
                   missingFields.push('brandId')
                 }
 
-                if (!row?.specs?.length) {
-                  missingFields.push('specs')
-                }
+                // if (!row?.specs?.length) {
+                //  missingFields.push('specs')
+                // }
 
                 if (!row?.attributes?.length) {
                   missingFields.push('attributes')
-                }
-
-                if (!row?.slug) {
-                  missingFields.push('slug')
                 }
 
                 if (!row?.images?.length) {
@@ -448,7 +445,7 @@ const AdminSellers: React.FC = () => {
                     const missingFieldsInRow: string[] = []
 
                     Object.keys(row).forEach((field) => {
-                      if (!row[field as keyof ProductData]) {
+                      if (!row[field as keyof Required<ProductData>]) {
                         missingFieldsInRow.push(field)
                       }
                     })

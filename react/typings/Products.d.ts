@@ -5,16 +5,6 @@ export interface CsvProductData {
   productName: string
   brandId: string | number
   categoryIds: string | number | string[] | number[]
-  productSpecs_name_1: string
-  productSpecs_values_1: string[]
-  productSpecs_name_2: string
-  productSpecs_values_2: string[]
-  productSpecs_name_3: string
-  productSpecs_values_3: string[]
-  productSpecs_name_4: string
-  productSpecs_values_4: string[]
-  productSpecs_name_5: string
-  productSpecs_values_5: string[]
   productAttributes_name_1: string
   productAttributes_value_1: string
   productAttributes_name_2: string
@@ -35,7 +25,6 @@ export interface CsvProductData {
   productAttributes_value_9: string
   productAttributes_name_10: string
   productAttributes_value_10: string
-  productSlug: string
   productImages_id_1
   productImages_url_1
   productImages_alt_1
@@ -70,7 +59,6 @@ export interface CsvProductData {
   skuName: string
   skuExternalId?: string | number
   skuEan?: string | number
-  skuManufacturerCode?: string | number
   skuIsActive: boolean
   skuWeight: number
   skuWidth: number
@@ -87,8 +75,6 @@ export interface CsvProductData {
   skuSpecs_name_5: string
   skuSpecs_value_5: string
   skuImages: string[]
-  productTransportModal?: string | number
-  productTaxCode?: string | number
   productDescription?: string
 }
 
