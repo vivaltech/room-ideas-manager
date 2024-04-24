@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `wakeUp` to fix first call. (If this doesn't work, we need to use a fetch instead of gql mutation).
-- Product Slug is generated based on the product name removing special characters and replacing spaces with `-`.
+- Product Slug is generated based on the product name removing special characters and replacing spaces with `-` and is normalize (convert á -> a and ç -> c).
 - Product Spec is generated based on the `skuSpecs` from each product.
 - Add `productStatus` as `active` always.
 - Add `skuIsActive` as `true` always.
