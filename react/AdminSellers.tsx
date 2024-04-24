@@ -248,12 +248,14 @@ const AdminSellers: React.FC = () => {
                       },
                     ].filter((a) => a?.name && a?.value),
                     slug: `/${row?.productName
+                      ?.normalize('NFD')
+                      ?.replace(/[\u0300-\u036f]/g, '')
                       ?.toLowerCase()
-                      .trim()
-                      .replace(/[^\w\s-]/g, '')
-                      .replace(/\s+/g, '-')
-                      .replace(/--+/g, '-')
-                      .slice(0, 50)}`,
+                      ?.trim()
+                      ?.replace(/[^\w\s-]/g, '')
+                      ?.replace(/\s+/g, '-')
+                      ?.replace(/--+/g, '-')
+                      ?.slice(0, 50)}`,
                     images: [
                       {
                         id: row?.productImages_id_1?.replace(/[^\w\s.-]/g, ''),
