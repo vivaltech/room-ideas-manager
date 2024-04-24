@@ -143,6 +143,7 @@ const AdminSellers: React.FC = () => {
                   productId = row?.productId?.toString()
                 } else if (row?.productExternalId) {
                   productId = row?.productExternalId?.toString()
+                  // TODO: add name as another matcher column
                 } else {
                   productId = generateNewUniqueId()
                 }
@@ -159,7 +160,7 @@ const AdminSellers: React.FC = () => {
                     name: row?.skuName,
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
-                    isActive: row?.skuIsActive,
+                    isActive: true,
                     weight: row?.skuWeight,
                     dimensions: {
                       width: row?.skuWidth,
@@ -199,7 +200,7 @@ const AdminSellers: React.FC = () => {
                   const product: ProductData = {
                     id: row?.productId,
                     externalId: row?.productExternalId,
-                    status: row?.productStatus,
+                    status: 'active',
                     name: row?.productName,
                     brandId: row?.brandId,
                     categoryIds: row?.categoryIds,
@@ -311,7 +312,7 @@ const AdminSellers: React.FC = () => {
                         name: row?.skuName,
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
-                        isActive: row?.skuIsActive,
+                        isActive: true,
                         weight: row?.skuWeight,
                         dimensions: {
                           width: row?.skuWidth,

@@ -1,7 +1,6 @@
 export interface CsvProductData {
   productId?: string | number
   productExternalId?: string | number
-  productStatus: string
   productName: string
   brandId: string | number
   categoryIds: string | number | string[] | number[]
@@ -59,7 +58,6 @@ export interface CsvProductData {
   skuName: string
   skuExternalId?: string | number
   skuEan?: string | number
-  skuIsActive: boolean
   skuWeight: number
   skuWidth: number
   skuHeight: number
