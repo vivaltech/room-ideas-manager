@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-04-26
+
 ### Added
 
 - Add `wakeUp` to fix first call. (If this doesn't work, we need to use a fetch instead of gql mutation).
