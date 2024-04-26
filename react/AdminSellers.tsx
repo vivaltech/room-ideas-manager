@@ -48,10 +48,6 @@ const AdminSellers: React.FC = () => {
     setShowTable(false)
   }
 
-  function generateNewUniqueId() {
-    return Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
-  }
-
   function normalizeProductName(productName: string) {
     return productName
       ?.normalize('NFD')
@@ -61,6 +57,16 @@ const AdminSellers: React.FC = () => {
       ?.replace(/[^\w\s-]/g, '')
       ?.replace(/\s+/g, '-')
       ?.replace(/--+/g, '-')
+  }
+
+  function generateNewUniqueId(productName?: string) {
+    if (!productName) {
+      return (
+        Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
+      )
+    }
+
+    return normalizeProductName(productName)
   }
 
   const handleFileUpload = useCallback((acceptedFiles) => {
@@ -148,7 +154,8 @@ const AdminSellers: React.FC = () => {
                   productId = row?.productId?.toString()
                 } else if (row?.productExternalId) {
                   productId = row?.productExternalId?.toString()
-                  // TODO: add name as another matcher column
+                } else if (row?.productName) {
+                  productId = generateNewUniqueId(row?.productName)
                 } else {
                   productId = generateNewUniqueId()
                 }

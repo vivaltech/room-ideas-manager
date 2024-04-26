@@ -19,10 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - If 2 different skus are from the same product, the accumulation of the images of each sku generates the `productImages`.
   - `imageId` is generated from `productName` normalized + `_X` (where X is the number of image) + `.png`.
   - `imageAlt` is generated from `productName` normalized + `_X` (where X is the number of image).
+- `productName` can be used as a column to know if 2 or more skus are from the same product.
 
 ### Fixed
 
 - Contemplate the conflict if the image id already exist and use it.
+- Change message `Is Active` to `Status`
 
 ### Removed
 
