@@ -55,7 +55,6 @@ export interface CsvProductData {
   productImages_url_10
   productImages_alt_10
   skuId?: string | number
-  skuName: string
   skuExternalId?: string | number
   skuEan?: string | number
   skuWeight: number

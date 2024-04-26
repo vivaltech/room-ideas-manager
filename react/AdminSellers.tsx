@@ -157,7 +157,15 @@ const AdminSellers: React.FC = () => {
                   // Add the SKU to the existing product
                   const sku: SkuData = {
                     id: row?.skuId,
-                    name: row?.skuName,
+                    name: `${existingProduct?.name} ${[
+                      row?.skuSpecs_value_1,
+                      row?.skuSpecs_value_2,
+                      row?.skuSpecs_value_3,
+                      row?.skuSpecs_value_4,
+                      row?.skuSpecs_value_5,
+                    ]
+                      ?.filter((s) => s)
+                      ?.join(' ')}`,
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
                     isActive: true,
@@ -311,7 +319,15 @@ const AdminSellers: React.FC = () => {
                     skus: [
                       {
                         id: row?.skuId,
-                        name: row?.skuName,
+                        name: `${row?.productName} ${[
+                          row?.skuSpecs_value_1,
+                          row?.skuSpecs_value_2,
+                          row?.skuSpecs_value_3,
+                          row?.skuSpecs_value_4,
+                          row?.skuSpecs_value_5,
+                        ]
+                          ?.filter((s) => s)
+                          ?.join(' ')}`,
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
                         isActive: true,
