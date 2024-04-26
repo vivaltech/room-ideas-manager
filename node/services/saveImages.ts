@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import FormData from 'form-data'
@@ -39,10 +40,10 @@ export async function saveImages(
 
     const uploadImageDetails = async () => {
       return Promise.all(
-        images.map(async (image) => {
-          try {
-            const cleanedFileName = image.fileName.replace(/[^\w\s.-]/g, '')
+        images?.map(async (image) => {
+          const cleanedFileName = image?.fileName?.replace(/[^\w\s.-]/g, '')
 
+          try {
             const imageBuffer = await imagesClient.open(image?.url)
 
             const formData = new FormData()
@@ -65,8 +66,37 @@ export async function saveImages(
           } catch (error) {
             const status = error?.response?.status
 
+            if (status === 409 || status === '409') {
+              const message = error?.response?.data?.message
+
+              const regex = /https:\/\/[^\s']+/
+              const match = message?.match(regex)
+
+              if (match && match.length > 0) {
+                const imageUrl = match[0]
+
+                return {
+                  fileName: cleanedFileName,
+                  success: true,
+                  details: {
+                    id: cleanedFileName,
+                    slug: imageUrl,
+                    fullUrl: imageUrl,
+                  },
+                }
+              }
+
+              return {
+                fileName: image?.fileName,
+                success: false,
+                details: {
+                  error: { message: 'Another Conflict', status },
+                },
+              }
+            }
+
             return {
-              fileName: image.fileName,
+              fileName: image?.fileName,
               success: false,
               details: {
                 error:

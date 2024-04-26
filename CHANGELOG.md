@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-04-26
+
+### Added
+
+- Add `wakeUp` to fix first call. (If this doesn't work, we need to use a fetch instead of gql mutation).
+- `productSlug` is generated based on the `productName` removing special characters and replacing spaces with `-` and is normalize (convert á -> a and ç -> c).
+- `productSpecs` is generated based on the `skuSpecs` from each product.
+- Add `productStatus` as `active` always.
+- Add `skuIsActive` as `true` always.
+- Add `skuName` generated from `productName` + values of the `skuSpecs`.
+- Add `skuImage_url_X (1 to 10)`, each row have the image of that sku.
+  - If 2 different skus are from the same product, the accumulation of the images of each sku generates the `productImages`.
+  - `imageId` is generated from `productName` normalized + `_X` (where X is the number of image) + `.png`.
+  - `imageAlt` is generated from `productName` normalized + `_X` (where X is the number of image).
+- `productName` can be used as a column to know if 2 or more skus are from the same product.
+
+### Fixed
+
+- Contemplate the conflict if the image id already exist and use it.
+- Change message `Is Active` to `Status`
+
+### Removed
+
+- Remove `productTransportModal, productTaxCode, skuManufacturerCode` columns from csv.
+- Remove `productSlug` column from csv.
+- Remove `productSpecs (name_1 to name_5 and values_1 to values_5)` columns from csv and generate it based on `skuSpecs`.
+- Remove `productStatus, skuIsActive` and add value as default.
+- Remove `skuName` column from csv.
+- Remove `productImages (id_1 to id_10 and url_1 to url_10 and alt_1 to alt_10)` columns from csv.
+
 ## [1.2.1] - 2024-04-03
 
 ### Fixed

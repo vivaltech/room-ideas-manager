@@ -48,8 +48,25 @@ const AdminSellers: React.FC = () => {
     setShowTable(false)
   }
 
-  function generateNewUniqueId() {
-    return Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
+  function normalizeProductName(productName: string) {
+    return productName
+      ?.normalize('NFD')
+      ?.replace(/[\u0300-\u036f]/g, '')
+      ?.toLowerCase()
+      ?.trim()
+      ?.replace(/[^\w\s-]/g, '')
+      ?.replace(/\s+/g, '-')
+      ?.replace(/--+/g, '-')
+  }
+
+  function generateNewUniqueId(productName?: string) {
+    if (!productName) {
+      return (
+        Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
+      )
+    }
+
+    return normalizeProductName(productName)
   }
 
   const handleFileUpload = useCallback((acceptedFiles) => {
@@ -89,11 +106,8 @@ const AdminSellers: React.FC = () => {
                 'productSpecs_values_5',
               ].map((h) => h.toLowerCase())
 
-              const skuImagesHeader = 'skuImages'.toLowerCase()
-
               const arrayHeaders = [
                 'categoryIds',
-                skuImagesHeader,
                 ...productSpecsValueHeaders,
               ].map((h) => h.toLowerCase())
 
@@ -104,10 +118,7 @@ const AdminSellers: React.FC = () => {
 
                 let parsedJSONValue
 
-                if (
-                  productSpecsValueHeaders.includes(headerLowerCase) ||
-                  headerLowerCase === skuImagesHeader
-                ) {
+                if (productSpecsValueHeaders.includes(headerLowerCase)) {
                   parsedJSONValue = jsonValue.slice(1, -1).split(';')
                 } else {
                   parsedJSONValue = JSON.parse(jsonValue)
@@ -143,6 +154,8 @@ const AdminSellers: React.FC = () => {
                   productId = row?.productId?.toString()
                 } else if (row?.productExternalId) {
                   productId = row?.productExternalId?.toString()
+                } else if (row?.productName) {
+                  productId = generateNewUniqueId(row?.productName)
                 } else {
                   productId = generateNewUniqueId()
                 }
@@ -153,14 +166,52 @@ const AdminSellers: React.FC = () => {
                     : undefined
 
                 if (existingProduct) {
+                  const existingImages = existingProduct.images
+                  const imageQuantity = existingImages.length
+                  const newProductImages = [
+                    ...[
+                      row?.skuImage_url_1,
+                      row?.skuImage_url_2,
+                      row?.skuImage_url_3,
+                      row?.skuImage_url_4,
+                      row?.skuImage_url_5,
+                      row?.skuImage_url_6,
+                      row?.skuImage_url_7,
+                      row?.skuImage_url_8,
+                      row?.skuImage_url_9,
+                      row?.skuImage_url_10,
+                    ]
+                      ?.filter((s) => s)
+                      ?.map((url, index) => {
+                        return {
+                          id: `${normalizeProductName(row?.productName)}_${
+                            index + 1 + imageQuantity
+                          }.png`?.replace(/[^\w\s.-]/g, ''),
+                          url: url?.trim(),
+                          alt: `${normalizeProductName(row?.productName)}_${
+                            index + 1 + imageQuantity
+                          }`,
+                        }
+                      }),
+                  ].filter((i) => i?.id && i?.url)
+
+                  existingProduct.images.push(...newProductImages)
+
                   // Add the SKU to the existing product
                   const sku: SkuData = {
                     id: row?.skuId,
-                    name: row?.skuName,
+                    name: `${existingProduct?.name} ${[
+                      row?.skuSpecs_value_1,
+                      row?.skuSpecs_value_2,
+                      row?.skuSpecs_value_3,
+                      row?.skuSpecs_value_4,
+                      row?.skuSpecs_value_5,
+                    ]
+                      ?.filter((s) => s)
+                      ?.join(' ')}`,
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
-                    manufacturerCode: row?.skuManufacturerCode,
-                    isActive: row?.skuIsActive,
+                    isActive: true,
                     weight: row?.skuWeight,
                     dimensions: {
                       width: row?.skuWidth,
@@ -189,43 +240,47 @@ const AdminSellers: React.FC = () => {
                         value: row?.skuSpecs_value_5,
                       },
                     ].filter((s) => s?.name && s?.value),
-                    images: row?.skuImages?.map((s) =>
-                      s?.replace(/[^\w\s.-]/g, '')
-                    ),
+                    images: newProductImages.map((image) => image.id),
                   }
 
                   existingProduct.skus.push(sku)
                 } else {
+                  const newProductImages = [
+                    ...[
+                      row?.skuImage_url_1,
+                      row?.skuImage_url_2,
+                      row?.skuImage_url_3,
+                      row?.skuImage_url_4,
+                      row?.skuImage_url_5,
+                      row?.skuImage_url_6,
+                      row?.skuImage_url_7,
+                      row?.skuImage_url_8,
+                      row?.skuImage_url_9,
+                      row?.skuImage_url_10,
+                    ]
+                      ?.filter((s) => s)
+                      ?.map((url, index) => {
+                        return {
+                          id: `${normalizeProductName(row?.productName)}_${
+                            index + 1
+                          }.png`?.replace(/[^\w\s.-]/g, ''),
+                          url: url?.trim(),
+                          alt: `${normalizeProductName(row?.productName)}_${
+                            index + 1
+                          }`,
+                        }
+                      }),
+                  ].filter((i) => i?.id && i?.url)
+
                   // Create a new product with the SKU
                   const product: ProductData = {
                     id: row?.productId,
                     externalId: row?.productExternalId,
-                    status: row?.productStatus,
+                    status: 'active',
                     name: row?.productName,
                     brandId: row?.brandId,
                     categoryIds: row?.categoryIds,
-                    specs: [
-                      {
-                        name: row?.productSpecs_name_1,
-                        values: row?.productSpecs_values_1,
-                      },
-                      {
-                        name: row?.productSpecs_name_2,
-                        values: row?.productSpecs_values_2,
-                      },
-                      {
-                        name: row?.productSpecs_name_3,
-                        values: row?.productSpecs_values_3,
-                      },
-                      {
-                        name: row?.productSpecs_name_4,
-                        values: row?.productSpecs_values_4,
-                      },
-                      {
-                        name: row?.productSpecs_name_5,
-                        values: row?.productSpecs_values_5,
-                      },
-                    ].filter((s) => s?.name && s?.values?.length > 0),
+                    specs: [],
                     attributes: [
                       {
                         name: row?.productAttributes_name_1,
@@ -268,67 +323,26 @@ const AdminSellers: React.FC = () => {
                         value: row?.productAttributes_value_10,
                       },
                     ].filter((a) => a?.name && a?.value),
-                    slug: row?.productSlug,
-                    images: [
-                      {
-                        id: row?.productImages_id_1?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_1?.trim(),
-                        alt: row?.productImages_alt_1,
-                      },
-                      {
-                        id: row?.productImages_id_2?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_2?.trim(),
-                        alt: row?.productImages_alt_2,
-                      },
-                      {
-                        id: row?.productImages_id_3?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_3?.trim(),
-                        alt: row?.productImages_alt_3,
-                      },
-                      {
-                        id: row?.productImages_id_4?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_4?.trim(),
-                        alt: row?.productImages_alt_4,
-                      },
-                      {
-                        id: row?.productImages_id_5?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_5?.trim(),
-                        alt: row?.productImages_alt_5,
-                      },
-                      {
-                        id: row?.productImages_id_6?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_6?.trim(),
-                        alt: row?.productImages_alt_6,
-                      },
-                      {
-                        id: row?.productImages_id_7?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_7?.trim(),
-                        alt: row?.productImages_alt_7,
-                      },
-                      {
-                        id: row?.productImages_id_8?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_8?.trim(),
-                        alt: row?.productImages_alt_8,
-                      },
-                      {
-                        id: row?.productImages_id_9?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_9?.trim(),
-                        alt: row?.productImages_alt_9,
-                      },
-                      {
-                        id: row?.productImages_id_10?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_10?.trim(),
-                        alt: row?.productImages_alt_10,
-                      },
-                    ].filter((i) => i?.id && i?.url),
+                    slug: `/${normalizeProductName(row?.productName)?.slice(
+                      0,
+                      50
+                    )}`,
+                    images: newProductImages,
                     skus: [
                       {
                         id: row?.skuId,
-                        name: row?.skuName,
+                        name: `${row?.productName} ${[
+                          row?.skuSpecs_value_1,
+                          row?.skuSpecs_value_2,
+                          row?.skuSpecs_value_3,
+                          row?.skuSpecs_value_4,
+                          row?.skuSpecs_value_5,
+                        ]
+                          ?.filter((s) => s)
+                          ?.join(' ')}`,
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
-                        manufacturerCode: row?.skuManufacturerCode,
-                        isActive: row?.skuIsActive,
+                        isActive: true,
                         weight: row?.skuWeight,
                         dimensions: {
                           width: row?.skuWidth,
@@ -357,18 +371,40 @@ const AdminSellers: React.FC = () => {
                             value: row?.skuSpecs_value_5,
                           },
                         ].filter((s) => s?.name && s?.value),
-                        images: row?.skuImages.map((s) =>
-                          s?.replace(/[^\w\s.-]/g, '')
-                        ),
+                        images: newProductImages.map((image) => image.id),
                       },
                     ],
-                    transportModal: row?.productTransportModal,
-                    taxCode: row?.productTaxCode,
                     description: row?.productDescription,
                   }
 
                   productMap.set(productId, product)
                 }
+              })
+
+              productMap.forEach((product) => {
+                const combinedSpecs: Array<{
+                  name: string
+                  values: string[]
+                }> = []
+
+                product?.skus?.forEach((sku) => {
+                  sku?.specs?.forEach((spec) => {
+                    const existingSpec = combinedSpecs?.find(
+                      (s) => s?.name === spec?.name
+                    )
+
+                    if (existingSpec) {
+                      existingSpec?.values?.push(spec?.value)
+                    } else {
+                      combinedSpecs.push({
+                        name: spec?.name,
+                        values: [spec?.value],
+                      })
+                    }
+                  })
+                })
+
+                product.specs = combinedSpecs
               })
 
               const validRows: ProductData[] = Array.from(
@@ -397,16 +433,12 @@ const AdminSellers: React.FC = () => {
                   missingFields.push('brandId')
                 }
 
-                if (!row?.specs?.length) {
-                  missingFields.push('specs')
-                }
+                // if (!row?.specs?.length) {
+                //  missingFields.push('specs')
+                // }
 
                 if (!row?.attributes?.length) {
                   missingFields.push('attributes')
-                }
-
-                if (!row?.slug) {
-                  missingFields.push('slug')
                 }
 
                 if (!row?.images?.length) {
@@ -442,7 +474,7 @@ const AdminSellers: React.FC = () => {
                     const missingFieldsInRow: string[] = []
 
                     Object.keys(row).forEach((field) => {
-                      if (!row[field as keyof ProductData]) {
+                      if (!row[field as keyof Required<ProductData>]) {
                         missingFieldsInRow.push(field)
                       }
                     })

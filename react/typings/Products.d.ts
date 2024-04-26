@@ -1,20 +1,9 @@
 export interface CsvProductData {
   productId?: string | number
   productExternalId?: string | number
-  productStatus: string
   productName: string
   brandId: string | number
   categoryIds: string | number | string[] | number[]
-  productSpecs_name_1: string
-  productSpecs_values_1: string[]
-  productSpecs_name_2: string
-  productSpecs_values_2: string[]
-  productSpecs_name_3: string
-  productSpecs_values_3: string[]
-  productSpecs_name_4: string
-  productSpecs_values_4: string[]
-  productSpecs_name_5: string
-  productSpecs_values_5: string[]
   productAttributes_name_1: string
   productAttributes_value_1: string
   productAttributes_name_2: string
@@ -35,43 +24,19 @@ export interface CsvProductData {
   productAttributes_value_9: string
   productAttributes_name_10: string
   productAttributes_value_10: string
-  productSlug: string
-  productImages_id_1
-  productImages_url_1
-  productImages_alt_1
-  productImages_id_2
-  productImages_url_2
-  productImages_alt_2
-  productImages_id_3
-  productImages_url_3
-  productImages_alt_3
-  productImages_id_4
-  productImages_url_4
-  productImages_alt_4
-  productImages_id_5
-  productImages_url_5
-  productImages_alt_5
-  productImages_id_6
-  productImages_url_6
-  productImages_alt_6
-  productImages_id_7
-  productImages_url_7
-  productImages_alt_7
-  productImages_id_8
-  productImages_url_8
-  productImages_alt_8
-  productImages_id_9
-  productImages_url_9
-  productImages_alt_9
-  productImages_id_10
-  productImages_url_10
-  productImages_alt_10
   skuId?: string | number
-  skuName: string
   skuExternalId?: string | number
   skuEan?: string | number
-  skuManufacturerCode?: string | number
-  skuIsActive: boolean
+  skuImage_url_1: string
+  skuImage_url_2: string
+  skuImage_url_3: string
+  skuImage_url_4: string
+  skuImage_url_5: string
+  skuImage_url_6: string
+  skuImage_url_7: string
+  skuImage_url_8: string
+  skuImage_url_9: string
+  skuImage_url_10: string
   skuWeight: number
   skuWidth: number
   skuHeight: number
@@ -86,9 +51,6 @@ export interface CsvProductData {
   skuSpecs_value_4: string
   skuSpecs_name_5: string
   skuSpecs_value_5: string
-  skuImages: string[]
-  productTransportModal?: string | number
-  productTaxCode?: string | number
   productDescription?: string
 }
 

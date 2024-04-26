@@ -8,6 +8,7 @@ import {
   Modal,
   IconExternalLink,
 } from 'vtex.styleguide'
+import { useMutation } from 'react-apollo'
 
 import type { ProductData, SkuData, ImageData } from '../../typings/Products'
 import {
@@ -17,6 +18,7 @@ import {
 import StatusTag from './StatusTag'
 import SkusTable from './SkusTable'
 import ImagesTable from './ImagesTable'
+import wakeUpGQL from '../../graphql/mutations/wakeUp.gql'
 import styles from '../../styles/ProductTable.module.css'
 
 const linkIcon = <IconExternalLink />
@@ -26,11 +28,17 @@ interface ProductsTableProps {
 }
 const ProductsTable = ({ products }: ProductsTableProps) => {
   const intl = useIntl()
+  const [wakeUpMutation] = useMutation(wakeUpGQL)
 
   const [openSkusModal, setOpenSkusModal] = useState(false)
   const [skusSelected, setSkusSelected] = useState<SkuData[]>([])
   const [openImagesModal, setOpenImagesModal] = useState(false)
   const [imagesSelected, setImagesSelected] = useState<ImageData[]>([])
+
+  const handleWakeUp = useCallback(async () => {
+    await wakeUpMutation()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const ITEMS_PER_PAGE = 5
 
@@ -159,16 +167,24 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
       id: 'slug',
       title: intl.formatMessage(productTableColumnsMessages.slugTitle),
     },
-    {
-      id: 'transportModal',
-      title: intl.formatMessage(
-        productTableColumnsMessages.transportModalTitle
-      ),
-    },
-    {
-      id: 'taxCode',
-      title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
-    },
+    ...(products.some((product) => product.transportModal)
+      ? [
+          {
+            id: 'transportModal',
+            title: intl.formatMessage(
+              productTableColumnsMessages.transportModalTitle
+            ),
+          },
+        ]
+      : []),
+    ...(products.some((product) => product.taxCode)
+      ? [
+          {
+            id: 'taxCode',
+            title: intl.formatMessage(productTableColumnsMessages.taxCodeTitle),
+          },
+        ]
+      : []),
     ...(products.some((product) => product.description)
       ? [
           {
@@ -216,6 +232,11 @@ const ProductsTable = ({ products }: ProductsTableProps) => {
     textShowRows: intl.formatMessage(productTableMessages.showRows),
     totalItems: filteredItems.length,
   }
+
+  useEffect(() => {
+    handleWakeUp()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (!products || products.length === 0) {

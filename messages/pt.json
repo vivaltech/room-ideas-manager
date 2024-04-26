@@ -32,7 +32,7 @@
   "admin/admin-import-seller-products.sku-table.columns.id.title": "ID do SKU",
   "admin/admin-import-seller-products.sku-table.columns.ean.title": "EAN",
   "admin/admin-import-seller-products.sku-table.columns.manufacturerCode.title": "Código do Fabricante",
-  "admin/admin-import-seller-products.sku-table.columns.isActive.title": "Está Ativo",
+  "admin/admin-import-seller-products.sku-table.columns.isActive.title": "Status",
   "admin/admin-import-seller-products.sku-table.columns.weight.title": "Peso",
   "admin/admin-import-seller-products.sku-table.columns.dimensions.title": "Dimensões",
   "admin/admin-import-seller-products.sku-table.columns.width.title": "Largura",
