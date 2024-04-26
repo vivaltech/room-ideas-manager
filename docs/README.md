@@ -199,7 +199,10 @@ Let’s review each field:
 
 In the latest update [1.3.0] on April 26, 2024, significant changes have been implemented in the import process of the app. Notably, some columns have been removed from the CSV format, while new calculated columns have been introduced within the app's logic. These calculated columns are generated dynamically based on existing data or specific rules outlined in the update. Below, you'll find comprehensive details regarding these newly added calculated columns:
 
-1. **productSlug**: The product slug column generates a unique slug for each product based on the product name. Special characters are removed, and spaces are replaced with hyphens (-). Additionally, any accented characters are normalized (e.g., á becomes a, ç becomes c).
+1. **productSlug**: The product slug column generates a unique slug for each product based on the `productName` normalized. Special characters are removed, and spaces are replaced with hyphens (-). Additionally, any accented characters are normalized (e.g., á becomes a, ç becomes c).
+
+   - Example:
+     ![Product Slug](./images/productSlug.png)
 
 2. **productSpecs**: The product specs column aggregates the specifications of each SKU associated with the product. Product Specs = Concatenation of SKU Specs for each sku of the same product.
 
