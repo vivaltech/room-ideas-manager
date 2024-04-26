@@ -52,6 +52,17 @@ const AdminSellers: React.FC = () => {
     return Date.now()?.toString() + Math.floor(Math.random() * 1000)?.toString()
   }
 
+  function normalizeProductName(productName: string) {
+    return productName
+      ?.normalize('NFD')
+      ?.replace(/[\u0300-\u036f]/g, '')
+      ?.toLowerCase()
+      ?.trim()
+      ?.replace(/[^\w\s-]/g, '')
+      ?.replace(/\s+/g, '-')
+      ?.replace(/--+/g, '-')
+  }
+
   const handleFileUpload = useCallback((acceptedFiles) => {
     try {
       // eslint-disable-next-line prefer-destructuring
@@ -89,11 +100,8 @@ const AdminSellers: React.FC = () => {
                 'productSpecs_values_5',
               ].map((h) => h.toLowerCase())
 
-              const skuImagesHeader = 'skuImages'.toLowerCase()
-
               const arrayHeaders = [
                 'categoryIds',
-                skuImagesHeader,
                 ...productSpecsValueHeaders,
               ].map((h) => h.toLowerCase())
 
@@ -104,10 +112,7 @@ const AdminSellers: React.FC = () => {
 
                 let parsedJSONValue
 
-                if (
-                  productSpecsValueHeaders.includes(headerLowerCase) ||
-                  headerLowerCase === skuImagesHeader
-                ) {
+                if (productSpecsValueHeaders.includes(headerLowerCase)) {
                   parsedJSONValue = jsonValue.slice(1, -1).split(';')
                 } else {
                   parsedJSONValue = JSON.parse(jsonValue)
@@ -154,6 +159,37 @@ const AdminSellers: React.FC = () => {
                     : undefined
 
                 if (existingProduct) {
+                  const existingImages = existingProduct.images
+                  const imageQuantity = existingImages.length
+                  const newProductImages = [
+                    ...[
+                      row?.skuImage_url_1,
+                      row?.skuImage_url_2,
+                      row?.skuImage_url_3,
+                      row?.skuImage_url_4,
+                      row?.skuImage_url_5,
+                      row?.skuImage_url_6,
+                      row?.skuImage_url_7,
+                      row?.skuImage_url_8,
+                      row?.skuImage_url_9,
+                      row?.skuImage_url_10,
+                    ]
+                      ?.filter((s) => s)
+                      ?.map((url, index) => {
+                        return {
+                          id: `${normalizeProductName(row?.productName)}_${
+                            index + 1 + imageQuantity
+                          }.png`?.replace(/[^\w\s.-]/g, ''),
+                          url: url?.trim(),
+                          alt: `${normalizeProductName(row?.productName)}_${
+                            index + 1 + imageQuantity
+                          }`,
+                        }
+                      }),
+                  ].filter((i) => i?.id && i?.url)
+
+                  existingProduct.images.push(...newProductImages)
+
                   // Add the SKU to the existing product
                   const sku: SkuData = {
                     id: row?.skuId,
@@ -197,13 +233,38 @@ const AdminSellers: React.FC = () => {
                         value: row?.skuSpecs_value_5,
                       },
                     ].filter((s) => s?.name && s?.value),
-                    images: row?.skuImages?.map((s) =>
-                      s?.replace(/[^\w\s.-]/g, '')
-                    ),
+                    images: newProductImages.map((image) => image.id),
                   }
 
                   existingProduct.skus.push(sku)
                 } else {
+                  const newProductImages = [
+                    ...[
+                      row?.skuImage_url_1,
+                      row?.skuImage_url_2,
+                      row?.skuImage_url_3,
+                      row?.skuImage_url_4,
+                      row?.skuImage_url_5,
+                      row?.skuImage_url_6,
+                      row?.skuImage_url_7,
+                      row?.skuImage_url_8,
+                      row?.skuImage_url_9,
+                      row?.skuImage_url_10,
+                    ]
+                      ?.filter((s) => s)
+                      ?.map((url, index) => {
+                        return {
+                          id: `${normalizeProductName(row?.productName)}_${
+                            index + 1
+                          }.png`?.replace(/[^\w\s.-]/g, ''),
+                          url: url?.trim(),
+                          alt: `${normalizeProductName(row?.productName)}_${
+                            index + 1
+                          }`,
+                        }
+                      }),
+                  ].filter((i) => i?.id && i?.url)
+
                   // Create a new product with the SKU
                   const product: ProductData = {
                     id: row?.productId,
@@ -255,67 +316,11 @@ const AdminSellers: React.FC = () => {
                         value: row?.productAttributes_value_10,
                       },
                     ].filter((a) => a?.name && a?.value),
-                    slug: `/${row?.productName
-                      ?.normalize('NFD')
-                      ?.replace(/[\u0300-\u036f]/g, '')
-                      ?.toLowerCase()
-                      ?.trim()
-                      ?.replace(/[^\w\s-]/g, '')
-                      ?.replace(/\s+/g, '-')
-                      ?.replace(/--+/g, '-')
-                      ?.slice(0, 50)}`,
-                    images: [
-                      {
-                        id: row?.productImages_id_1?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_1?.trim(),
-                        alt: row?.productImages_alt_1,
-                      },
-                      {
-                        id: row?.productImages_id_2?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_2?.trim(),
-                        alt: row?.productImages_alt_2,
-                      },
-                      {
-                        id: row?.productImages_id_3?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_3?.trim(),
-                        alt: row?.productImages_alt_3,
-                      },
-                      {
-                        id: row?.productImages_id_4?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_4?.trim(),
-                        alt: row?.productImages_alt_4,
-                      },
-                      {
-                        id: row?.productImages_id_5?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_5?.trim(),
-                        alt: row?.productImages_alt_5,
-                      },
-                      {
-                        id: row?.productImages_id_6?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_6?.trim(),
-                        alt: row?.productImages_alt_6,
-                      },
-                      {
-                        id: row?.productImages_id_7?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_7?.trim(),
-                        alt: row?.productImages_alt_7,
-                      },
-                      {
-                        id: row?.productImages_id_8?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_8?.trim(),
-                        alt: row?.productImages_alt_8,
-                      },
-                      {
-                        id: row?.productImages_id_9?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_9?.trim(),
-                        alt: row?.productImages_alt_9,
-                      },
-                      {
-                        id: row?.productImages_id_10?.replace(/[^\w\s.-]/g, ''),
-                        url: row?.productImages_url_10?.trim(),
-                        alt: row?.productImages_alt_10,
-                      },
-                    ].filter((i) => i?.id && i?.url),
+                    slug: `/${normalizeProductName(row?.productName)?.slice(
+                      0,
+                      50
+                    )}`,
+                    images: newProductImages,
                     skus: [
                       {
                         id: row?.skuId,
@@ -359,9 +364,7 @@ const AdminSellers: React.FC = () => {
                             value: row?.skuSpecs_value_5,
                           },
                         ].filter((s) => s?.name && s?.value),
-                        images: row?.skuImages.map((s) =>
-                          s?.replace(/[^\w\s.-]/g, '')
-                        ),
+                        images: newProductImages.map((image) => image.id),
                       },
                     ],
                     description: row?.productDescription,
