@@ -13,6 +13,7 @@
   "admin/admin-import-seller-products.main.product": "Product",
   "admin/admin-import-seller-products.main.withMissingFields": "with missing fields",
   "admin/admin-import-seller-products.main.downloadButton": "Download Example",
+  "admin/admin-import-seller-products.main.downloadPDFButton": "Documentation",
 
   "admin/admin-import-seller-products.product-table.columns.id.title": "Product Id",
   "admin/admin-import-seller-products.product-table.columns.externalId.title": "External Id",

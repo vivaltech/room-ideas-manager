@@ -24,6 +24,7 @@ export const adminSellersMainMessages = defineMessages({
   product: { id: `${prefixAdminSellersMain}product` },
   withMissingFields: { id: `${prefixAdminSellersMain}withMissingFields` },
   downloadButton: { id: `${prefixAdminSellersMain}downloadButton` },
+  downloadPDFButton: { id: `${prefixAdminSellersMain}downloadPDFButton` },
 })
 
 export const productTableColumnsMessages = defineMessages({

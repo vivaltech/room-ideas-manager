@@ -18,6 +18,7 @@ import ProductsTable from './components/Tables/ProductsTable'
 import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
 import { exampleCsvContent } from './examples/exampleCsvContent'
+import { documentationPDF } from './examples/documentationPDF'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
@@ -552,6 +553,16 @@ const AdminSellers: React.FC = () => {
     document.body.removeChild(link)
   }, [])
 
+  const handleDownloadDocumentationPDFClick = useCallback(() => {
+    const linkSource = `data:application/pdf;base64,${documentationPDF}`
+    const downloadLink = document.createElement('a')
+    const fileNameWithExtension = `MEDIS-Import Seller Products.pdf`
+
+    downloadLink.href = linkSource
+    downloadLink.download = fileNameWithExtension
+    downloadLink.click()
+  }, [])
+
   useEffect(() => {
     if (!errorProcessingCsv) {
       return
@@ -661,13 +672,27 @@ const AdminSellers: React.FC = () => {
                 {intl.formatMessage(adminSellersMainMessages.importButton)}
               </Button>
             ) : (
-              <div className="mt4 mb4">
-                <Button
-                  variation="secondary"
-                  onClick={handleDownloadExampleClick}
-                >
-                  {intl.formatMessage(adminSellersMainMessages.downloadButton)}
-                </Button>
+              <div className="mt4 mb4 flex flex-column">
+                <div className="">
+                  <Button
+                    variation="secondary"
+                    onClick={handleDownloadExampleClick}
+                  >
+                    {intl.formatMessage(
+                      adminSellersMainMessages.downloadButton
+                    )}
+                  </Button>
+                </div>
+                <div className="mt3 flex flex-column">
+                  <Button
+                    variation="secondary"
+                    onClick={handleDownloadDocumentationPDFClick}
+                  >
+                    {intl.formatMessage(
+                      adminSellersMainMessages.downloadPDFButton
+                    )}
+                  </Button>
+                </div>
               </div>
             )}
           </div>
