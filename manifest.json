@@ -1,7 +1,7 @@
 {
   "name": "admin-import-seller-products",
   "vendor": "ageas",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "title": "Import Seller Products",
   "description": "This module empowers users to seamlessly import products into the Seller Portal catalog by utilizing a CSV file.",
   "mustUpdateAt": "2022-08-28",
