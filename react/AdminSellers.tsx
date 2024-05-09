@@ -696,6 +696,7 @@ const AdminSellers: React.FC = () => {
                 <div className="mt3 flex flex-column">
                   <Button
                     variation="secondary"
+                    size="small"
                     onClick={handleDownloadDocumentationPDFClick}
                   >
                     {intl.formatMessage(
