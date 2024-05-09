@@ -19,7 +19,7 @@ import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
 import {
   exampleCsvContentPT,
-  exampleCsvContentEN,
+  // exampleCsvContentEN,
 } from './examples/exampleCsvContent'
 import { documentationPDF } from './examples/documentationPDF'
 
@@ -546,10 +546,11 @@ const AdminSellers: React.FC = () => {
   const handleDownloadExampleClick = useCallback(() => {
     const link = document.createElement('a')
 
-    const lang = intl?.locale?.substring(0, 2)?.toLowerCase()
+    // Commented to have in the future example based on the language of the user navigating
+    // const lang = intl?.locale?.substring(0, 2)?.toLowerCase()
+    // const exampleCsvContent = lang === 'pt' ? exampleCsvContentPT : exampleCsvContentEN
 
-    const exampleCsvContent =
-      lang === 'pt' ? exampleCsvContentPT : exampleCsvContentEN
+    const exampleCsvContent = exampleCsvContentPT
 
     const blob = new Blob([exampleCsvContent], {
       type: 'text/csv;charset=utf-8;',
@@ -560,7 +561,7 @@ const AdminSellers: React.FC = () => {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-  }, [intl?.locale])
+  }, [])
 
   const handleDownloadDocumentationPDFClick = useCallback(() => {
     const linkSource = `data:application/pdf;base64,${documentationPDF}`
