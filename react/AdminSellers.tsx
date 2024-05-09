@@ -17,11 +17,15 @@ import type { CsvProductData, ProductData, SkuData } from './typings/Products'
 import ProductsTable from './components/Tables/ProductsTable'
 import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
-import { exampleCsvContent } from './examples/exampleCsvContent'
+import {
+  exampleCsvContentPT,
+  exampleCsvContentEN,
+} from './examples/exampleCsvContent'
 import { documentationPDF } from './examples/documentationPDF'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
+
   const [productData, setProductData] = useState<ProductData[]>([])
   const [errorProcessingCsv, setErrorProcessingCsv] = useState<string | null>(
     null
@@ -542,6 +546,11 @@ const AdminSellers: React.FC = () => {
   const handleDownloadExampleClick = useCallback(() => {
     const link = document.createElement('a')
 
+    const lang = intl?.locale?.substring(0, 2)?.toLowerCase()
+
+    const exampleCsvContent =
+      lang === 'pt' ? exampleCsvContentPT : exampleCsvContentEN
+
     const blob = new Blob([exampleCsvContent], {
       type: 'text/csv;charset=utf-8;',
     })
@@ -551,7 +560,7 @@ const AdminSellers: React.FC = () => {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-  }, [])
+  }, [intl?.locale])
 
   const handleDownloadDocumentationPDFClick = useCallback(() => {
     const linkSource = `data:application/pdf;base64,${documentationPDF}`
