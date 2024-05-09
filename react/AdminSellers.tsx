@@ -90,7 +90,10 @@ const AdminSellers: React.FC = () => {
 
         handleResetUpload()
 
-        Papa.parse<ProductData>(csvFile, {
+        const lines = csvFile.split('\n')
+        const csvData = lines.slice(2).join('\n')
+
+        Papa.parse<ProductData>(csvData, {
           header: true,
           skipEmptyLines: true,
           dynamicTyping: true,
