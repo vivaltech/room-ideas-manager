@@ -17,11 +17,15 @@ import type { CsvProductData, ProductData, SkuData } from './typings/Products'
 import ProductsTable from './components/Tables/ProductsTable'
 import ImportResults from './components/ImportResults'
 import styles from './styles/AdminSellers.module.css'
-import { exampleCsvContent } from './examples/exampleCsvContent'
+import {
+  exampleCsvContentPT,
+  // exampleCsvContentEN,
+} from './examples/exampleCsvContent'
 import { documentationPDF } from './examples/documentationPDF'
 
 const AdminSellers: React.FC = () => {
   const intl = useIntl()
+
   const [productData, setProductData] = useState<ProductData[]>([])
   const [errorProcessingCsv, setErrorProcessingCsv] = useState<string | null>(
     null
@@ -86,7 +90,10 @@ const AdminSellers: React.FC = () => {
 
         handleResetUpload()
 
-        Papa.parse<ProductData>(csvFile, {
+        const lines = csvFile.split('\n')
+        const csvData = lines.slice(2).join('\n')
+
+        Papa.parse<ProductData>(csvData, {
           header: true,
           skipEmptyLines: true,
           dynamicTyping: true,
@@ -542,6 +549,12 @@ const AdminSellers: React.FC = () => {
   const handleDownloadExampleClick = useCallback(() => {
     const link = document.createElement('a')
 
+    // Commented to have in the future example based on the language of the user navigating
+    // const lang = intl?.locale?.substring(0, 2)?.toLowerCase()
+    // const exampleCsvContent = lang === 'pt' ? exampleCsvContentPT : exampleCsvContentEN
+
+    const exampleCsvContent = exampleCsvContentPT
+
     const blob = new Blob([exampleCsvContent], {
       type: 'text/csv;charset=utf-8;',
     })
@@ -686,6 +699,7 @@ const AdminSellers: React.FC = () => {
                 <div className="mt3 flex flex-column">
                   <Button
                     variation="secondary"
+                    size="small"
                     onClick={handleDownloadDocumentationPDFClick}
                   >
                     {intl.formatMessage(
