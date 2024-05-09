@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add rows of description and required columns. Then omit this rows at the momento of processing the csv.
+
+### Fixed
+
+- Fix documentation button smaller
+
 ## [1.3.1] - 2024-04-29
 
 ### Added
