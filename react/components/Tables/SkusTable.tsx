@@ -63,6 +63,9 @@ const SkusTable = ({ skus }: SkusTableProps) => {
     {
       id: 'weight',
       title: intl.formatMessage(skuTableColumnsMessages.weightTitle),
+      cellRenderer: ({ data }: { data: number }) => {
+        return `${data / 1000} kg`
+      },
     },
     {
       id: 'dimensions',
@@ -78,18 +81,21 @@ const SkusTable = ({ skus }: SkusTableProps) => {
               {intl.formatMessage(skuTableColumnsMessages.widthTitle)}:
             </strong>{' '}
             {data.width}
+            {' cm'}
           </li>
           <li>
             <strong>
               {intl.formatMessage(skuTableColumnsMessages.heightTitle)}:
             </strong>{' '}
             {data.height}
+            {' cm'}
           </li>
           <li>
             <strong>
               {intl.formatMessage(skuTableColumnsMessages.lengthTitle)}:
             </strong>{' '}
             {data.length}
+            {' cm'}
           </li>
         </ul>
       ),

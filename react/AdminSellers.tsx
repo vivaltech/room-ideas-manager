@@ -220,7 +220,7 @@ const AdminSellers: React.FC = () => {
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
                     isActive: true,
-                    weight: row?.skuWeight,
+                    weight: row?.skuWeight * 1000,
                     dimensions: {
                       width: row?.skuWidth,
                       height: row?.skuHeight,
@@ -355,7 +355,7 @@ const AdminSellers: React.FC = () => {
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
                         isActive: true,
-                        weight: row?.skuWeight,
+                        weight: row?.skuWeight * 1000,
                         dimensions: {
                           width: row?.skuWidth,
                           height: row?.skuHeight,

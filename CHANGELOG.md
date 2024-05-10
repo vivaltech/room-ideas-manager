@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Input skuWeight in kg
+
 ## [1.4.1] - 2024-05-09
 
 ### Added
