@@ -247,7 +247,11 @@ const AdminSellers: React.FC = () => {
                         name: row?.skuSpecs_name_5,
                         value: row?.skuSpecs_value_5,
                       },
-                    ].filter((s) => s?.name && s?.value),
+                    ]
+                      ?.filter((s) => s?.name && s?.value)
+                      ?.map((s) => {
+                        return { ...s, value: s.value.toString() }
+                      }),
                     images: newProductImages.map((image) => image.id),
                   }
 
@@ -378,7 +382,11 @@ const AdminSellers: React.FC = () => {
                             name: row?.skuSpecs_name_5,
                             value: row?.skuSpecs_value_5,
                           },
-                        ].filter((s) => s?.name && s?.value),
+                        ]
+                          ?.filter((s) => s?.name && s?.value)
+                          ?.map((s) => {
+                            return { ...s, value: s.value.toString() }
+                          }),
                         images: newProductImages.map((image) => image.id),
                       },
                     ],
