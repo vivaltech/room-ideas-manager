@@ -220,7 +220,7 @@ const AdminSellers: React.FC = () => {
                     externalId: row?.skuExternalId,
                     ean: row?.skuEan,
                     isActive: true,
-                    weight: row?.skuWeight,
+                    weight: row?.skuWeight * 1000,
                     dimensions: {
                       width: row?.skuWidth,
                       height: row?.skuHeight,
@@ -247,7 +247,11 @@ const AdminSellers: React.FC = () => {
                         name: row?.skuSpecs_name_5,
                         value: row?.skuSpecs_value_5,
                       },
-                    ].filter((s) => s?.name && s?.value),
+                    ]
+                      ?.filter((s) => s?.name && s?.value)
+                      ?.map((s) => {
+                        return { ...s, value: s.value.toString() }
+                      }),
                     images: newProductImages.map((image) => image.id),
                   }
 
@@ -351,7 +355,7 @@ const AdminSellers: React.FC = () => {
                         externalId: row?.skuExternalId,
                         ean: row?.skuEan,
                         isActive: true,
-                        weight: row?.skuWeight,
+                        weight: row?.skuWeight * 1000,
                         dimensions: {
                           width: row?.skuWidth,
                           height: row?.skuHeight,
@@ -378,7 +382,11 @@ const AdminSellers: React.FC = () => {
                             name: row?.skuSpecs_name_5,
                             value: row?.skuSpecs_value_5,
                           },
-                        ].filter((s) => s?.name && s?.value),
+                        ]
+                          ?.filter((s) => s?.name && s?.value)
+                          ?.map((s) => {
+                            return { ...s, value: s.value.toString() }
+                          }),
                         images: newProductImages.map((image) => image.id),
                       },
                     ],
