@@ -5,10 +5,6 @@
   },
   "admin.app.room-details": {
     "component": "RoomDetails",
-    "path": "/admin/app/room-ideas-manager/:roomId"
-  },
-  "admin.app.admin-import-seller-products": {
-    "component": "AdminSellers",
-    "path": "/admin/app/admin-import-seller-products"
+    "path": "/admin/app/room-ideas-manager/room-details"
   }
 }

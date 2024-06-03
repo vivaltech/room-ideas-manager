@@ -1,6 +1,6 @@
 {
   "section": "other",
-  "path": "/admin/admin-import-seller-products",
-  "titleId": "admin/admin-import-seller-products.navigation.label-group",
+  "path": "/admin/app/room-ideas-manager",
+  "titleId": "admin/room-ideas-manager.navigation.label",
   "searchKeyWordsHelpers": "admin/admin-import-seller-products.navigation.search.kws"
 }

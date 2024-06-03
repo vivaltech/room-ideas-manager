@@ -45,8 +45,14 @@ export async function getRoomIdeas(ctx: Context, next: () => Promise<any>) {
 
     const masterDataRoomIdeas: RoomIdea[] = await masterdata.searchDocuments(variables)
 
+    const sortedRoomData = masterDataRoomIdeas.sort((a, b) => {
+      const orderA = parseInt(a.order ?? '0');
+      const orderB = parseInt(b.order ?? '0');
+      return orderA - orderB;
+    });
+
     ctx.status = 200
-    ctx.body = masterDataRoomIdeas
+    ctx.body = sortedRoomData
 
     await next()
   } catch (error) {

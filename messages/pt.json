@@ -1,5 +1,6 @@
 {
   "admin/admin-import-seller-products.navigation.label-group": "Import Seller Products",
+  "admin/room-ideas-manager.navigation.label": "Room Ideas",
   "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers, product, products",
   "admin/admin-import-seller-products.main.title": "Import Seller Products",
   "admin/admin-import-seller-products.main.importButton": "Importar",
