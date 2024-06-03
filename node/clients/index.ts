@@ -1,30 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prettier/prettier */
 import { IOClients } from '@vtex/api'
 
-import { CatalogSellerPortalClient } from './catalogSellerPortal'
-import { VtexIdClient } from './vtexId'
-import { ImagesClient } from './images'
-import { CatalogImagesClient } from './catalogImages'
-import { CatalogImagesExternalClient } from './catalogImagesExternal'
+import Status from './status'
 
+// Extend the default IOClients implementation with our own custom clients.
 export class Clients extends IOClients {
-  public get catalogSellerPortal() {
-    return this.getOrSet('catalogSellerPortal', CatalogSellerPortalClient)
-  }
-
-  public get vtexId() {
-    return this.getOrSet('vtexId', VtexIdClient)
-  }
-
-  public get images() {
-    return this.getOrSet('images', ImagesClient)
-  }
-
-  public get catalogImages() {
-    return this.getOrSet('catalogImages', CatalogImagesClient)
-  }
-
-  public get catalogImagesExternal() {
-    return this.getOrSet('catalogImagesExternal', CatalogImagesExternalClient)
+  public get status() {
+    return this.getOrSet('status', Status)
   }
 }

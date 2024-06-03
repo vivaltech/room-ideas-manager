@@ -1,8 +1,8 @@
-import { mutations as importSellerProductsMutations } from './importSellerProducts'
+// import { mutations as importSellerProductsMutations } from './importSellerProducts'
 
-export const resolvers = {
-  Query: {},
-  Mutation: {
-    ...importSellerProductsMutations,
-  },
-}
+// export const resolvers = {
+//   Query: {},
+//   Mutation: {
+//     ...importSellerProductsMutations,
+//   },
+// }

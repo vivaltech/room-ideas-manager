@@ -1,9 +1,9 @@
 {
-  "name": "admin-import-seller-products",
-  "vendor": "ageas",
+  "name": "room-ideas-manager",
+  "vendor": "demoaccount1",
   "version": "1.5.0",
-  "title": "Import Seller Products",
-  "description": "This module empowers users to seamlessly import products into the Seller Portal catalog by utilizing a CSV file.",
+  "title": "Room Ideas Manager",
+  "description": "This module empowers users to seamlessly create room ideas.",
   "mustUpdateAt": "2022-08-28",
   "dependencies": {
     "vtex.styleguide": "9.x",
@@ -25,7 +25,9 @@
       "email": "soporte.commerce@valtech.com",
       "phone": "+541170796080"
     },
-    "availableCountries": ["*"]
+    "availableCountries": [
+      "*"
+    ]
   },
   "policies": [
     {
@@ -110,7 +112,10 @@
             "format": "password"
           }
         },
-        "required": ["appKey", "appToken"]
+        "required": [
+          "appKey",
+          "appToken"
+        ]
       }
     }
   },

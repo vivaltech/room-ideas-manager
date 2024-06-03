@@ -1,7 +1,7 @@
 {
-  "admin/admin-import-seller-products.navigation.label-group": "Import Seller Products",
+  "admin/admin-import-seller-products.navigation.label-group": "Room Ideas",
   "admin/admin-import-seller-products.navigation.search.kws": "valtech, admin, seller, sellers, product, products",
-  "admin/admin-import-seller-products.main.title": "Import Seller Products",
+  "admin/admin-import-seller-products.main.title": "Room Ideas",
   "admin/admin-import-seller-products.main.importButton": "Import",
   "admin/admin-import-seller-products.main.dropFile": "Drop here your CSV or",
   "admin/admin-import-seller-products.main.chooseFile": "choose a file",

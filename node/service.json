@@ -6,16 +6,12 @@
   "maxReplicas": 80,
   "workers": 4,
   "routes": {
-    "importSellerProducts": {
-      "path": "/_v/admin-import-seller-products/importSellerProducts",
+    "getRoomIdeas": {
+      "path": "/_v/room-ideas-manager/getRoomIdeas",
       "public": true
     },
-    "getSellerProduct": {
-      "path": "/_v/admin-import-seller-products/getSellerProduct",
-      "public": true
-    },
-    "importImages": {
-      "path": "/_v/admin-import-seller-products/importImages",
+    "getRoomScenes": {
+      "path": "/_v/room-ideas-manager/getRoomScenes/:roomId",
       "public": true
     }
   }

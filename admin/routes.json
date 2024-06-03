@@ -1,4 +1,12 @@
 {
+  "admin.app.room-ideas-manager": {
+    "component": "RoomIdeas",
+    "path": "/admin/app/room-ideas-manager"
+  },
+  "admin.app.room-details": {
+    "component": "RoomDetails",
+    "path": "/admin/app/room-ideas-manager/:roomId"
+  },
   "admin.app.admin-import-seller-products": {
     "component": "AdminSellers",
     "path": "/admin/app/admin-import-seller-products"
