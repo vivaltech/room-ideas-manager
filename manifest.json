@@ -1,7 +1,7 @@
 {
   "name": "room-ideas-manager",
   "vendor": "demoaccount1",
-  "version": "1.5.0",
+  "version": "1.5.1-beta.0",
   "title": "Room Ideas Manager",
   "description": "This module empowers users to seamlessly create room ideas.",
   "mustUpdateAt": "2022-08-28",
