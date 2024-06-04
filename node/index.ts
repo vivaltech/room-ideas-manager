@@ -3,16 +3,15 @@ import type { ClientsConfig, ServiceContext } from '@vtex/api'
 import { LRUCache, Service, method } from '@vtex/api'
 
 import { Clients } from './clients'
-// import { resolvers } from './resolvers'
 import { getRoomIdeas } from './middlewares/getRoomIdeas/getRoomIdeas'
 import { getRoomScenes } from './middlewares/getRoomScenes/getRoomScenes'
 
-const TIMEOUT_MS = 80000
+const TIMEOUT_MS = 8000
 
 // Create a LRU memory cache for the Status client.
 // The @vtex/api HttpClient respects Cache-Control headers and uses the provided cache.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const memoryCache = new LRUCache<string, any>({ max: 80000 })
+const memoryCache = new LRUCache<string, any>({ max: 5000 })
 
 metrics.trackCache('status', memoryCache)
 
@@ -42,22 +41,6 @@ declare global {
 export default new Service({
   clients,
   routes: {
-    // importSellerProducts: method({
-    //   POST: [
-    //     getBody,
-    //     getAppSettings,
-    //     validateBodyProductList,
-    //     addOrigin,
-    //     importProductImages,
-    //     importSellerProducts,
-    //   ],
-    // }),
-    // getSellerProduct: method({
-    //   POST: [getAppSettings, getSellerProduct],
-    // }),
-    // importImages: method({
-    //   POST: [getBody, getAppSettings, importImages],
-    // }),
     getRoomIdeas: method({
       GET: [getRoomIdeas]
     }),
@@ -65,7 +48,4 @@ export default new Service({
       GET: [getRoomScenes]
     }),
   },
-  // graphql: {
-  //   resolvers,
-  // },
 })

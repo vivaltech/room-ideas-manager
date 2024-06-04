@@ -1,9 +1,9 @@
 {
   "memory": 1024,
-  "ttl": 120,
-  "timeout": 200,
-  "minReplicas": 4,
-  "maxReplicas": 80,
+  "ttl": 60,
+  "timeout": 180,
+  "minReplicas": 2,
+  "maxReplicas": 60,
   "workers": 4,
   "routes": {
     "getRoomIdeas": {

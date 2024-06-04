@@ -61,6 +61,8 @@ export async function getRoomScenes(ctx: Context, next: () => Promise<any>) {
       return orderA - orderB;
     });
 
+    ctx.set('Cache-Control', 'public, max-age=100')
+
     ctx.status = 200
     ctx.body = sortedSceneData
 
