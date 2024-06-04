@@ -8,8 +8,6 @@ import {
   Table
 } from 'vtex.styleguide'
 
-import style from './styles/RoomIdeas.module.css'
-
 const RoomIdeas: React.FC = () => {
   const defaultSchema = {
     properties: {
@@ -49,7 +47,7 @@ const RoomIdeas: React.FC = () => {
         </PageHeader>
       }
     >
-      <PageBlock variation="full" className={style.RoomIdeas}>
+      <PageBlock variation="full">
       <Table
         fullWidth
         schema={defaultSchema}

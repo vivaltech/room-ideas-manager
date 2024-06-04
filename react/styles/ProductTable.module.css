@@ -1,9 +1,0 @@
-/* ProductTable.module.module.css */
-
-.productsTable table thead th {
-  z-index: 10;
-}
-
-.productsTable table tbody tr:hover {
-  background-color: #f2f4f585;
-}
